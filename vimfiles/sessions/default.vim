@@ -1,6 +1,6 @@
 " D:\data\projects\new\Tools\Vim\vimfiles\sessions\default.vim:
 " Vim session script.
-" Created by session.vim 2.13.1 on 23 May 2018 at 00:20:56.
+" Created by session.vim 2.13.1 on 23 May 2018 at 01:04:10.
 " Open this file in Vim and run :source % to restore your session.
 
 set guioptions=g
@@ -56,17 +56,20 @@ let NERDTreeMapOpenVSplit = "s"
 let NERDTrimTrailingWhitespace = "0"
 let NERDTreeMapDeleteBookmark = "D"
 let LatexBox_fold_automatic =  1 
+let NERDTreeAutoCenterThreshold = "3"
 let UltiSnipsEditSplit = "normal"
 let LatexBox_split_side = "aboveleft"
 let NERDTreeMapJumpFirstChild = "{"
 let NERDTreeCopyDirCmd = "xcopy /s /e /i /y /q "
 let NERDTreeMapToggleBookmarks = "B"
+let LatexBox_show_warnings =  1 
 let Tlist_Sort_Type = "name"
 let Tlist_Enable_Fold_Column =  0 
 let EasyMotion_move_highlight =  1 
 let EasyMotion_smartcase =  1 
 let NERDTreeBookmarksFile = "C:\\Users\\TommyX/.NERDTreeBookmarks"
 let UltiSnipsJumpForwardTrigger = "<c-j>"
+let NERDTreeBookmarksSort = "1"
 let Tlist_Ctags_Cmd = "D:\\data\\projects\\new\\Tools\\Vim\\vimfiles\\third_party\\ctags\\ctags"
 let UltiSnipsRemoveSelectModeMappings =  1 
 let EasyMotion_ignore_exception =  0 
@@ -87,11 +90,9 @@ let NERDTreeMapJumpPrevSibling = "<C-k>"
 let NERDDefaultNesting = "1"
 let NERDTreeMapOpenInTab = "t"
 let NERDTreeChDirMode = "0"
-let NERDTreeAutoCenterThreshold = "3"
 let NERDTreeShowFiles = "1"
 let LatexBox_latexmk_async =  0 
 let NERDTreeHijackNetrw = "1"
-let NERDTreeBookmarksSort = "1"
 let LatexBox_eq_env_patterns = "equation\\|gather\\|multiline\\|align\\|flalign\\|alignat\\|eqnarray"
 let EasyMotion_re_anywhere = "\\v(<.|^$)|(.>|^$)|(\\l)\\zs(\\u)|(_\\zs.)|(#\\zs.)"
 let EasyMotion_verbose =  0 
@@ -123,7 +124,6 @@ let EasyMotion_hl_group_target = "EasyMotionTarget"
 let NERDTreeMapPreview = "go"
 let NERDTreeCascadeSingleChildDir = "1"
 let EasyMotion_disable_two_key_combo =  0 
-let LatexBox_show_warnings =  1 
 let NERDMenuMode = "3"
 let NERDTreeRemoveDirCmd = "rmdir /s /q "
 let EasyMotion_grouping =  1 
@@ -189,7 +189,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +245 Vim.txt
+badd +246 Vim.txt
 badd +130 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\models\driver.ts
 badd +687 Software\ Engineering.txt
 badd +121 \data\study\new\CSC207\info.txt
@@ -234,7 +234,7 @@ badd +14 \data\study\new\CSC258\lab\prelab1.sptex
 badd +34 \data\projects\new\creations\2017\ GDDC\first_tutorial.txt
 badd +160 \Download\implementation.py
 badd +930 Competitive\ Programming\Competitive\ Programming\ and\ Algorithms.txt
-badd +1271 \data\projects\new\Tools\Vim\_vimrc
+badd +1 \data\projects\new\Tools\Vim\_vimrc
 badd +631 \data\projects\new\creations\2016\ Resume\tommyx_resume.spcls
 badd +7 Languages\LaTeX.txt
 badd +1162 \data\study\new\MAT223\info.txt
@@ -439,15 +439,18 @@ badd +140 \data\projects\new\creations\2017\ UTAT\main_repo\UTAT-AeRo-Vision-201
 badd +37 \data\projects\new\creations\2017\ UTAT\utat-phase-ii\Results\Evidence_Image.tex
 badd +1 E:\UTAT\ Evidence.kml
 badd +86 Emacs.txt
-badd +1 GTD.txt
+badd +68 GTD.txt
 badd +264 temp_notes.txt
 badd +28 Cooking\ theory.txt
 badd +81 Qt\ Concepts.txt
 badd +88 \data\projects\new\Tools\Vim\vimfiles\bundle\vim-smart-completer\plugin\sc.vim
 badd +4 \data\projects\new\Tools\Vim\.gitignore
+badd +0 \data\projects\new\Tools\Vim\test.py
+badd +974 \data\projects\new\Tools\Vim\vimfiles\tommyx.vim
+badd +17 \data\projects\new\Tools\Vim\README.md
 argglobal
 silent! argdel *
-$argadd \data\projects\new\Tools\Vim\test.py
+$argadd \data\projects\new\Tools\Vim\README.md
 edit \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\models\driver.ts
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -606,9 +609,9 @@ wincmd t
 set winminheight=1 winheight=1 winminwidth=1 winwidth=1
 exe '1resize ' . ((&lines * 41 + 22) / 45)
 exe 'vert 1resize ' . ((&columns * 30 + 87) / 174)
-exe '2resize ' . ((&lines * 28 + 22) / 45)
+exe '2resize ' . ((&lines * 27 + 22) / 45)
 exe 'vert 2resize ' . ((&columns * 143 + 87) / 174)
-exe '3resize ' . ((&lines * 12 + 22) / 45)
+exe '3resize ' . ((&lines * 13 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 143 + 87) / 174)
 argglobal
 enew
@@ -631,7 +634,7 @@ setlocal fdl=8
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1055 - ((13 * winheight(0) + 14) / 28)
+let s:l = 1055 - ((12 * winheight(0) + 13) / 27)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -649,7 +652,7 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 390 - ((5 * winheight(0) + 6) / 12)
+let s:l = 390 - ((5 * winheight(0) + 6) / 13)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -658,9 +661,9 @@ normal! 023|
 wincmd w
 exe '1resize ' . ((&lines * 41 + 22) / 45)
 exe 'vert 1resize ' . ((&columns * 30 + 87) / 174)
-exe '2resize ' . ((&lines * 28 + 22) / 45)
+exe '2resize ' . ((&lines * 27 + 22) / 45)
 exe 'vert 2resize ' . ((&columns * 143 + 87) / 174)
-exe '3resize ' . ((&lines * 12 + 22) / 45)
+exe '3resize ' . ((&lines * 13 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 143 + 87) / 174)
 tabedit D:\data\projects\new\creations\2015\ Competitive\ Programming\remove_comment.cpp
 set splitbelow splitright
@@ -806,11 +809,18 @@ vsplit
 2wincmd h
 wincmd w
 wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd t
 set winminheight=1 winheight=1 winminwidth=1 winwidth=1
 exe 'vert 1resize ' . ((&columns * 32 + 87) / 174)
 exe 'vert 2resize ' . ((&columns * 70 + 87) / 174)
+exe '3resize ' . ((&lines * 20 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 70 + 87) / 174)
+exe '4resize ' . ((&lines * 21 + 22) / 45)
+exe 'vert 4resize ' . ((&columns * 70 + 87) / 174)
 argglobal
 enew
 " file D:\data\projects\new\knowledge\NERD_tree_6
@@ -832,17 +842,17 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-67
+306
 silent! normal! zo
-let s:l = 73 - ((14 * winheight(0) + 21) / 42)
+let s:l = 298 - ((10 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-73
-normal! 025|
+298
+normal! 092|
 wincmd w
 argglobal
-if bufexists('D:\data\projects\new\Tools\Vim\_vimrc') | buffer D:\data\projects\new\Tools\Vim\_vimrc | else | edit D:\data\projects\new\Tools\Vim\_vimrc | endif
+if bufexists('D:\data\projects\new\knowledge\GTD.txt') | buffer D:\data\projects\new\knowledge\GTD.txt | else | edit D:\data\projects\new\knowledge\GTD.txt | endif
 setlocal fdm=expr
 setlocal fde=IndentFold(v:lnum)
 setlocal fmr={{{,}}}
@@ -851,17 +861,159 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1263 - ((20 * winheight(0) + 21) / 42)
+2
+silent! normal! zo
+3
+silent! normal! zo
+5
+normal! zc
+6
+normal! zc
+11
+silent! normal! zo
+12
+silent! normal! zo
+14
+normal! zc
+17
+normal! zc
+12
+normal! zc
+22
+normal! zc
+11
+normal! zc
+3
+normal! zc
+25
+normal! zc
+28
+normal! zc
+34
+silent! normal! zo
+35
+normal! zc
+38
+normal! zc
+34
+normal! zc
+41
+silent! normal! zo
+42
+normal! zc
+52
+normal! zc
+60
+normal! zc
+62
+normal! zc
+41
+normal! zc
+2
+normal! zc
+70
+silent! normal! zo
+130
+silent! normal! zo
+195
+silent! normal! zo
+225
+silent! normal! zo
+228
+silent! normal! zo
+let s:l = 75 - ((74 * winheight(0) + 10) / 20)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1263
-normal! 025|
+75
+normal! 0137|
+wincmd w
+argglobal
+if bufexists('D:\data\projects\new\knowledge\GTD.txt') | buffer D:\data\projects\new\knowledge\GTD.txt | else | edit D:\data\projects\new\knowledge\GTD.txt | endif
+setlocal fdm=expr
+setlocal fde=IndentFold(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=999
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+2
+silent! normal! zo
+3
+silent! normal! zo
+5
+normal! zc
+6
+normal! zc
+11
+silent! normal! zo
+12
+silent! normal! zo
+14
+normal! zc
+17
+normal! zc
+12
+normal! zc
+22
+normal! zc
+11
+normal! zc
+3
+normal! zc
+25
+normal! zc
+28
+normal! zc
+34
+silent! normal! zo
+35
+normal! zc
+38
+normal! zc
+34
+normal! zc
+41
+silent! normal! zo
+42
+normal! zc
+52
+normal! zc
+60
+normal! zc
+62
+normal! zc
+41
+normal! zc
+2
+normal! zc
+68
+normal! zc
+70
+silent! normal! zo
+130
+silent! normal! zo
+195
+silent! normal! zo
+225
+silent! normal! zo
+228
+silent! normal! zo
+let s:l = 191 - ((6 * winheight(0) + 10) / 21)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+191
+normal! 030|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 32 + 87) / 174)
 exe 'vert 2resize ' . ((&columns * 70 + 87) / 174)
+exe '3resize ' . ((&lines * 20 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 70 + 87) / 174)
+exe '4resize ' . ((&lines * 21 + 22) / 45)
+exe 'vert 4resize ' . ((&columns * 70 + 87) / 174)
 tabnext 6
 if exists('s:wipebuf') && s:wipebuf != bufnr('%')
 "   silent exe 'bwipe ' . s:wipebuf
@@ -904,7 +1056,7 @@ if !getbufvar(s:bufnr_save, '&modified')
   endif
 endif
 execute "cd" fnameescape(s:cwd_save)
-1resize 42|vert 1resize 30|2resize 28|vert 2resize 143|3resize 13|vert 3resize 143|
+1resize 42|vert 1resize 30|2resize 27|vert 2resize 143|3resize 14|vert 3resize 143|
 1wincmd w
 tabnext 3
 let s:bufnr_save = bufnr("%")
@@ -956,7 +1108,7 @@ if !getbufvar(s:bufnr_save, '&modified')
   endif
 endif
 execute "cd" fnameescape(s:cwd_save)
-1resize 42|vert 1resize 32|2resize 42|vert 2resize 70|3resize 42|vert 3resize 70|
+1resize 42|vert 1resize 32|2resize 42|vert 2resize 70|3resize 20|vert 3resize 70|4resize 21|vert 4resize 70|
 2wincmd w
 tabnext 6
 if exists('s:wipebuf')
