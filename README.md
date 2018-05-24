@@ -1,4 +1,4 @@
-# tommyx-vim
+# tommyx-vimrc
 
 My vim configuration.
 
@@ -8,7 +8,7 @@ My vim configuration.
 
 2. Clone the repository somewhere.
 ```
-git clone https://github.com/TommyX12/tommyx-vim.git .
+git clone https://github.com/TommyX12/tommyx-vimrc.git .
 ```
 
 3. Clone Vundle into `vimfiles/bundle/Vundle.vim` relative to this repository.
