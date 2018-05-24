@@ -1436,11 +1436,15 @@
             endif
         endfunction
 
+        function! Min(a, b)
+            return a:a < a:b ? a:a : a:b
+        endfunction
         function! FoldCurrent()
             " set foldmethod=indent
+            let fc = foldclosed('.')
             if foldclosed('.') >= 0
                 if &foldlevel > 0
-                    let level = foldlevel('.')
+                    let level = Min(&foldlevel, (foldlevel(fc)))
                     let &foldlevel = level - 1
                 endif
             else
