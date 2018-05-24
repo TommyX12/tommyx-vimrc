@@ -1,0 +1,29 @@
+snippet un "using namespace"
+using namespace ${1:std};
+endsnippet
+
+snippet for "for loop"
+for (int ${1:i} = 0; $1 < ${3:${2:array}.size()}; ++$1) {
+	${0}$2[$1]
+}
+endsnippet
+
+snippet incall "include all (for contest)"
+#include <bits/stdc++.h>
+
+${1:using namespace std;}
+
+${0}
+endsnippet
+
+snippet scanf "scanf"
+scanf("%${1:d}", &${2:N});
+${0}
+endsnippet
+
+snippet scanf2 "scanf2"
+scanf("%${1:d} %${2:d}", &${3:N}, &${4:M});
+${0}
+endsnippet
+
+# vim:ft=snippets:
