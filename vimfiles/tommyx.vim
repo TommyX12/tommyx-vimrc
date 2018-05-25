@@ -105,6 +105,9 @@
 
     " leader guide
     Plugin 'hecal3/vim-leader-guide'
+    
+    " more text objects
+    Plugin 'wellle/targets.vim'
 
     " auto resize windows
     " Plugin 'roman/golden-ratio'
