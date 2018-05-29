@@ -903,10 +903,10 @@
         tnoremap <C-w><C-b> <C-w>""
 
         " fast window navigation
-        tnoremap <C-h> <C-w>h
-        tnoremap <C-j> <C-w>j
-        tnoremap <C-k> <C-w>k
-        tnoremap <C-l> <C-w>l
+        tnoremap <C-w><C-h> <C-w>h
+        tnoremap <C-w><C-j> <C-w>j
+        tnoremap <C-w><C-k> <C-w>k
+        tnoremap <C-w><C-l> <C-w>l
         
         endif
 
