@@ -84,6 +84,9 @@
     " match html and xml tags
     " Plugin 'gregsexton/MatchTag'
     Plugin 'TommyX12/matchtagalways'
+    
+    " able to increase decrease dates
+    Plugin 'tpope/vim-speeddating'
 
     " dim inactive window
     " Plugin 'blueyed/vim-diminactive'
@@ -522,10 +525,10 @@
     imap <silent> <S-cr> <cr><up><end>
 
     " map - and = decrease and increase numbers.
-    noremap = <C-a>
-    noremap - <C-x>
-    vnoremap + g<C-a>
-    vnoremap _ g<C-x>
+    map = <C-a>
+    map - <C-x>
+    vmap + g<C-a>
+    vmap _ g<C-x>
 
     " easy window sizing
     nnoremap _ <C-w>-
@@ -568,7 +571,9 @@
 
     " system clipboard copy and paste using ctrl-c and ctrl-v
     vnoremap <C-c> "*y
-    inoremap <C-v> <C-g>ux<backspace><esc>"*]pa
+    " inoremap <C-v> <C-g>ux<backspace><esc>"*]pa
+    inoremap <C-v> <C-g>u<C-r><C-p>*
+    cnoremap <C-v> <C-r><C-o>*
     " vnoremap <C-v> <esc>"*]p
 
     " buffer creation, deletion, and navigation
@@ -668,7 +673,7 @@
 
     " paste in insert mode with ctrl-b
     inoremap <C-b> <C-g>u<C-r><C-p>"
-    cnoremap <C-b> <C-r>"
+    cnoremap <C-b> <C-r><C-o>"
 
     " correct last spell when shift-space-space in insert mode
     inoremap <S-space><S-space> <C-g>u<esc>[s1z=`]a
@@ -898,10 +903,10 @@
         tnoremap <C-w><C-b> <C-w>""
 
         " fast window navigation
-        tnoremap <C-h> <C-w>h
-        tnoremap <C-j> <C-w>j
-        tnoremap <C-k> <C-w>k
-        tnoremap <C-l> <C-w>l
+        tnoremap <C-w><C-h> <C-w>h
+        tnoremap <C-w><C-j> <C-w>j
+        tnoremap <C-w><C-k> <C-w>k
+        tnoremap <C-w><C-l> <C-w>l
         
         endif
 
@@ -2207,4 +2212,8 @@
 " === Miscellaneous ===
     function Rand()
         return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
+    endfunction
+    
+    function! MoveToWindow(num)
+        exe a:num . 'wincmd w'
     endfunction
