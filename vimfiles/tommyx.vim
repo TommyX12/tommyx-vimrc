@@ -74,6 +74,9 @@
 
     " better indent guide
     Plugin 'nathanaelkane/vim-indent-guides'
+    
+    " visual-split-peek
+    Plugin 'wellle/visual-split.vim'
 
     " automatic formatting
     Plugin 'Chiel92/vim-autoformat'
@@ -328,6 +331,10 @@
     set textwidth=0
     set wrapmargin=0
     set formatoptions=roqnMj
+    
+    " auto resize only width of windows
+    set equalalways
+    set eadirection=hor
 
     " set tab indent guide
     set listchars=tab:\|\ ,extends:>,precedes:< 
@@ -2208,6 +2215,10 @@
     " === fast mark ===
         " nnoremap <expr> mm SetFastMark()
         " nnoremap <expr> M JumpFastMark()
+    
+    " === visual split ===
+        vnoremap <leader>wvk :VSSplitAbove<cr>
+        vnoremap <leader>wvj :VSSplitBelow<cr>
 
 " === Miscellaneous ===
     function Rand()
