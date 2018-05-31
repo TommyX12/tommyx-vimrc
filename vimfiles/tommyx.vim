@@ -551,7 +551,7 @@
     nnoremap <C-down> <C-e>
 
     " ctrl a select all
-    nnoremap <C-a> ggVG
+    nnoremap <leader><C-a> ggVG
     
     " So we don't have to press shift when we want to get into command mode.
     noremap ; :
@@ -754,6 +754,9 @@
     
     " Quick buffer switching - like cmd-tabbing
     nnoremap <leader><tab> <c-^>
+    
+    " Quick window switching
+    nnoremap <leader>w<tab> <C-w><C-p>
 
     " use tab in normal mode to replace register key " 
     " noremap <tab> "
