@@ -1,6 +1,6 @@
 " D:\data\projects\new\Tools\Vim\vimfiles\sessions\default.vim:
 " Vim session script.
-" Created by session.vim 2.13.1 on 23 May 2018 at 01:04:10.
+" Created by session.vim 2.13.1 on 31 May 2018 at 21:43:20.
 " Open this file in Vim and run :source % to restore your session.
 
 set guioptions=g
@@ -27,7 +27,7 @@ let LatexBox_fold_text =  1
 let NERDTreeMapToggleHidden = "I"
 let NERDTreeWinSize =  30 
 let EasyMotion_hl_inc_search = "EasyMotionIncSearch"
-let NERDRemoveExtraSpaces = "0"
+let NERDTreeMapRefreshRoot = "R"
 let NERDTreeMapMenu = "m"
 let NERDTreeMapJumpParent = "p"
 let NERDTreeShowBookmarks = "0"
@@ -39,7 +39,7 @@ let NERDTreeMapOpenSplit = "i"
 let EasyMotion_hl_move = "EasyMotionMoveHL"
 let NERDTreeShowLineNumbers = "0"
 let NERDTreeHighlightCursorline = "1"
-let UltiSnipsExpandTrigger = "<c-l>"
+let UltiSnipsEnableSnipMate =  1 
 let EasyMotion_use_migemo =  0 
 let NERDCreateDefaultMappings = "1"
 let LatexBox_fold_toc =  0 
@@ -48,7 +48,8 @@ let BufKillOverrideCtrlCaret =  0
 let NERDTreeMapJumpRoot = "P"
 let EasyMotion_hl2_first_group_target = "EasyMotionTarget2First"
 let NERDTreeGlyphReadOnly = "RO"
-let NERDTreeMapRefreshRoot = "R"
+let NERDTreeAutoDeleteBuffer =  0 
+let NERDRemoveExtraSpaces = "0"
 let LatexBox_latexmk_env = ""
 let NERDTreeAutoCenter = "1"
 let NERDTreeCascadeOpenSingleChildDir = "1"
@@ -100,9 +101,9 @@ let LatexBox_fold_toc_levels =  1
 let UltiSnipsJumpBackwardTrigger = "<c-k>"
 let EasyMotion_cursor_highlight =  1 
 let LatexBox_split_type = "vnew"
-let NERDBlockComIgnoreEmpty = "0"
 let Tlist_File_Fold_Auto_Close =  1 
 let LatexBox_output_type = "pdf"
+let NERDCommentWholeLinesInVMode = "0"
 let NERDTreeSortDirs = "1"
 let NERDTreeMapToggleFiles = "]"
 let NERDAllowAnyVisualDelims = "1"
@@ -116,8 +117,7 @@ let EasyMotion_off_screen_search =  0
 let NERDTreeMapCloseDir = "x"
 let NERDTreeSortHiddenFirst = "1"
 let LatexBox_fold_preamble =  1 
-let UltiSnipsEnableSnipMate =  1 
-let NERDTreeAutoDeleteBuffer =  0 
+let UltiSnipsExpandTrigger = "<c-l>"
 let EasyMotion_use_upper =  0 
 let EasyMotion_do_mapping =  1 
 let EasyMotion_hl_group_target = "EasyMotionTarget"
@@ -137,9 +137,9 @@ let LatexBox_toc_hidehelp =  0
 let BufExplorer_title = "[Buf List]"
 let LatexBox_latexmk_options = ""
 let BufKillCreateMappings =  1 
+let NERDBlockComIgnoreEmpty = "0"
 let LatexBox_latexmk_preview_continuously =  0 
 let BufKillVerbose =  1 
-let EasyMotion_startofline =  0 
 let UltiSnipsListSnippets = "<c-n>"
 let NERDTreeMapChangeRoot = "C"
 let NERDCompactSexyComs = "0"
@@ -165,13 +165,13 @@ let EasyMotion_re_line_anywhere = "\\v(<.|^$)|(.>|^$)|(\\l)\\zs(\\u)|(_\\zs.)|(#
 let NERDTreeMapCWD = "CD"
 let BufKillActionWhenBufferDisplayedInAnotherWindow = "confirm"
 let NERDTreeMapUpdir = "u"
-let NERDCommentWholeLinesInVMode = "0"
 let NERDTreeMapChdir = "cd"
 let NERDRPlace = "<]"
 let NERDTreeMapToggleZoom = "A"
 let NERDRemoveAltComs = "1"
 let NERDTreeMapJumpLastChild = "}"
 let EasyMotion_hl2_second_group_target = "EasyMotionTarget2Second"
+let EasyMotion_startofline =  0 
 let NERDTreeMapJumpNextSibling = "<C-j>"
 let NERDTreeMapQuit = "q"
 let LatexBox_Folding =  0 
@@ -189,16 +189,16 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +246 Vim.txt
+badd +805 Vim.txt
 badd +130 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\models\driver.ts
-badd +687 Software\ Engineering.txt
+badd +240 Software\ Engineering.txt
 badd +121 \data\study\new\CSC207\info.txt
 badd +242 Knowledge\ to\ learn.txt
 badd +184 \data\study\new\temp_py.py
 badd +52 People\ I\ know.txt
 badd +567 C++\ Knowledge\C++\ Concepts.txt
 badd +12 \data\projects\new\creations\2016\ Uniprep\Course\ Plan.txt
-badd +1265 AI\AI\ Concepts.txt
+badd +2655 AI\AI\ Concepts.txt
 badd +76 Unity\ Concepts.txt
 badd +396 Music\ Theory\ and\ Composition.txt
 badd +38 \data\projects\new\creations\2015\ Competitive\ Programming\Template\ Code\starter.cpp
@@ -206,7 +206,7 @@ badd +62 \Download\MyObjectPool.cs
 badd +990 \data\study\new\CSC209\info.txt
 badd +9 \data\projects\new\creations\2017\ SimpleTex\sptex\info.txt
 badd +37 \data\projects\new\creations\2016\ HelloWeb\info.txt
-badd +390 \data\projects\new\creations\2017\ UTAT\info.txt
+badd +89 \data\projects\new\creations\2017\ UTAT\info.txt
 badd +82 \data\projects\new\creations\2017\ GDDC\info.txt
 badd +75 Git\ Concepts.txt
 badd +326 \data\projects\new\creations\2016\ Life++\local\src\note.txt
@@ -233,7 +233,7 @@ badd +57 \data\projects\new\creations\2017\ Knowledge\ Manager\structured-knowle
 badd +14 \data\study\new\CSC258\lab\prelab1.sptex
 badd +34 \data\projects\new\creations\2017\ GDDC\first_tutorial.txt
 badd +160 \Download\implementation.py
-badd +930 Competitive\ Programming\Competitive\ Programming\ and\ Algorithms.txt
+badd +212 Competitive\ Programming\Competitive\ Programming\ and\ Algorithms.txt
 badd +1 \data\projects\new\Tools\Vim\_vimrc
 badd +631 \data\projects\new\creations\2016\ Resume\tommyx_resume.spcls
 badd +7 Languages\LaTeX.txt
@@ -277,7 +277,7 @@ badd +25 \data\study\new\CSC258\test.py
 badd +15 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\models\item.ts
 badd +4 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\assets\i18n\en.json
 badd +35 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\app\app.module.ts
-badd +1052 \data\projects\new\creations\2018\ Catalyzer\catalyzer\info.txt
+badd +1059 \data\projects\new\creations\2018\ Catalyzer\catalyzer\info.txt
 badd +14 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\components\components.ts
 badd +28 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\components\timeline-page\timeline-page.html
 badd +87 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\components\timeline-page\timeline-page.ts
@@ -343,12 +343,12 @@ badd +11 \data\projects\new\creations\2016\ HelloWeb\git\tommyx12.github.io\miss
 badd +78 \data\projects\new\creations\2016\ HelloWeb\git\tommyx12.github.io\missile_test\game.js
 badd +255 \data\projects\new\creations\2016\ HelloWeb\git\tommyx12.github.io\common\util.js
 badd +1486 \data\projects\new\creations\2016\ HelloWeb\git\tommyx12.github.io\dungeon_survival\game.js
-badd +24 Game\ Dev\ Concepts.txt
+badd +12 Game\ Dev\ Concepts.txt
 badd +1 \data\study\new\CSC373\assignments\A2.sptex
 badd +142 \data\study\new\CSC373\assignments\A2.tex
 badd +11 \data\study\new\CSC373\assignments\373_A2Q3.tex
 badd +199 \Download\A2.tex
-badd +116 \data\projects\new\work\Google\ internship\ info.txt
+badd +122 \data\projects\new\work\Google\ internship\ info.txt
 badd +4 \data\projects\new\creations\2018\ Catalyzer\catalyzer\push.bat
 badd +25 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\common\objective.ts
 badd +2 \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\components\actions-browser\actions-browser.scss
@@ -374,11 +374,11 @@ badd +50 \data\projects\new\creations\2015\ Competitive\ Programming\DMOJ\sssp.c
 badd +46 \data\projects\new\creations\2016\ AI\SFML\ Test\SFMLTest\nebula\src\engine\utils\Util.cpp
 badd +1 \data\study\new\CSC321\homework\hw4.sptex
 badd +83 \data\study\new\CSC321\homework\hw5.sptex
-badd +192 \data\study\new\STA247\temp.py
+badd +193 \data\study\new\STA247\temp.py
 badd +1 \data\projects\new\creations\CSC401_A1\repo\a1_preproc.py
-badd +22 Games\Torchlight\ 2.txt
+badd +40 Games\Torchlight\ 2.txt
 badd +229 \data\entertainment\games\new\TES\ Skyrim\Skyrim\To-dos.txt
-badd +321 \data\entertainment\games\new\X3.Albion.Prelude.v3.1a-AL213.part0\X3\ Terran\ Conflict\to-do.txt
+badd +12 \data\entertainment\games\new\X3.Albion.Prelude.v3.1a-AL213.part0\X3\ Terran\ Conflict\to-do.txt
 badd +27 Command\ Line.txt
 badd +26 \data\projects\new\creations\2018\ Catalyzer\catalyzer\legacy\components\objective-editor\objective-editor.html
 badd +22 \data\study\new\CSC321\assignments\a3-code\visualize_attention.py
@@ -439,18 +439,24 @@ badd +140 \data\projects\new\creations\2017\ UTAT\main_repo\UTAT-AeRo-Vision-201
 badd +37 \data\projects\new\creations\2017\ UTAT\utat-phase-ii\Results\Evidence_Image.tex
 badd +1 E:\UTAT\ Evidence.kml
 badd +86 Emacs.txt
-badd +68 GTD.txt
+badd +83 GTD.txt
 badd +264 temp_notes.txt
-badd +28 Cooking\ theory.txt
+badd +1 Cooking\ theory.txt
 badd +81 Qt\ Concepts.txt
 badd +88 \data\projects\new\Tools\Vim\vimfiles\bundle\vim-smart-completer\plugin\sc.vim
 badd +4 \data\projects\new\Tools\Vim\.gitignore
-badd +0 \data\projects\new\Tools\Vim\test.py
-badd +974 \data\projects\new\Tools\Vim\vimfiles\tommyx.vim
+badd +1 \data\projects\new\Tools\Vim\test.py
+badd +49 \data\projects\new\Tools\Vim\vimfiles\tommyx.vim
 badd +17 \data\projects\new\Tools\Vim\README.md
+badd +229 D:\data\projects\new\knowledge\ backup\GTD.txt
+badd +32 \data\study\new\CSC321\temp.py
+badd +1 Games\Planetside\ 2.txt
+badd +1 Computer\ Graphics\ Concepts.txt
+badd +417 \data\projects\new\Tools\Vim\vimfiles\spell\en.utf-8.add
+badd +0 \data\projects\new\creations\2015\ Competitive\ Programming\Leetcode\longestparensubstr.py
 argglobal
 silent! argdel *
-$argadd \data\projects\new\Tools\Vim\README.md
+$argadd \data\projects\new\Tools\Vim\vimfiles\bundle\rainbow\plugin\rainbow.vim
 edit \data\projects\new\creations\2018\ Catalyzer\catalyzer\src\models\driver.ts
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -570,17 +576,17 @@ silent! normal! zo
 silent! normal! zo
 1046
 silent! normal! zo
-1060
+1064
 silent! normal! zo
-1094
+1098
 silent! normal! zo
-1102
+1106
 silent! normal! zo
-1113
+1117
 silent! normal! zo
-1139
+1143
 silent! normal! zo
-1226
+1230
 silent! normal! zo
 let s:l = 218 - ((11 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
@@ -609,9 +615,9 @@ wincmd t
 set winminheight=1 winheight=1 winminwidth=1 winwidth=1
 exe '1resize ' . ((&lines * 41 + 22) / 45)
 exe 'vert 1resize ' . ((&columns * 30 + 87) / 174)
-exe '2resize ' . ((&lines * 27 + 22) / 45)
+exe '2resize ' . ((&lines * 25 + 22) / 45)
 exe 'vert 2resize ' . ((&columns * 143 + 87) / 174)
-exe '3resize ' . ((&lines * 13 + 22) / 45)
+exe '3resize ' . ((&lines * 15 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 143 + 87) / 174)
 argglobal
 enew
@@ -634,7 +640,7 @@ setlocal fdl=8
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1055 - ((12 * winheight(0) + 13) / 27)
+let s:l = 1055 - ((11 * winheight(0) + 12) / 25)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -652,7 +658,7 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 390 - ((5 * winheight(0) + 6) / 13)
+let s:l = 390 - ((5 * winheight(0) + 7) / 15)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -661,9 +667,9 @@ normal! 023|
 wincmd w
 exe '1resize ' . ((&lines * 41 + 22) / 45)
 exe 'vert 1resize ' . ((&columns * 30 + 87) / 174)
-exe '2resize ' . ((&lines * 27 + 22) / 45)
+exe '2resize ' . ((&lines * 25 + 22) / 45)
 exe 'vert 2resize ' . ((&columns * 143 + 87) / 174)
-exe '3resize ' . ((&lines * 13 + 22) / 45)
+exe '3resize ' . ((&lines * 15 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 143 + 87) / 174)
 tabedit D:\data\projects\new\creations\2015\ Competitive\ Programming\remove_comment.cpp
 set splitbelow splitright
@@ -809,18 +815,11 @@ vsplit
 2wincmd h
 wincmd w
 wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 wincmd t
 set winminheight=1 winheight=1 winminwidth=1 winwidth=1
 exe 'vert 1resize ' . ((&columns * 32 + 87) / 174)
 exe 'vert 2resize ' . ((&columns * 70 + 87) / 174)
-exe '3resize ' . ((&lines * 20 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 70 + 87) / 174)
-exe '4resize ' . ((&lines * 21 + 22) / 45)
-exe 'vert 4resize ' . ((&columns * 70 + 87) / 174)
 argglobal
 enew
 " file D:\data\projects\new\knowledge\NERD_tree_6
@@ -842,17 +841,61 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-306
+7
 silent! normal! zo
-let s:l = 298 - ((10 * winheight(0) + 21) / 42)
+32
+silent! normal! zo
+47
+silent! normal! zo
+33
+silent! normal! zo
+49
+silent! normal! zo
+56
+silent! normal! zo
+91
+silent! normal! zo
+92
+silent! normal! zo
+97
+silent! normal! zo
+98
+silent! normal! zo
+106
+silent! normal! zo
+137
+silent! normal! zo
+161
+silent! normal! zo
+187
+silent! normal! zo
+188
+silent! normal! zo
+218
+silent! normal! zo
+220
+silent! normal! zo
+221
+silent! normal! zo
+232
+silent! normal! zo
+248
+silent! normal! zo
+249
+silent! normal! zo
+281
+silent! normal! zo
+284
+silent! normal! zo
+let s:l = 162 - ((12 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-298
-normal! 092|
+162
+normal! 029|
 wincmd w
 argglobal
-if bufexists('D:\data\projects\new\knowledge\GTD.txt') | buffer D:\data\projects\new\knowledge\GTD.txt | else | edit D:\data\projects\new\knowledge\GTD.txt | endif
+if bufexists('D:\data\projects\new\Tools\Vim\vimfiles\tommyx.vim') | buffer D:\data\projects\new\Tools\Vim\vimfiles\tommyx.vim | else | edit D:\data\projects\new\Tools\Vim\vimfiles\tommyx.vim | endif
 setlocal fdm=expr
 setlocal fde=IndentFold(v:lnum)
 setlocal fmr={{{,}}}
@@ -861,159 +904,21 @@ setlocal fdl=999
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-2
+1
 silent! normal! zo
-3
-silent! normal! zo
-5
-normal! zc
 6
-normal! zc
-11
 silent! normal! zo
-12
-silent! normal! zo
-14
-normal! zc
-17
-normal! zc
-12
-normal! zc
-22
-normal! zc
-11
-normal! zc
-3
-normal! zc
-25
-normal! zc
-28
-normal! zc
-34
-silent! normal! zo
-35
-normal! zc
-38
-normal! zc
-34
-normal! zc
-41
-silent! normal! zo
-42
-normal! zc
-52
-normal! zc
-60
-normal! zc
-62
-normal! zc
-41
-normal! zc
-2
-normal! zc
-70
-silent! normal! zo
-130
-silent! normal! zo
-195
-silent! normal! zo
-225
-silent! normal! zo
-228
-silent! normal! zo
-let s:l = 75 - ((74 * winheight(0) + 10) / 20)
+let s:l = 48 - ((18 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-75
-normal! 0137|
+48
+normal! 032|
 wincmd w
-argglobal
-if bufexists('D:\data\projects\new\knowledge\GTD.txt') | buffer D:\data\projects\new\knowledge\GTD.txt | else | edit D:\data\projects\new\knowledge\GTD.txt | endif
-setlocal fdm=expr
-setlocal fde=IndentFold(v:lnum)
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=999
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-2
-silent! normal! zo
-3
-silent! normal! zo
-5
-normal! zc
-6
-normal! zc
-11
-silent! normal! zo
-12
-silent! normal! zo
-14
-normal! zc
-17
-normal! zc
-12
-normal! zc
-22
-normal! zc
-11
-normal! zc
-3
-normal! zc
-25
-normal! zc
-28
-normal! zc
-34
-silent! normal! zo
-35
-normal! zc
-38
-normal! zc
-34
-normal! zc
-41
-silent! normal! zo
-42
-normal! zc
-52
-normal! zc
-60
-normal! zc
-62
-normal! zc
-41
-normal! zc
-2
-normal! zc
-68
-normal! zc
-70
-silent! normal! zo
-130
-silent! normal! zo
-195
-silent! normal! zo
-225
-silent! normal! zo
-228
-silent! normal! zo
-let s:l = 191 - ((6 * winheight(0) + 10) / 21)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-191
-normal! 030|
-wincmd w
-2wincmd w
+3wincmd w
 exe 'vert 1resize ' . ((&columns * 32 + 87) / 174)
 exe 'vert 2resize ' . ((&columns * 70 + 87) / 174)
-exe '3resize ' . ((&lines * 20 + 22) / 45)
 exe 'vert 3resize ' . ((&columns * 70 + 87) / 174)
-exe '4resize ' . ((&lines * 21 + 22) / 45)
-exe 'vert 4resize ' . ((&columns * 70 + 87) / 174)
 tabnext 6
 if exists('s:wipebuf') && s:wipebuf != bufnr('%')
 "   silent exe 'bwipe ' . s:wipebuf
@@ -1056,7 +961,7 @@ if !getbufvar(s:bufnr_save, '&modified')
   endif
 endif
 execute "cd" fnameescape(s:cwd_save)
-1resize 42|vert 1resize 30|2resize 27|vert 2resize 143|3resize 14|vert 3resize 143|
+1resize 42|vert 1resize 30|2resize 25|vert 2resize 143|3resize 16|vert 3resize 143|
 1wincmd w
 tabnext 3
 let s:bufnr_save = bufnr("%")
@@ -1108,8 +1013,8 @@ if !getbufvar(s:bufnr_save, '&modified')
   endif
 endif
 execute "cd" fnameescape(s:cwd_save)
-1resize 42|vert 1resize 32|2resize 42|vert 2resize 70|3resize 20|vert 3resize 70|4resize 21|vert 4resize 70|
-2wincmd w
+1resize 42|vert 1resize 32|2resize 42|vert 2resize 70|3resize 42|vert 3resize 70|
+3wincmd w
 tabnext 6
 if exists('s:wipebuf')
   if empty(bufname(s:wipebuf))

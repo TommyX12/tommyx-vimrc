@@ -46,7 +46,8 @@
     " rainbow parenthesis
     " Plugin 'junegunn/rainbow_parentheses.vim'
     " Plugin 'kien/rainbow_parentheses.vim'
-    Plugin 'luochen1990/rainbow'
+    " Plugin 'luochen1990/rainbow'
+    Plugin 'TommyX12/rainbow'
 
     " buffer explorer
     Plugin 'jlanzarotta/bufexplorer'
@@ -1173,6 +1174,7 @@
         let g:NERDTreeMapToggleFiles = ']'
         let g:NERDTreeMapJumpFirstChild = '{'
         let g:NERDTreeMapJumpLastChild = '}'
+        let g:NERDTreeStatusline = 'NERD'
         
     " === easy tags ===
         let g:easytags_cmd = expand(g:ctags_path)
