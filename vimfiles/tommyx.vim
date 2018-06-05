@@ -578,11 +578,19 @@
     nnoremap <leader>wa :wa<cr>
 
     " system clipboard copy and paste using ctrl-c and ctrl-v
-    vnoremap <C-c> "*y
-    " inoremap <C-v> <C-g>ux<backspace><esc>"*]pa
-    inoremap <C-v> <C-g>u<C-r><C-p>*
-    cnoremap <C-v> <C-r><C-o>*
-    " vnoremap <C-v> <esc>"*]p
+    if g:os == 'windows'
+      vnoremap <C-c> "*y
+      " inoremap <C-v> <C-g>ux<backspace><esc>"*]pa
+      inoremap <C-v> <C-g>u<C-r><C-p>*
+      cnoremap <C-v> <C-r><C-o>*
+      " vnoremap <C-v> <esc>"*]p
+    else
+      vnoremap <C-c> "+y
+      " inoremap <C-v> <C-g>ux<backspace><esc>"+]pa
+      inoremap <C-v> <C-g>u<C-r><C-p>+
+      cnoremap <C-v> <C-r><C-o>+
+      " vnoremap <C-v> <esc>"+]p
+    endif
 
     " buffer creation, deletion, and navigation
     nnoremap <leader>T :enew<cr>
@@ -893,6 +901,7 @@
         
         " start terminal
         nnoremap <leader>t :term ++rows=10<space>
+        nnoremap <leader>T :term ++rows=10 ++curwin<space>
 
         " go to terminal normal mode
         tnoremap jk <C-w>N
