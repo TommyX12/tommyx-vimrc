@@ -2017,8 +2017,8 @@
         call leaderGuide#register_prefix_descriptions("<tab>", "g:tab_map")
 
     " === smart completer ===
-        imap jp <Plug>(SC_Secondary)
-        imap j[ <Plug>(SC)
+        imap jp <Plug>(SC)
+        imap j[ <Plug>(SC_Secondary)
     
     " === my commands ===
         nnoremap <C-f> :Grep<space>
