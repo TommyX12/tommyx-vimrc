@@ -1072,9 +1072,11 @@
         let g:ycm_min_num_of_chars_for_completion = 1
         let g:ycm_min_num_identifier_candidate_chars = 5
         " let g:ycm_global_ycm_extra_conf = expand('$VIM/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm')
+        
+        let g:ycm_auto_trigger = 0
     
     " === smart completer ===
-        let g:sc_auto_trigger = 0
+        let g:sc_auto_trigger = 1
         
     " === golden ratio ===
         let g:golden_ratio_exclude_nonmodifiable = 1
@@ -1180,10 +1182,12 @@
         let g:NERDTreeShowHidden = 1
         let g:NERDTreeWinSize = 30
         let g:NERDTreeIgnore = ['\.meta$', '\.pyc$']
-        let g:NERDTreeMapToggleFilters = '['
-        let g:NERDTreeMapToggleFiles = ']'
-        let g:NERDTreeMapJumpFirstChild = '{'
-        let g:NERDTreeMapJumpLastChild = '}'
+        let g:NERDTreeMapToggleFilters = '<'
+        let g:NERDTreeMapToggleFiles = '>'
+        let g:NERDTreeMapJumpFirstChild = 'zk'
+        let g:NERDTreeMapJumpLastChild = 'zj'
+        let g:NERDTreeMapChangeRoot = 'cd'
+        let g:NERDTreeMapChdir = 'CD'
         let g:NERDTreeStatusline = 'NERD'
         
     " === easy tags ===
@@ -1579,37 +1583,37 @@
         inoremap <silent> <C-s> x<backspace><esc>:<C-u>Update<cr>a
     
     " === YCM trigger delay ===
-        let g:ycm_t_id = -1
-        let g:ycm_event_block = 0
-        function! TriggerYCM(id)
-            let g:ycm_t_id = -1
-            if !pumvisible() && (mode() ==# "i" || mode() ==# "R")
-                let g:ycm_auto_trigger = 1
-                let g:ycm_event_block = 1
-                do TextChangedI
-            endif
-            return ''
-        endfunction
-        function! OnTextChangedI()
-            if g:ycm_event_block == 1
-                let g:ycm_event_block = 0
-                return
-            endif
+        " let g:ycm_t_id = -1
+        " let g:ycm_event_block = 0
+        " function! TriggerYCM(id)
+            " let g:ycm_t_id = -1
+            " if !pumvisible() && (mode() ==# "i" || mode() ==# "R")
+                " let g:ycm_auto_trigger = 1
+                " let g:ycm_event_block = 1
+                " do TextChangedI
+            " endif
+            " return ''
+        " endfunction
+        " function! OnTextChangedI()
+            " if g:ycm_event_block == 1
+                " let g:ycm_event_block = 0
+                " return
+            " endif
             
-            if !pumvisible()
-                let g:ycm_auto_trigger = 0
-            endif
-            if g:ycm_t_id != -1
-                call timer_stop(g:ycm_t_id)
-            endif
-            if g:ycm_enabled
-                let g:ycm_t_id = timer_start(g:ycm_trigger_delay, 'TriggerYCM')
-            endif
-        endfunction
-        augroup ycm_trigger_group
-            autocmd!
-            autocmd TextChangedI * call OnTextChangedI()
-        augroup END
+            " if !pumvisible()
+                " let g:ycm_auto_trigger = 0
+            " endif
+            " if g:ycm_t_id != -1
+                " call timer_stop(g:ycm_t_id)
+            " endif
+            " if g:ycm_enabled
+                " let g:ycm_t_id = timer_start(g:ycm_trigger_delay, 'TriggerYCM')
+            " endif
+        " endfunction
+        " augroup ycm_trigger_group
+            " autocmd!
+            " autocmd TextChangedI * call OnTextChangedI()
+        " augroup END
     
     " === work break ===
         let g:workbreak_cooldown_counter = 0
