@@ -2017,6 +2017,7 @@
         call leaderGuide#register_prefix_descriptions("<tab>", "g:tab_map")
 
     " === smart completer ===
+        imap jp <Plug>(SC_Secondary)
         imap j[ <Plug>(SC)
     
     " === my commands ===
