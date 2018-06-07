@@ -2074,6 +2074,11 @@
         let g:UltiSnipsListSnippets="<c-n>"
         let g:UltiSnipsJumpForwardTrigger="<c-j>"
         let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+        " disable ulti-snip auto trigger
+        augroup ultisnips_no_auto_expansion
+            autocmd!
+            autocmd VimEnter * autocmd! UltiSnips_AutoTrigger
+        augroup END
         
     " === lime light ===
         function! LimeLightToggle()
