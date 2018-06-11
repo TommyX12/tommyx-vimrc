@@ -1262,7 +1262,11 @@
         
     " === fullscreen ===
         " full screen on start up
-        autocmd GUIEnter * silent! WToggleFullscreen
+        if g:os == "windows"
+          autocmd GUIEnter * silent! WToggleFullscreen | set showtabline=2
+        else
+          autocmd GUIEnter * silent! Fullscreen | set showtabline=2
+        endif
         
     " === YCM trigger delay ===
         let g:ycm_enabled = 1
