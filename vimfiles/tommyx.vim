@@ -295,6 +295,10 @@
 
     " We have to turn this stuff back on if we want all of our features.
     filetype plugin indent on " Filetype auto-detection
+    
+    if exists('g:plugins_not_installed') && g:plugins_not_installed
+        finish
+    endif
 
 " === Vim settings ===
     " syntax highlighting

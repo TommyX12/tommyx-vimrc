@@ -21,6 +21,8 @@ git clone https://github.com/VundleVim/Vundle.vim.git vimfiles/bundle/Vundle.vim
 * Make sure all directories appearing in the variables are available
     (especially the ones for temporary files).
 
-5. Launch Vim, ignore the errors, and run `:PluginInstall`, then quit Vim.
+5. Launch Vim, run `:PluginInstall`, then quit Vim.
 
-6. Install YCM by following the instructions [here](https://github.com/Valloric/YouCompleteMe#installation).
+6. Remove `let g:plugins_not_installed = 1` from your own vimrc.
+
+7. Install YCM by following the instructions [here](https://github.com/Valloric/YouCompleteMe#installation).

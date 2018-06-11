@@ -1,4 +1,5 @@
 " ==================================================
+let g:plugins_not_installed = 1
 
 " === Required ===
 set runtimepath+=$VIM/vimfiles " set to [repository dir]/vimfiles
