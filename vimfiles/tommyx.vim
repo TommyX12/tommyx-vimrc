@@ -1082,6 +1082,10 @@
     " === smart completer ===
         let g:sc_auto_trigger = 1
         
+    " === matchtagalways ===
+        let g:mta_use_matchparen_group = 0
+        let g:mta_set_default_matchtag_color = 0
+        
     " === golden ratio ===
         let g:golden_ratio_exclude_nonmodifiable = 1
         
@@ -2164,10 +2168,11 @@
         nnoremap <leader>m :TagbarClose<cr>:TagbarOpen<cr>
         
     " === anzu and asterisk ===
-        nmap * <Plug>(asterisk-z*)<Plug>(anzu-echo-search-status)zz
-        nmap g* <Plug>(asterisk-gz*)<Plug>(anzu-echo-search-status)zz
-        nmap n <Plug>(anzu-n-with-echo)zz
-        nmap N <Plug>(anzu-N-with-echo)zz
+        nnoremap <silent> <Plug>(add-jumplist) :exec "norm! " . line(".") . "G" . col(".") . "\|"<cr>
+        nmap * <Plug>(asterisk-z*)zz<Plug>(add-jumplist)
+        nmap g* <Plug>(asterisk-gz*)zz<Plug>(add-jumplist)
+        noremap n :exe "keepj norm! n"<cr>zz
+        noremap N :exe "keepj norm! N"<cr>zz
         
     " === vim-over ===
         nnoremap <leader>s :OverCommandLine<cr>s/
