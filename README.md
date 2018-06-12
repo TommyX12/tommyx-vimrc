@@ -16,7 +16,7 @@ git clone https://github.com/TommyX12/tommyx-vimrc.git .
 git clone https://github.com/VundleVim/Vundle.vim.git vimfiles/bundle/Vundle.vim
 ```
 
-4. Add the content of `vimrc` into your own vimrc.
+4. Add the content of `add_to_vimrc` into your own vimrc.
 * Configure the vimrc by setting the variables properly.
 * Make sure all directories appearing in the variables are available
     (especially the ones for temporary files).

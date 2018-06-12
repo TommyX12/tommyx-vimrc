@@ -1262,10 +1262,10 @@
         
     " === fullscreen ===
         " full screen on start up
-        if g:os == "windows"
-          autocmd GUIEnter * silent! WToggleFullscreen | set showtabline=2
+        if g:os == 'windows'
+            autocmd GUIEnter * silent! exe "WToggleFullscreen" | set showtabline=2
         else
-          autocmd GUIEnter * silent! Fullscreen | set showtabline=2
+            autocmd GUIEnter * silent! exe "Fullscreen" | set showtabline=2
         endif
         
     " === YCM trigger delay ===
