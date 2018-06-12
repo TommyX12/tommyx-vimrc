@@ -386,6 +386,9 @@
     
     " timeout on waiting for command
     set timeoutlen=500
+    
+    " speed up vim-airline
+    set ttimeoutlen=10
 
     " set nobackup
     " set nowritebackup
@@ -1128,6 +1131,7 @@
         let g:airline_left_sep = ''
         let g:airline_right_sep = ''
         let g:airline_detect_spell = 0
+        let g:airline_highlighting_cache = 1 " speed up highlighting
 
         " add window number to status line
         function! AirlineWindowNumber(...)
