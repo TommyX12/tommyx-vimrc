@@ -1035,7 +1035,7 @@
     
     " === rainbow parenthesis ===
         let g:rainbow_active = 1
-        let g:rainbow_conf = { 'guifgs': ['#268bd2', '#6a9407', '#289990', '#7f77e6', '#b58900', '#cb4b16'], 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'], 'operators': '_,_', 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'], 'separately': { '*': {}, 'html': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-]\+\)/ end=#</\z1># fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent,htmlCssDefinition,@htmlPreproc,@htmlArgCluster'], }, 'javascript': { 'containedin': 'jsParens,jsFuncArgs,jsFuncBlock,jsFunction' }, 'vim': { 'containedin': 'vimFuncBody' }, 'php': {'containedin': '@htmlPreproc'} } }
+        let g:rainbow_conf = { 'guifgs': ['#268bd2', '#6a9407', '#289990', '#7f77e6', '#b58900', '#cb4b16'], 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'], 'operators': '_,_', 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'], 'separately': { '*': {}, 'xml': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-]\+\)/ end=#\(</\z1\|/\)># fold contains=xmlTagN,xmlString,xmlArg,xmlValue,xmlTagError,xmlEvent,xmlCssDefinition,@xmlPreproc,@xmlArgCluster'], }, 'html': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-]\+\)/ end=#\(</\z1\|/\)># fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent,htmlCssDefinition,@htmlPreproc,@htmlArgCluster'], }, 'javascript': { 'containedin': 'jsParens,jsFuncArgs,jsFuncBlock,jsFunction' }, 'vim': { 'containedin': 'vimFuncBody' }, 'php': {'containedin': '@htmlPreproc'} } }
     
     " === multiple cursor ===
         " do not use ycm during multiple cursor edit.
