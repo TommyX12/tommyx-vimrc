@@ -1307,8 +1307,8 @@
 
 " === Mini plugins ===
     " === move selection to marker ===
-        command! -nargs=1 -range GoTo exe (search("@<args>", 'nw'))
-        command! -nargs=1 -range MoveTo exe "<line1>,<line2>d x | norm! mx" | exe (search("@<args>", 'nw')) . " | norm! ]Pg`x" | echo "Press ENTER to continue" | call input("")
+        command! -nargs=1 -range GoTo exe (search("@<args>", 'nw')) | exe "norm! zO"
+        command! -nargs=1 -range MoveTo exe "<line1>,<line2>d x | norm! mx" | exe (search("@<args>", 'nw')) . " | norm! zO]Pg`x" | echo "Press ENTER to continue" | call input("")
     
     " === lime focus (requires reading mode) ===
         let g:limefocus_on = 0
