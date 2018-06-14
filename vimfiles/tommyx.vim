@@ -753,17 +753,8 @@
     nnoremap <leader>*S :%s/\<<C-r><C-w>\>/
     
     " Search for selected text, forwards or backwards.
-    vnoremap <silent> * :<C-U>
-      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-      \gvy/<C-R><C-R>=substitute(
-      \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-      \gV:call setreg('"', old_reg, old_regtype)<CR>
-      \gv
-    vnoremap <silent> # :<C-U>
-      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-      \gvy?<C-R><C-R>=substitute(
-      \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-      \gV:call setreg('"', old_reg, old_regtype)<CR>
+    vnoremap <silent> * :<C-U>let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>gvy/<C-R><C-R>=substitute(escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>gV:call setreg('"', old_reg, old_regtype)<CR>n
+    vnoremap <silent> # :<C-U>let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>gvy?<C-R><C-R>=substitute(escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>gV:call setreg('"', old_reg, old_regtype)<CR>N
 
     " enable applying repeat and macro command to all lines selected in visual mode
     vnoremap . :norm! .<cr>
@@ -854,6 +845,8 @@
     nmap dt dit
     nmap ct cit
     nmap yt yit
+    nmap dn dgn
+    nmap cn cgn
 
     " paste in visual mode without re-copy
     function! RestoreRegister()
@@ -1035,7 +1028,7 @@
     
     " === rainbow parenthesis ===
         let g:rainbow_active = 1
-        let g:rainbow_conf = { 'guifgs': ['#268bd2', '#6a9407', '#289990', '#7f77e6', '#b58900', '#cb4b16'], 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'], 'operators': '_,_', 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'], 'separately': { '*': {}, 'xml': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-]\+\)/ end=#\(</\z1\|/\)># fold contains=xmlTagN,xmlString,xmlArg,xmlValue,xmlTagError,xmlEvent,xmlCssDefinition,@xmlPreproc,@xmlArgCluster'], }, 'html': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-]\+\)/ end=#\(</\z1\|/\)># fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent,htmlCssDefinition,@htmlPreproc,@htmlArgCluster'], }, 'javascript': { 'containedin': 'jsParens,jsFuncArgs,jsFuncBlock,jsFunction' }, 'vim': { 'containedin': 'vimFuncBody' }, 'php': {'containedin': '@htmlPreproc'} } }
+        let g:rainbow_conf = { 'guifgs': ['#268bd2', '#6a9407', '#289990', '#7f77e6', '#b58900', '#cb4b16'], 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'], 'operators': '_,_', 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'], 'separately': { '*': {}, 'xml': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-:]\+\)/ end=#\(</\z1\|/\)># fold contains=xmlTagN,xmlString,xmlComment,xmlArg,xmlValue,xmlTagError,xmlEvent,xmlCssDefinition,@xmlPreproc,@xmlArgCluster'], }, 'html': { 'parentheses': ['start=/<\z\([a-zA-Z0-9\-:]\+\)/ end=#\(</\z1\|/\)># fold contains=htmlComment,htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent,htmlCssDefinition,@htmlPreproc,@htmlArgCluster'], }, 'javascript': { 'containedin': 'jsParens,jsFuncArgs,jsFuncBlock,jsFunction' }, 'vim': { 'containedin': 'vimFuncBody' }, 'php': {'containedin': '@htmlPreproc'} } }
     
     " === multiple cursor ===
         " do not use ycm during multiple cursor edit.
