@@ -607,7 +607,7 @@
     nnoremap <C-S-tab> gT
     
     " Use jk to leave insert mode and command line mode.
-    inoremap jk x<backspace><esc>`^
+    inoremap jk x<backspace><esc>
     inoremap jj j
     inoremap JJ J
     cnoremap jj j
