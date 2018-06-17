@@ -17,6 +17,7 @@ _NUMERALS = '0123456789abcdefABCDEF'
 _HEXDEC = {v: int(v, 16) for v in (x+y for x in _NUMERALS for y in _NUMERALS)}
 LOWERCASE, UPPERCASE = 'x', 'X'
 
+
 def rgb(triplet_text):
     return [_HEXDEC[triplet_text[0:2]], _HEXDEC[triplet_text[2:4]], _HEXDEC[triplet_text[4:6]]]
 
