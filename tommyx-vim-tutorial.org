@@ -1,0 +1,12 @@
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+#+TITLE: TommyX's Vim Tutorial
+#+AUTHOR: TommyX
+
+* Setup configuration
+1. Make a github repository
+2. Clone the repository to somewhere (say “~/vicky-vim”)
+3. Add a file (say “vicky-vimrc.vim”)
+4. Open “~/.vimrc”
+5. Add:
+   : set runtimepath+=~/vicky-vim
+   : runtime vicky-vimrc.vim
