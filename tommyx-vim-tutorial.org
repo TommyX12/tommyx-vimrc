@@ -23,13 +23,53 @@
 - =gg=: move to top of the file
 - =G=: move to end of the file
 - =ctrl + u= (*up*): scroll up
-- =ctrl + d= (*down*): scroll up
+- =ctrl + d= (*down*): scroll down
 
-** Editing
+** Normal and visual mode editing
+Operator:
+- =d= + /movement/ (*delete*): delete /movement/
+- =c= + /movement/ (*change*): change /movement/
+- =y= + /movement/: copy /movement/
+- =p= (*paste*): paste what was copied
+- =.=: *very useful*: repeat the last command
+  
+Movement (the most useful):
+- =iw=: inside word, which is the word itself
+- =aw=: around word, which is the word and the space after it
+- if pressing the operator twice: the entire line
+- if shift + operator: from cursor to end of the line
+- if currently in visual model: the selection itself
+  
+Enter visual model from normal mode:
+- =v=: enter visual mode
+- =V=: enter visual line mode (select lines)
+
+Some *very useful* examples:
+- =dd=: delete the line
+- =cc=: delete the line, then go into insert mode
+- =yy=: copy the line
+- =C=: delete from cursor to end of the line, then go into insert mode
+- =daw= (*delete around word*): delete word, including the space after it
+- =ciw= (*change inside word*): delete word then go into insert mode. This is *very useful* during searching, if you press =n= and then =.= and repeat, since it can replace the next occurrence by going to it and repeating the command.
+- =yiw=: copy word
+- =d= or =c= or =y= in visual mode: delete or change or copy the visual selection.
+
+** Insert mode editing
+When in normal mode:
+- =i=: enter insert mode
+- =a=: go to next character, and enter insert mode
+- =I= (shift + =i=): go to start of line, and enter insert mode
+- =A= (shift + =a=): go to end of line, and enter insert mode
+
+When in insert mode:
+- =ctrl + n= (*next auto complete*): auto complete. Press again to select the next auto complete.
+- =ctrl + p= (*previous auto complete*): auto complete. Press again to select the previous auto complete.
 
 ** Search
 - =/=: search forward
 - =?= (shift + =/=): search backward
+- =n= (*next* occurrence): jump to next occurrence of the previous search
+- =N= (shift + =n=): jump to previous occurrence of the previous search
 - =*=: *very useful*: search for the word under cursor and jump to the next occurrence
 
 * Changing Your Configuration
@@ -37,7 +77,8 @@
 ** Basic syntax and example
 - Comment:
   : " some comment
-- Key binding:
+
+- Key binding (example):
   : nmap a b
   This makes it so that pressing =a= in *normal* mode performs the same action as =b=.
   : imap a b
@@ -46,6 +87,18 @@
   This makes it so that pressing =a= in *visual* mode performs the same action as =b=.
   : nnoremap a b
   This makes it so that pressing =a= in *normal* mode performs the same action as =b=, but =b= is *not recursive*, which means any other binding that make =b= do something else is ignored. This means we make =a= do the *original* action in =b=.
+  
+  example:
+  : inoremap jk <esc>
+  This makes it so that if you press =jk= (quickly) in insert mode, it quits insert mode (by simulating the =esc= key).
+
+- Some common keys:
+  - =<esc>=: escape
+  - =<cr>=: enter
+  - =<C-x>=: control + w
+  - =<S-x>=: shift + x
+  - =<leader>=: leader key. You can set this to anything you want, such as comma (=,=). For example:
+    : let mapleader = ","
 
 ** Installing plugin manager
 Follow instructions here: https://github.com/VundleVim/Vundle.vim
@@ -53,6 +106,29 @@ Follow instructions here: https://github.com/VundleVim/Vundle.vim
 This allows you to super easily install any plugin that you can find on github.
 
 ** Some useful key bindings
+#+BEGIN_EXAMPLE
+" Y copy to end of line
+noremap Y y$
+
+" very useful: make . work in visual mode, by repeating the command on each line
+vnoremap . :norm! .<cr>
+
+" set leader key to comma
+let mapleader = ","
+
+" very useful: make jk quit insert mode
+inoremap jk <esc>
+
+" make comma + space remove search highlight
+" here <leader> means comma, because we set it earlier
+nnoremap <leader><space> :noh<cr>
+
+" use shift + hjkl to move faster
+inoremap <silent> H 8h
+inoremap <silent> L 8l
+inoremap <silent> J 5gj
+inoremap <silent> K 5gk
+#+END_EXAMPLE
 
 ** Some useful settings
 Just copy these into your config.
