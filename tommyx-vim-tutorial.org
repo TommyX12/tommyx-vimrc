@@ -33,10 +33,18 @@ Operator:
 - =p= (*paste*): paste what was copied
 - =<= / =>= + /movement/: indent /movement/
 - =.=: *very useful*: repeat the last command
+- =u=: *very useful*: undo
+- =ctrl + r=: *very useful*: redo. It is highly recommended to bind =U= (shift + =u=) to redo.
   
 Movement (the most useful):
 - =iw=: inside word, which is the word itself
 - =aw=: around word, which is the word and the space after it
+- =i)=: inside current round bracket
+- =a)=: inside current round bracket, including the bracket itself
+- =i]=: inside current square bracket
+- =i}=: inside current curly bracket
+- =i'=: inside current single quote
+- =i"=: inside current double quote
 - if pressing the operator twice: the entire line
 - if shift + operator: from cursor to end of the line
 - if currently in visual model: the selection itself
@@ -52,6 +60,7 @@ Some *very useful* examples:
 - =C=: delete from cursor to end of the line, then go into insert mode
 - =daw= (*delete around word*): delete word, including the space after it
 - =ciw= (*change inside word*): delete word then go into insert mode. This is *very useful* during searching, if you press =n= and then =.= and repeat, since it can replace the next occurrence by going to it and repeating the command.
+- =ci)= (*change inside "()"*): delete all content inside the current round bracket, and enter insert mode. For example, if you have ~a = (something else)~, and cursor is at ~else~, then press ~di)~ to get ~a = ()~.
 - =yiw=: copy word
 - =d= or =c= or =y= or =<= or =>= in visual mode: delete or change or copy or indent the visual selection.
 - =<<= / =>>=: indent current line to the left / right
@@ -146,6 +155,9 @@ nnoremap H 8h
 nnoremap L 8l
 nnoremap J 5j
 nnoremap K 5k
+
+" use U for redo
+nnoremap U <C-r>
 #+END_EXAMPLE
 
 ** Some useful settings
