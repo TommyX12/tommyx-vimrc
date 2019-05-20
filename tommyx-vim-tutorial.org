@@ -62,8 +62,8 @@ When in normal mode:
 - =A= (shift + =a=): go to end of line, and enter insert mode
 
 When in insert mode:
-- =ctrl + n= (*next auto complete*): auto complete. Press again to select the next auto complete.
-- =ctrl + p= (*previous auto complete*): auto complete. Press again to select the previous auto complete.
+- =ctrl + n= (*next* auto complete): auto complete. Press again to select the next auto complete.
+- =ctrl + p= (*previous* auto complete): auto complete. Press again to select the previous auto complete.
 
 ** Search
 - =/=: search forward
@@ -112,6 +112,15 @@ Follow instructions here: https://github.com/VundleVim/Vundle.vim
 
 This allows you to super easily install any plugin that you can find on github.
 
+** Special commands
+To type in special commands, first press =:=. After typing the command, press =enter= to run it.
+
+*** Basics
+- =:q= (*quit*): quit vim
+- =:q!=: force quit vim
+- =:w= (*write*): save current file
+- =:e filename= (*edit*): edit a file called =filename=
+
 ** Some useful key bindings
 #+BEGIN_EXAMPLE
 " Y copy to end of line
@@ -131,20 +140,11 @@ inoremap jk <esc>
 nnoremap <leader><space> :noh<cr>
 
 " use shift + hjkl to move faster
-inoremap <silent> H 8h
-inoremap <silent> L 8l
-inoremap <silent> J 5gj
-inoremap <silent> K 5gk
+nnoremap H 8h
+nnoremap L 8l
+nnoremap J 5j
+nnoremap K 5k
 #+END_EXAMPLE
-
-** Special commands
-To type in special commands, first press =:=. After typing the command, press =enter= to run it.
-
-*** Basics
-- =:q= (*quit*): quit vim
-- =:q!=: force quit vim
-- =:w= (*write*): save current file
-- =:e filename= (*edit*): edit a file called =filename=
 
 ** Some useful settings
 Just copy these into your config.
