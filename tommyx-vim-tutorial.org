@@ -2,11 +2,101 @@
 #+TITLE: TommyX's Vim Tutorial
 #+AUTHOR: TommyX
 
-* Setup configuration
-1. Make a github repository
-2. Clone the repository to somewhere (say “~/vicky-vim”)
-3. Add a file (say “vicky-vimrc.vim”)
-4. Open “~/.vimrc”
+* Setup Your Configuration
+1. Make a GitHub repository
+2. Clone the repository to somewhere (say =~/vicky-vim=)
+3. Add a file (say =vicky-vimrc.vim=)
+4. Open =~/.vimrc=
 5. Add:
    : set runtimepath+=~/vicky-vim
    : runtime vicky-vimrc.vim
+   First line tells vim that vim can search for files in =~/vicky-vim=.
+   Second line tells vim to run the file ~vicky-vimrc.vim~, and vim will search under ~runtimepath~, which includes =~/vicky-vim=.
+6. Now add all your configuration to =vicky-vimrc.vim=, and make sure to sync it to GitHub.
+
+* Useful Default Key Bindings
+
+** Movement
+
+* Changing Your Configuration
+
+** Basic Syntax
+Comment:
+: " some comment
+
+** Some useful settings to add
+Just copy these into your config.
+#+BEGIN_EXAMPLE
+" syntax highlighting
+syntax on
+
+" enable cursor line
+set cursorline
+
+" line numbering
+set number
+set norelativenumber
+
+" enable spellcheck
+set spell spelllang=en_us
+
+" disable cursor blinking in normal mode
+set guicursor+=n:blinkon0
+
+" omni completion
+set omnifunc=syntaxcomplete#Complete
+
+" indent wrapped lines
+set wrap
+set breakindent
+set breakindentopt=shift:2
+set showbreak=..
+
+" horizontal split below, vertical split right.
+set splitbelow
+set splitright
+
+" tab and indent settings
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab " use spaces instead of tabs.
+set smarttab " let's tab key insert 'tab stops', and backspace deletes tabs.
+set shiftround " tab / shifting moves to closest tab stop.
+set autoindent " Match indents on new lines.
+set copyindent " Copy existing indent char when auto indenting
+set smartindent " Intelligently un-indent / indent new lines based on rules.
+
+" backspace
+set backspace=indent,eol,start
+    
+set hidden " allow me to have buffers with unsaved changes.
+set autoread " automatically load file if changed on disk.
+
+" use utf-8 by default
+set encoding=utf-8
+
+" make search better
+set ignorecase " case insensitive search
+set smartcase " If there are uppercase letters, become case-sensitive.
+set incsearch " live incremental searching
+set showmatch " live match highlighting
+set hlsearch " highlight matches
+set gdefault " use the `g` flag by default.
+
+" allow the cursor to go anywhere in visual block mode.
+set virtualedit+=block
+
+" always display status line
+set laststatus=2
+
+" disable jumping to matching bracket when inserting
+set noshowmatch
+
+" enhance completion 
+set completeopt=longest,menuone
+
+" disable printing stuff when completing 
+set shortmess+=aoOc
+#+END_EXAMPLE
+
