@@ -72,6 +72,13 @@ When in insert mode:
 - =N= (shift + =n=): jump to previous occurrence of the previous search
 - =*=: *very useful*: search for the word under cursor and jump to the next occurrence
 
+** Opening multiple windows
+Window commands usually start with =ctrl + w=.
+- =ctrl + w= then =ctrl + s= (*window split*): split the window horizontally (into top and bottom)
+- =ctrl + w= then =ctrl + v= (*window vertical* split): split the window vertically (into left and right)
+- =ctrl + w= then =ctrl + q= (*window quit*): close current window
+- =ctrl + w= then =ctrl + h/j/k/l=: move to another window
+
 * Changing Your Configuration
 
 ** Basic syntax and example
@@ -129,6 +136,15 @@ inoremap <silent> L 8l
 inoremap <silent> J 5gj
 inoremap <silent> K 5gk
 #+END_EXAMPLE
+
+** Special commands
+To type in special commands, first press =:=. After typing the command, press =enter= to run it.
+
+*** Basics
+- =:q= (*quit*): quit vim
+- =:q!=: force quit vim
+- =:w= (*write*): save current file
+- =:e filename= (*edit*): edit a file called =filename=
 
 ** Some useful settings
 Just copy these into your config.
