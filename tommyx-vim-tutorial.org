@@ -158,6 +158,13 @@ nnoremap K 5k
 
 " use U for redo
 nnoremap U <C-r>
+
+" use ctrl+h and ctrl+l to go to start and end of line
+nnoremap <C-h> ^
+nnoremap <C-l> $
+" use ctrl+k and ctrl+j to go to start and end of file
+nnoremap <C-j> G
+nnoremap <C-k> gg
 #+END_EXAMPLE
 
 ** Some useful settings
