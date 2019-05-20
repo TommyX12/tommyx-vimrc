@@ -6,29 +6,62 @@
 1. Make a GitHub repository
 2. Clone the repository to somewhere (say =~/vicky-vim=)
 3. Add a file (say =vicky-vimrc.vim=)
-4. Open =~/.vimrc=
-5. Add:
+4. Add to =~/.vimrc=:
    : set runtimepath+=~/vicky-vim
    : runtime vicky-vimrc.vim
    First line tells vim that vim can search for files in =~/vicky-vim=.
    Second line tells vim to run the file ~vicky-vimrc.vim~, and vim will search under ~runtimepath~, which includes =~/vicky-vim=.
-6. Now add all your configuration to =vicky-vimrc.vim=, and make sure to sync it to GitHub.
+5. Now add all your configuration to =vicky-vimrc.vim=, and make sure to sync it to GitHub.
 
 * Useful Default Key Bindings
 
 ** Movement
+- =h= / =l=: move left / right
+- =j= / =k=: move down / up
+- =w= (next *word*) / =b= (*backward* word): move to next word / move to previous word
+- =e= (*end* of word): move to the end of current word
+- =gg=: move to top of the file
+- =G=: move to end of the file
+- =ctrl + u= (*up*): scroll up
+- =ctrl + d= (*down*): scroll up
+
+** Editing
+
+** Search
+- =/=: search forward
+- =?= (shift + =/=): search backward
+- =*=: *very useful*: search for the word under cursor and jump to the next occurrence
 
 * Changing Your Configuration
 
-** Basic Syntax
-Comment:
-: " some comment
+** Basic syntax and example
+- Comment:
+  : " some comment
+- Key binding:
+  : nmap a b
+  This makes it so that pressing =a= in *normal* mode performs the same action as =b=.
+  : imap a b
+  This makes it so that pressing =a= in *insert* mode performs the same action as =b=.
+  : vmap a b
+  This makes it so that pressing =a= in *visual* mode performs the same action as =b=.
+  : nnoremap a b
+  This makes it so that pressing =a= in *normal* mode performs the same action as =b=, but =b= is *not recursive*, which means any other binding that make =b= do something else is ignored. This means we make =a= do the *original* action in =b=.
 
-** Some useful settings to add
+** Installing plugin manager
+Follow instructions here: https://github.com/VundleVim/Vundle.vim
+
+This allows you to super easily install any plugin that you can find on github.
+
+** Some useful key bindings
+
+** Some useful settings
 Just copy these into your config.
 #+BEGIN_EXAMPLE
 " syntax highlighting
 syntax on
+
+" enable system clipboard
+set clipboard=unnamed
 
 " enable cursor line
 set cursorline
