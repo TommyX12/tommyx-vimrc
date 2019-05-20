@@ -31,6 +31,7 @@ Operator:
 - =c= + /movement/ (*change*): change /movement/
 - =y= + /movement/: copy /movement/
 - =p= (*paste*): paste what was copied
+- =<= / =>= + /movement/: indent /movement/
 - =.=: *very useful*: repeat the last command
   
 Movement (the most useful):
@@ -52,7 +53,8 @@ Some *very useful* examples:
 - =daw= (*delete around word*): delete word, including the space after it
 - =ciw= (*change inside word*): delete word then go into insert mode. This is *very useful* during searching, if you press =n= and then =.= and repeat, since it can replace the next occurrence by going to it and repeating the command.
 - =yiw=: copy word
-- =d= or =c= or =y= in visual mode: delete or change or copy the visual selection.
+- =d= or =c= or =y= or =<= or =>= in visual mode: delete or change or copy or indent the visual selection.
+- =<<= / =>>=: indent current line to the left / right
 
 ** Insert mode editing
 When in normal mode:
