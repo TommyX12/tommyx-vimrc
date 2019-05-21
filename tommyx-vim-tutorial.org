@@ -90,6 +90,16 @@ Window commands usually start with =ctrl + w=.
 - =ctrl + w= then =ctrl + q= (*window quit*): close current window
 - =ctrl + w= then =ctrl + h/j/k/l=: move to another window
 
+** Special commands
+To type in special commands, first press =:=. After typing the command, press =enter= to run it.
+
+*** Basics
+- =:q= (*quit*): quit vim
+- =:q!=: force quit vim
+- =:w= (*write*): save current file
+- =:e filename= (*edit*): edit a file called =filename=
+- =:123=: go to line 123
+
 * Changing Your Configuration
 
 ** Basic syntax and example
@@ -122,15 +132,6 @@ Window commands usually start with =ctrl + w=.
 Follow instructions here: https://github.com/VundleVim/Vundle.vim
 
 This allows you to super easily install any plugin that you can find on github.
-
-** Special commands
-To type in special commands, first press =:=. After typing the command, press =enter= to run it.
-
-*** Basics
-- =:q= (*quit*): quit vim
-- =:q!=: force quit vim
-- =:w= (*write*): save current file
-- =:e filename= (*edit*): edit a file called =filename=
 
 ** Some useful key bindings
 #+BEGIN_EXAMPLE
