@@ -149,13 +149,13 @@ noremap <leader>. @:
 " nnoremap <leader>: :!start Explorer /select,%:p<CR>
 
 " move cursor to comfortable reading position
-nnoremap <leader>z :norm! zt1<C-y><cr>
+nnoremap <leader>z zz5<C-e>
 
 " move cursor to comfortable reading position when pressing enter in insert
 " and when entering insert mode
 " autocmd InsertEnter * silent! call EnterInsert()
 " autocmd InsertLeave * silent! call ExitInsert()
-inoremap <silent> <cr> <space><backspace><cr><space><backspace><C-o>:norm! zz<cr>
+" inoremap <silent> <cr> <space><backspace><cr><space><backspace><C-o>:norm! zz<cr>
 
 " map - and = decrease and increase numbers. 
 noremap = <C-a>
@@ -168,6 +168,12 @@ nnoremap _ <C-w>-
 nnoremap + <C-w>+
 nnoremap < <C-w><
 nnoremap > <C-w>>
+
+" easy window movement
+nnoremap <space>wh <C-w>h
+nnoremap <space>wl <C-w>l
+nnoremap <space>wj <C-w>j
+nnoremap <space>wk <C-w>k
 
 " follow symbol under cursor use tj instead of default
 noremap <C-]> g<C-]>
@@ -251,7 +257,7 @@ nnoremap <C-tab> :bnext<cr>
 nnoremap <C-S-tab> :bprevious<cr>
 
 " Use jk to leave insert mode and command line mode.
-inoremap jk <space><backspace><esc>
+inoremap jk <esc>
 inoremap jj j
 inoremap JJ J
 imap Jk jk
@@ -262,7 +268,7 @@ cnoremap <S-space> <cr>:noh<cr>
 cnoremap <C-n> \.\*
 
 " Use jp to quickly select completion in insert mode
-imap jp <C-p>
+imap jp <C-n>
 imap j1 <C-n>
 imap j2 <C-n><C-n>
 imap j3 <C-n><C-n><C-n>
@@ -291,19 +297,19 @@ noremap <leader>j J
 nnoremap <leader>J A,<esc>J
 
 " split line with ,k
-nnoremap <leader>k i<cr><esc>l
-nnoremap <leader>K :s/,\s*/\r<cr>
+nnoremap <leader>h i<cr><esc>l
+nnoremap <leader>H :s/,\s*/\r<cr>
 
 " Smart auto close brackets
 " inoremap ( ()<left>
 " inoremap () ()
-inoremap (<cr> (<cr><space><backspace><esc>o)<esc>kI
+" inoremap (<cr> (<cr><space><backspace><esc>o)<esc>kI
 " inoremap [ []<left>
 " inoremap [] []
-inoremap [<cr> [<cr><space><backspace><esc>o]<esc>kI
+" inoremap [<cr> [<cr><space><backspace><esc>o]<esc>kI
 " inoremap { {}<left>
 " inoremap {} {}
-inoremap {<cr> {<cr><space><backspace><esc>o}<esc>kI
+" inoremap {<cr> {<cr><space><backspace><esc>o}<esc>kI
 " inoremap < <><left>
 " inoremap <> <>
 " inoremap " ""<left>
@@ -324,8 +330,8 @@ autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " autocmd FileType lpp setlocal expandtab
 
 " split window vertically and horizontally
-noremap <leader>wv <C-w>v
-noremap <leader>wh <C-w>s
+noremap <space>wv <C-w>v
+noremap <space>wd <C-w>s
 
 " Y copy to end of line
 noremap Y y$
@@ -342,13 +348,11 @@ noremap Y y$
 " vnoremap <leader>k 6gk
 " vnoremap <leader>j 6gj
 
-" quickly re-size window vertically and horizontally
-nnoremap <leader>wsh :res<space>
-nnoremap <leader>wsv :vert res<space>
-nnoremap <leader>wsV :vert res 30<cr>
+" save all files
+nnoremap <leader>w :wa<cr>
 
 " close window with ,wq
-" nnoremap <leader>wq <C-w>
+nnoremap <space>wq <C-w>
 
 " google things with leader g
 nnoremap <leader>g :Google<space>
@@ -399,14 +403,8 @@ noremap <silent> w h
 noremap <silent> e l
 noremap <silent> W 8h
 noremap <silent> E 8l
-function! FastLineMoveUp()
-    return '5gk'
-endfunction
-function! FastLineMoveDown()
-    return '5gj'
-endfunction
-noremap <silent> <expr> J FastLineMoveDown()
-noremap <silent> <expr> K FastLineMoveUp()
+noremap <silent> J 5gj
+noremap <silent> K 5gk
 noremap <silent> G ^
 noremap <silent> : $
 vnoremap <silent> : $h
@@ -551,18 +549,32 @@ nnoremap S "_S
 nnoremap dw daw
 nnoremap cw ciw
 nnoremap yw yiw
-nnoremap dW daw
-nnoremap cW ciw
-nnoremap yW yiw
+nnoremap dW daW
+nnoremap cW ciW
+nnoremap yW yiW
 nnoremap d) di)
 nnoremap c) ci)
 nnoremap y) yi)
-nnoremap d} di}
-nnoremap c} ci}
-nnoremap y} yi}
 nnoremap d] di]
 nnoremap c] ci]
 nnoremap y] yi]
+nnoremap d} di}
+nnoremap c} ci}
+nnoremap y} yi}
+nnoremap d> di>
+nnoremap c> ci>
+nnoremap y> yi>
+nnoremap d' di'
+nnoremap c' ci'
+nnoremap y' yi'
+nnoremap d" di"
+nnoremap c" ci"
+nnoremap y" yi"
+nnoremap dt dit
+nnoremap ct cit
+nnoremap yt yit
+nnoremap dn dgn
+nnoremap cn cgn
 
 " paste in visual mode without re-copy
 function! RestoreRegister()
@@ -578,56 +590,17 @@ endfunction
 " NB: this supports "rp that replaces the selection by the contents of @r
 vnoremap <silent> <expr> p <sid>Repl()
 
-" nnoremap <leader>CL :colorscheme github<cr>:AirlineTheme tommyx<cr>
-" nnoremap <leader>CD :colorscheme githubdark<cr>:AirlineTheme tommyxdark<cr>
-nnoremap <leader>CL :set background=light<cr>
-nnoremap <leader>CD :set background=dark<cr>
-
 " [f and ]f jump fix list
 nnoremap [f :lp<cr>
 nnoremap ]f :lne<cr>
 
-" \ in normal mode to escape the character
-nnoremap \ i\<esc>l
-
-" Plugin settings:
-" Below are some 'sane' (IMHO) defaults for a couple of the above plugins I
-" referenced.
-
-" Map the key for toggling comments with vim-commentary
-nnoremap <leader>c <Plug>CommentaryLine
-
-" macro commands
-command! -range=% -nargs=0 Tab2Space execute '<line1>,<line2>s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
-command! -range=% -nargs=0 Space2Tab execute '<line1>,<line2>s#^\( \{'.&ts.'\}\)\+#\=repeat("\t", len(submatch(0))/' . &ts . ')'
-
-" expand('%')
-let knownFileExtensions = '**/*.txt **/*.c **/*.cpp **/*.h **/*.hpp **/*.py **/*.cs **/*.java **/*.qml **/*.js **/*.html **/*.tex **/*.xml **/*.hx **/*.as **/*.css **/*.php'
-command! -nargs=1 Grep execute 'noautocmd lvimgrep /<args>/j ' . substitute(expand('%'), ' ', '\\ ', 'g') . ' | lopen'
-" command! -nargs=1 Grep execute 'noautocmd lvimgrep /<args>/j '. '"' . expand('%') . '"' . ' | lopen'
-command! -nargs=1 GrepAll execute 'noautocmd lvimgrep /<args>/j '. knownFileExtensions .' | lopen'
-command! -nargs=1 GrepArgs execute 'noautocmd lvimgrep /<args>/j ## | lopen'
-nnoremap <C-f> :Grep<space>
-vnoremap <C-f> y:Grep<space><C-r>"
-nnoremap <leader><C-f> :GrepAll<space>
-vnoremap <leader><C-f> y:GrepAll<space><C-r>"
-nnoremap <leader><C-g> :GrepArgs<space>
-vnoremap <leader><C-g> y:GrepArgs<space><C-r>"
- 
-nnoremap <leader><leader>tex<space>be :norm! yypkI\begin{<esc>A}<esc>jI\end{<esc>A}<esc>O
-nnoremap <leader><leader>tex<space>lr :norm! i\left<esc>l%i\right<esc>
-nnoremap <leader><leader>tex<space>\ :norm! i\<esc>l%i\<esc>
-
-nnoremap <leader><leader>c<space>prln :norm! oprintf("\n");<esc>4hi
-nnoremap <leader><leader>c<space>pdln :norm! oprintf("%d\n", );<esc>1hi
-nnoremap <leader><leader>c<space>prlnx :norm! ostd::cout << "" << std::endl;<esc>14hi
-nnoremap <leader><leader>c<space>pdlnx :norm! ostd::cout <<  << std::endl;<esc>13hi
-nnoremap <leader><leader>c<space>cr :norm! biconst <esc>ea&<esc>
-nnoremap <leader><leader>c<space>hg :norm! yypI#define <esc>kI#ifndef <esc>jo<cr><cr><cr>#endif<esc>kki
-
-nnoremap <leader><leader>la<space>e :norm! F(lvf,lyPpa\hdots, <esc>f,llxF1vpF(f1l<C-a>f)hvhdl
-
-" nnoremap <leader><leader>mltag :norm! yypkI<<esc>A><esc>jI<\<esc>A><esc>O
-
-
 imap j[ <C-x><C-p>
+
+" visual copy without moving
+vnoremap y y']
+
+" select last visual
+nnoremap <leader>v gv
+
+" use t to jump brackers
+noremap t %
