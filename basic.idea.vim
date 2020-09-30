@@ -4,6 +4,14 @@
 " join
 set ideajoin
 
+" arg text object
+set argtextobj
+
+" commentary
+set commentary
+nmap <leader>c<space> gcc
+vmap <leader>c<space> gc
+
 " surround
 set surround
 nmap s ys
@@ -38,7 +46,7 @@ set clipboard+=unnamed
 nnoremap <space>n :action GotoFile<cr>
 
 " switch to symbol
-nnoremap <space>is :action GotoSymbol<cr>
+nnoremap <space>is :action FileStructurePopup<cr>
 
 " jump back and forth
 nnoremap m :action Back<cr>
