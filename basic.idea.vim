@@ -36,14 +36,18 @@ vnoremap <leader>s :s/
 " jv paste
 inoremap jv <C-o>:action EditorPaste<cr>
 
+" close window
+nnoremap <space>wq :action Unsplit<cr>
+
 " use system clipboard
 set clipboard+=unnamed
 
 " go to last tab (TODO wrong)
 " nnoremap <space><tab> :action GoToLastTab<cr>
 
-" switch to file
-nnoremap <space>n :action GotoFile<cr>
+" switch to class and file
+nnoremap <space>n :action GotoClass<cr>
+nnoremap <space>if :action GotoFile<cr>
 
 " switch to symbol
 nnoremap <space>is :action FileStructurePopup<cr>
@@ -51,3 +55,15 @@ nnoremap <space>is :action FileStructurePopup<cr>
 " jump back and forth
 nnoremap m :action Back<cr>
 nnoremap M :action Forward<cr>
+
+" search all in project
+nnoremap <space>id :action FindInPath<cr>
+
+" reformat
+nnoremap <leader><tab> :action ReformatCode<cr>
+
+" commit (not working yet)
+nnoremap <space>vc :action ChangesView.ToggleCommitUi<cr>
+
+" push
+nnoremap <space>vp :action Vcs.Push<cr>

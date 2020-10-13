@@ -251,8 +251,6 @@ inoremap <C-v> <space><backspace><esc>"*]pa
 
 " buffer creation and navigation
 nnoremap <leader>t :enew<cr>
-nnoremap <leader>q :BD<cr>
-nnoremap <leader>Q :BD!<cr>
 nnoremap <C-tab> :bnext<cr>
 nnoremap <C-S-tab> :bprevious<cr>
 
@@ -409,6 +407,10 @@ noremap <silent> G ^
 noremap <silent> : $
 vnoremap <silent> : $h
 noremap <silent> gG G
+noremap <silent> <M-j> <C-d>
+noremap <silent> <M-k> <C-u>
+noremap <silent> <M-S-j> G
+noremap <silent> <M-S-k> gg
 
 " noremap <silent> <C-h> 10h
 " noremap <silent> <C-l> 10l
@@ -532,6 +534,8 @@ nnoremap q @
 nnoremap Q q
 vnoremap q :norm! @
 vnoremap Q q
+nmap <leader>q qq
+nmap <leader>Q Qq
 
 " default do not copy when changing.
 " nnoremap d "_d
