@@ -149,7 +149,7 @@ noremap <leader>. @:
 " nnoremap <leader>: :!start Explorer /select,%:p<CR>
 
 " move cursor to comfortable reading position
-nnoremap <leader>z zz5<C-e>
+nnoremap <leader>z zz
 
 " move cursor to comfortable reading position when pressing enter in insert
 " and when entering insert mode
@@ -471,9 +471,10 @@ vnoremap <leader><space> <esc>
 map <space>f /\V
 map <space>F ?\V
 
-" search word under cursor do not jump
+" search word under cursor
 nnoremap F *N
 nnoremap g* g*N
+vnoremap F y/<C-r>"<cr>N
 
 " use leader s to start replacing, and leader S to start replacing whole document 
 nnoremap <leader>s :s/
