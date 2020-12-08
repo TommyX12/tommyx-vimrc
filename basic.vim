@@ -540,13 +540,13 @@ nmap <leader>Q Qq
 " default do not copy when changing.
 " nnoremap d "_d
 " vnoremap d "_d
-nnoremap c "_c
-vnoremap c "_c
-nnoremap s "_s
-vnoremap s "_s
-nnoremap C "_C
-vnoremap C "_C
-nnoremap S "_S
+" nnoremap c "_c
+" vnoremap c "_c
+" nnoremap s "_s
+" vnoremap s "_s
+" nnoremap C "_C
+" vnoremap C "_C
+" nnoremap S "_S
 " noremap <C-d> d
 
 " use dw instead of daw etc
