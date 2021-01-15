@@ -46,8 +46,9 @@ set clipboard+=unnamed
 " nnoremap <space><tab> :action GoToLastTab<cr>
 
 " switch to class and file
-nnoremap <space>n :action GotoClass<cr>
+nnoremap <space>ic :action GotoClass<cr>
 nnoremap <space>if :action GotoFile<cr>
+nnoremap <space>n :action GotoFile<cr>
 
 " switch to symbol
 nnoremap <space>is :action FileStructurePopup<cr>
@@ -67,3 +68,6 @@ nnoremap <space>vc :action ChangesView.ToggleCommitUi<cr>
 
 " push
 nnoremap <space>vp :action Vcs.Push<cr>
+
+" command palette
+nnoremap <space>x :action GotoAction<cr>
