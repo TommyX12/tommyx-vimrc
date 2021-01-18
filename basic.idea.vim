@@ -49,6 +49,7 @@ set clipboard+=unnamed
 nnoremap <space>ic :action GotoClass<cr>
 nnoremap <space>if :action GotoFile<cr>
 nnoremap <space>n :action GotoFile<cr>
+" nnoremap <space>n :action RecentFiles<cr>
 
 " switch to symbol
 nnoremap <space>is :action FileStructurePopup<cr>
@@ -71,3 +72,6 @@ nnoremap <space>vp :action Vcs.Push<cr>
 
 " command palette
 nnoremap <space>x :action GotoAction<cr>
+
+" open in emacs
+nnoremap <space>e :action Tool_External Tools_Emacs<cr>
