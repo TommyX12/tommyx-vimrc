@@ -265,6 +265,10 @@ cnoremap jk <C-c>
 cnoremap <S-space> <cr>:noh<cr>
 cnoremap <C-n> \.\*
 
+" Use jv to paste in insert mode
+inoremap jv <C-r><C-p>"
+cnoremap jv <C-r>"
+
 " Use jp to quickly select completion in insert mode
 imap jp <C-n>
 imap j1 <C-n>
