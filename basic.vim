@@ -53,6 +53,10 @@ set autoindent " Match indents on new lines.
 set copyindent " Copy existing indent char when auto indenting
 set smartindent " Intelligently un-indent / indent new lines based on rules.
 
+" split right and below
+set splitright
+set splitbelow
+
 " timeout on waiting for command
 set timeoutlen=750
 
@@ -354,7 +358,7 @@ noremap Y y$
 nnoremap <leader>w :wa<cr>
 
 " close window with ,wq
-nnoremap <space>wq <C-w>
+nnoremap <space>wq <C-w>q
 
 " google things with leader g
 nnoremap <leader>g :Google<space>
