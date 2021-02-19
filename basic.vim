@@ -99,8 +99,8 @@ set noshowmatch
 " enable system clipboard
 " set clipboard=unnamed
 
-" enhance completion 
-set completeopt=longest,menuone
+" enhance completion
+set completeopt=menuone
 
 " disable printing random shit when completing 
 set shortmess+=aoOc
@@ -347,6 +347,9 @@ noremap Y y$
 " vnoremap <leader>h ^
 " nnoremap <leader>l $
 " vnoremap <leader>l $
+
+" use space + n to edit file
+nnoremap <space>n :e<space>
 
 " move up and down more quickly
 " nnoremap <leader>k 6gk
