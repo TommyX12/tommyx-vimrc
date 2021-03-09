@@ -75,3 +75,6 @@ nnoremap <space>x :action GotoAction<cr>
 
 " open in emacs
 nnoremap <space>e :action Tool_External Tools_Emacs<cr>
+
+" ace jump
+nnoremap f :action AceWordAction<cr>
