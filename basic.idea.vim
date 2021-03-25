@@ -64,11 +64,17 @@ nnoremap <space>id :action FindInPath<cr>
 " reformat
 nnoremap <leader><tab> :action ReformatCode<cr>
 
-" commit (not working yet)
-nnoremap <space>vc :action ChangesView.ToggleCommitUi<cr>
+" show local changes
+nnoremap <space>vc :action Vcs.Show.Local.Changes<cr>
 
 " push
 nnoremap <space>vp :action Vcs.Push<cr>
+
+" pull
+nnoremap <space>vP :action Git.Pull<cr>
+
+" file history
+nnoremap <space>vh :action Vcs.ShowTabbedFileHistory<cr>
 
 " command palette
 nnoremap <space>x :action GotoAction<cr>
@@ -78,3 +84,9 @@ nnoremap <space>e :action Tool_External Tools_Emacs<cr>
 
 " ace jump
 nnoremap f :action AceWordAction<cr>
+
+" snippet
+inoremap <M-l> <C-o>:action InsertLiveTemplate<cr>
+inoremap <M-j> <C-o>:action NextTemplateVariable<cr>
+inoremap <M-k> <C-o>:action PreviousTemplateVariable<cr>
+inoremap ji <C-o>:action ExpandLiveTemplateTab<cr>
