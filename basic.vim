@@ -122,14 +122,14 @@ inoremap <C-space> <C-x><C-p>
 inoremap <C-S-space> <C-x><C-l>
 
 " fix spelling. F fix previous one.
-nnoremap <leader>f 1z=
-vnoremap <leader>f 1z=
-nnoremap <leader>F [s1z=<C-o>
+nnoremap ,f 1z=
+vnoremap ,f 1z=
+nnoremap ,F [s1z=<C-o>
 
 " Open and indent
-nnoremap <leader>o o<space><backspace><esc>k$
-nnoremap <leader>O O<space><backspace><esc>j$
-nnoremap <leader><C-o> o<space><backspace><esc>kO<space><backspace><esc>j$
+nnoremap ,o o<space><backspace><esc>k$
+nnoremap ,O O<space><backspace><esc>j$
+nnoremap ,<C-o> o<space><backspace><esc>kO<space><backspace><esc>j$
 
 " better { } navigation
 nnoremap [[ ?{<CR>w99[{
@@ -138,22 +138,22 @@ nnoremap ]] j0[[%/{<CR>
 nnoremap [] k$][%?}<CR>
 
 " remove excess white space
-vnoremap <leader>rws :s/\%V\ \+/ <cr>:noh<cr>
+vnoremap ,rws :s/\%V\ \+/ <cr>:noh<cr>
 
 " Clear line
-nnoremap <leader>d ^D
+nnoremap ,d ^D
 
 " execute last command
-noremap <leader>. @:
+noremap ,. @:
 
 " open command line at file location
-" nnoremap <leader>; :!start cmd /k cd %:p:h<cr>
+" nnoremap ,; :!start cmd /k cd %:p:h<cr>
 
 " open explorer at file location
-" nnoremap <leader>: :!start Explorer /select,%:p<CR>
+" nnoremap ,: :!start Explorer /select,%:p<CR>
 
 " move cursor to comfortable reading position
-nnoremap <leader>z zz
+nnoremap ,z zz
 
 " move cursor to comfortable reading position when pressing enter in insert
 " and when entering insert mode
@@ -236,14 +236,14 @@ nnoremap <C-s> :<C-u>Update<cr>
 inoremap <C-s> <space><backspace><esc>:<C-u>Update<cr>a
 
 " leader-ctrl-s save all
-nnoremap <leader><C-s> :wa<cr>
+nnoremap ,<C-s> :wa<cr>
 
 " leader re restore session
-" nnoremap <leader>re :OpenSession! default<cr>:WToggleFullscreen<cr>:WToggleFullscreen<cr> 
-" nnoremap <leader>re :WToggleFullscreen<cr>:OpenSession! default<cr>:WToggleFullscreen<cr>:WToggleFullscreen<cr> 
+" nnoremap ,re :OpenSession! default<cr>:WToggleFullscreen<cr>:WToggleFullscreen<cr> 
+" nnoremap ,re :WToggleFullscreen<cr>:OpenSession! default<cr>:WToggleFullscreen<cr>:WToggleFullscreen<cr> 
 
 " leader se open session
-" nnoremap <leader>se :OpenSession!<cr>
+" nnoremap ,se :OpenSession!<cr>
 
 " toggle fullscreen
 " nnoremap <C-cr> :WToggleFullscreen<cr>
@@ -254,7 +254,7 @@ inoremap <C-v> <space><backspace><esc>"*]pa
 " vnoremap <C-v> <esc>"*]p
 
 " buffer creation and navigation
-nnoremap <leader>t :enew<cr>
+nnoremap ,t :enew<cr>
 nnoremap <C-tab> :bnext<cr>
 nnoremap <C-S-tab> :bprevious<cr>
 
@@ -298,13 +298,13 @@ inoremap j<tab> <C-v>009
 
 
 " join line with with ,j
-noremap <leader>j J
+noremap ,j J
 " join line with comma with ,J
-nnoremap <leader>J A,<esc>J
+nnoremap ,J A,<esc>J
 
 " split line with ,k
-nnoremap <leader>h i<cr><esc>l
-nnoremap <leader>H :s/,\s*/\r<cr>
+nnoremap ,h i<cr><esc>l
+nnoremap ,H :s/,\s*/\r<cr>
 
 " Smart auto close brackets
 " inoremap ( ()<left>
@@ -343,33 +343,33 @@ noremap <space>wd <C-w>s
 noremap Y y$
 
 " go to start and end of sentense more quickly
-" nnoremap <leader>h ^
-" vnoremap <leader>h ^
-" nnoremap <leader>l $
-" vnoremap <leader>l $
+" nnoremap ,h ^
+" vnoremap ,h ^
+" nnoremap ,l $
+" vnoremap ,l $
 
 " use space + n to edit file
-nnoremap <space>n :e<space>
+" nnoremap <space>n :e<space>
 
 " move up and down more quickly
-" nnoremap <leader>k 6gk
-" nnoremap <leader>j 6gj
-" vnoremap <leader>k 6gk
-" vnoremap <leader>j 6gj
+" nnoremap ,k 6gk
+" nnoremap ,j 6gj
+" vnoremap ,k 6gk
+" vnoremap ,j 6gj
 
 " save all files
-nnoremap <leader>w :wa<cr>
+nnoremap ,w :wa<cr>
 
 " close window with ,wq
 nnoremap <space>wq <C-w>q
 
 " google things with leader g
-nnoremap <leader>g :Google<space>
-vnoremap <leader>g :Google<cr>
+nnoremap ,g :Google<space>
+vnoremap ,g :Google<cr>
 
 " swap last deleted
-nnoremap <leader>x v<esc>`.``gvP``P
-vnoremap <leader>x <esc>`.``gvP``P
+nnoremap ,x v<esc>`.``gvP``P
+vnoremap ,x <esc>`.``gvP``P
 
 " paste in insert mode with ctrl-b
 inoremap <C-b> <C-r><C-p>"
@@ -379,13 +379,13 @@ cnoremap <C-b> <C-r>"
 inoremap <S-space><S-space> <C-g>u<esc>[s1z=`]a
 
 " open NERDTree
-nnoremap <leader>n :NERDTree<cr>
+nnoremap ,n :NERDTree<cr>
 " find current file in nerd tree with ,N
-nnoremap <leader>N :NERDTreeFind<cr>
+nnoremap ,N :NERDTreeFind<cr>
 
 " open TList
-" nnoremap <leader>m :TlistOpen<cr>:vert res 30<cr>
-nnoremap <leader>m :TagbarClose<cr>:TagbarOpen<cr>
+" nnoremap ,m :TlistOpen<cr>:vert res 30<cr>
+nnoremap ,m :TagbarClose<cr>:TagbarOpen<cr>
 
 autocmd InsertEnter * silent! exec "norm! " . line(".") . "G" . col(".") . "|"
 
@@ -471,11 +471,11 @@ nnoremap M <C-i>
 "vnoremap ? ?\V
 
 " Clear match highlighting
-nnoremap <leader><space> :noh<cr>
+nnoremap ,<space> :noh<cr>
 " :call clearmatches()<cr>
 
 " quit visual mode with ,space
-vnoremap <leader><space> <esc>
+vnoremap ,<space> <esc>
 
 " use space and shift-space for quick searching.
 " the \V makes it use normal words instead of regex 
@@ -488,15 +488,15 @@ nnoremap g* g*N
 vnoremap F y/<C-r>"<cr>N
 
 " use leader s to start replacing, and leader S to start replacing whole document 
-nnoremap <leader>s :s/
-nnoremap <leader>S :%s/
-vnoremap <leader>s :s/\%V
-vnoremap <leader>S :s/
-nnoremap <leader>*s :s/\<<C-r><C-w>\>/
-nnoremap <leader>*S :%s/\<<C-r><C-w>\>/
+nnoremap ,s :s/
+nnoremap ,S :%s/
+vnoremap ,s :s/\%V
+vnoremap ,S :s/
+nnoremap ,*s :s/\<<C-r><C-w>\>/
+nnoremap ,*S :%s/\<<C-r><C-w>\>/
 
 " generate tag file with ,ut
-nnoremap <leader>ut :UpdateTags<cr>
+nnoremap ,ut :UpdateTags<cr>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -515,7 +515,7 @@ vnoremap <silent> # :<C-U>
 vnoremap . :norm! .<cr>
  
 " Quick buffer switching - like cmd-tabbing
-nnoremap <leader><tab> <c-^>
+nnoremap ,<tab> <c-^>
 
 " use tab in normal mode to replace register key " 
 " noremap <tab> "
@@ -546,8 +546,8 @@ nnoremap q @
 nnoremap Q q
 vnoremap q :norm! @
 vnoremap Q q
-nmap <leader>q qq
-nmap <leader>Q Qq
+nmap ,q qq
+nmap ,Q Qq
 
 " default do not copy when changing.
 " nnoremap d "_d
@@ -616,7 +616,7 @@ imap j[ <C-x><C-p>
 vnoremap y y']
 
 " select last visual
-nnoremap <leader>v gv
+nnoremap ,v gv
 
 " use t to jump brackers
 noremap t %
