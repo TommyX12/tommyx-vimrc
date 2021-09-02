@@ -90,3 +90,7 @@ inoremap <M-l> <C-o>:action InsertLiveTemplate<cr>
 inoremap <M-j> <C-o>:action NextTemplateVariable<cr>
 inoremap <M-k> <C-o>:action PreviousTemplateVariable<cr>
 inoremap ji <C-o>:action ExpandLiveTemplateTab<cr>
+
+" refactor
+nnoremap <space>r :action Refactorings.QuickListPopupAction<cr>
+vnoremap <space>r :action Refactorings.QuickListPopupAction<cr>
