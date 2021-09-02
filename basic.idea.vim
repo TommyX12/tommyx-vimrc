@@ -9,8 +9,8 @@ set argtextobj
 
 " commentary
 set commentary
-nmap <leader>c<space> gcc
-vmap <leader>c<space> gc
+nmap ,c<space> gcc
+vmap ,c<space> gc
 
 " surround
 set surround
@@ -25,13 +25,13 @@ inoremap jp <cr>
 nnoremap R :action RenameElement<cr>
 
 " jump to definition
-nnoremap <leader>n :action GotoDeclaration<cr>
+nnoremap ,n :action GotoDeclaration<cr>
 
 " repeat in visual (TODO doesn't work)
 vnoremap . .
 
 " substitution in visual
-vnoremap <leader>s :s/
+vnoremap ,s :s/
 
 " jv paste
 inoremap jv <C-o>:action EditorPaste<cr>
@@ -62,7 +62,7 @@ nnoremap M :action Forward<cr>
 nnoremap <space>id :action FindInPath<cr>
 
 " reformat
-nnoremap <leader><tab> :action ReformatCode<cr>
+nnoremap ,<tab> :action ReformatCode<cr>
 
 " show local changes
 nnoremap <space>vc :action Vcs.Show.Local.Changes<cr>
