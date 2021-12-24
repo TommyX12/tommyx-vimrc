@@ -54,10 +54,6 @@ nnoremap <space>n :action GotoFile<cr>
 " switch to symbol
 nnoremap <space>is :action FileStructurePopup<cr>
 
-" jump back and forth
-nnoremap m :action Back<cr>
-nnoremap M :action Forward<cr>
-
 " search all in project
 nnoremap <space>id :action FindInPath<cr>
 

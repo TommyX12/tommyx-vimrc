@@ -154,6 +154,7 @@ noremap ,. @:
 
 " move cursor to comfortable reading position
 nnoremap ,z zz
+vnoremap ,z zz
 
 " move cursor to comfortable reading position when pressing enter in insert
 " and when entering insert mode
