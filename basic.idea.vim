@@ -85,7 +85,10 @@ nnoremap f :action AceWordAction<cr>
 inoremap <M-l> <C-o>:action InsertLiveTemplate<cr>
 inoremap <M-j> <C-o>:action NextTemplateVariable<cr>
 inoremap <M-k> <C-o>:action PreviousTemplateVariable<cr>
-inoremap ji <C-o>:action ExpandLiveTemplateTab<cr>
+inoremap <A-l> <C-o>:action InsertLiveTemplate<cr>
+inoremap <A-j> <C-o>:action NextTemplateVariable<cr>
+inoremap <A-k> <C-o>:action PreviousTemplateVariable<cr>
+inoremap ji <C-o>:action ExpandLiveTemplateByTab<cr>
 
 " refactor
 nnoremap <space>r :action Refactorings.QuickListPopupAction<cr>

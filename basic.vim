@@ -423,6 +423,10 @@ noremap <silent> <M-j> <C-d>
 noremap <silent> <M-k> <C-u>
 noremap <silent> <M-S-j> G
 noremap <silent> <M-S-k> gg
+noremap <silent> <A-j> <C-d>
+noremap <silent> <A-k> <C-u>
+noremap <silent> <A-S-j> G
+noremap <silent> <A-S-k> gg
 
 " noremap <silent> <C-h> 10h
 " noremap <silent> <C-l> 10l
