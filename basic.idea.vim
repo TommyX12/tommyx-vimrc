@@ -93,3 +93,7 @@ inoremap ji <C-o>:action ExpandLiveTemplateByTab<cr>
 " refactor
 nnoremap <space>r :action Refactorings.QuickListPopupAction<cr>
 vnoremap <space>r :action Refactorings.QuickListPopupAction<cr>
+
+" back and forward
+nmap m <Action>(Back)
+nmap M <Action>(Forward)
