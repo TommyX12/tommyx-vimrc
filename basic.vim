@@ -488,9 +488,9 @@ map <space>f /\V
 map <space>F ?\V
 
 " search word under cursor
-nnoremap F *N
+nnoremap F *Nzz
 nnoremap g* g*N
-vnoremap F y/<C-r>"<cr>N
+vnoremap F y/<C-r>"<cr>Nzz
 
 " use leader s to start replacing, and leader S to start replacing whole document 
 nnoremap ,s :s/
