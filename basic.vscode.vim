@@ -4,6 +4,7 @@
 vunmap y
 unmap ,<tab>
 unmap <space>f
+unmap <space>F
 unmap <space>wq
 iunmap jv
 iunmap jp
