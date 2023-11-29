@@ -101,3 +101,6 @@ nmap M <Action>(Forward)
 
 " zen mode
 nnoremap <space>z :action ToggleZenMode<cr>
+
+" recent files
+nnoremap <space><tab> :action RecentFiles<cr>
