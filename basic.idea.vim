@@ -54,6 +54,7 @@ nnoremap <space>n :action GotoFile<cr>
 
 " switch to symbol
 nnoremap <space>is :action FileStructurePopup<cr>
+vnoremap <space>is :action FileStructurePopup<cr>
 
 " search all in project
 nnoremap <space>id :action FindInPath<cr>
@@ -82,6 +83,7 @@ nnoremap <space>e :action Tool_External Tools_Emacs<cr>
 
 " ace jump
 nnoremap f :action AceWordAction<cr>
+vnoremap f :action AceWordAction<cr>
 
 " snippet
 inoremap <M-l> <C-o>:action InsertLiveTemplate<cr>
@@ -108,7 +110,10 @@ nnoremap <space><tab> :action RecentFiles<cr>
 
 " copilot
 nnoremap <space>ca :action ActivateGitHubCopilotChatToolWindow<cr>
+vnoremap <space>ca :action ActivateGitHubCopilotChatToolWindow<cr>
 
 " sourcegraph
 nnoremap <space>ic :action sourcegraph.openFindPopup<cr>
 nnoremap <space>iC :action sourcegraph.searchSelection<cr>
+vnoremap <space>ic :action sourcegraph.openFindPopup<cr>
+vnoremap <space>iC :action sourcegraph.searchSelection<cr>
