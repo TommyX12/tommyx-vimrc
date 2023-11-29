@@ -37,6 +37,7 @@ vnoremap ,s :s/
 inoremap jv <C-o>:action EditorPaste<cr>
 
 " close window
+nnoremap <space>q :action CloseContent<cr>
 nnoremap <space>wq :action Unsplit<cr>
 
 " use system clipboard
@@ -79,7 +80,7 @@ nnoremap <space>x :action GotoAction<cr>
 nnoremap <space>e :action Tool_External Tools_Emacs<cr>
 
 " ace jump
-" nnoremap f :action AceWordAction<cr>
+nnoremap f :action AceWordAction<cr>
 
 " snippet
 inoremap <M-l> <C-o>:action InsertLiveTemplate<cr>
@@ -99,4 +100,4 @@ nmap m <Action>(Back)
 nmap M <Action>(Forward)
 
 " zen mode
-nnoremap f :action ToggleZenMode<cr>
+nnoremap <space>z :action ToggleZenMode<cr>
