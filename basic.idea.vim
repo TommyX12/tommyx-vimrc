@@ -47,7 +47,7 @@ set clipboard+=unnamed
 " nnoremap <space><tab> :action GoToLastTab<cr>
 
 " switch to class and file
-nnoremap <space>ic :action GotoClass<cr>
+" nnoremap <space>ic :action GotoClass<cr>
 nnoremap <space>if :action GotoFile<cr>
 nnoremap <space>n :action GotoFile<cr>
 " nnoremap <space>n :action RecentFiles<cr>
@@ -75,6 +75,7 @@ nnoremap <space>vh :action Vcs.ShowTabbedFileHistory<cr>
 
 " command palette
 nnoremap <space>x :action GotoAction<cr>
+vnoremap <space>x :action GotoAction<cr>
 
 " open in emacs
 nnoremap <space>e :action Tool_External Tools_Emacs<cr>
@@ -104,3 +105,10 @@ nnoremap <space>z :action ToggleZenMode<cr>
 
 " recent files
 nnoremap <space><tab> :action RecentFiles<cr>
+
+" copilot
+nnoremap <space>ca :action ActivateGitHubCopilotChatToolWindow<cr>
+
+" sourcegraph
+nnoremap <space>ic :action sourcegraph.openFindPopup<cr>
+nnoremap <space>iC :action sourcegraph.searchSelection<cr>
