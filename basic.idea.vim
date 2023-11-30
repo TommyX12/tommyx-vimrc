@@ -117,3 +117,6 @@ nnoremap <space>ic :action sourcegraph.openFindPopup<cr>
 nnoremap <space>iC :action sourcegraph.searchSelection<cr>
 vnoremap <space>ic :action sourcegraph.openFindPopup<cr>
 vnoremap <space>iC :action sourcegraph.searchSelection<cr>
+
+" fix copy in visual mode
+vnoremap y y
