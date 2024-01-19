@@ -34,7 +34,7 @@ vnoremap . .
 vnoremap ,s :s/
 
 " jv paste
-inoremap jv <C-o>:action EditorPaste<cr>
+inoremap jv <C-o>:action EditorPaste<cr>i
 
 " close window
 nnoremap <space>q :action CloseContent<cr>
