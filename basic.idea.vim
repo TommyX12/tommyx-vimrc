@@ -38,7 +38,7 @@ inoremap jv <C-o>:action EditorPaste<cr>i
 
 " close window
 nnoremap <space>q :action CloseContent<cr>
-nnoremap <space>wq :action Unsplit<cr>
+nnoremap <space>wq :action CloseAllEditors<cr>
 
 " use system clipboard
 set clipboard+=unnamed
