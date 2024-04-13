@@ -111,8 +111,9 @@ set showtabline=2
 " set noeb vb t_vb=
 " autocmd GUIEnter * set vb t_vb=
 
-" disable toolbar
-" set guioptions-=T
+" disable toolbar and menu bar
+set guioptions-=T
+set guioptions-=m 
 
 " enhance completion
 " inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<tab>"
