@@ -1,0 +1,25 @@
+extends javascript
+
+snippet rect "Rectangle"
+Rectangle {
+	color: ${1:"#000000"}
+	${2:anchors.fill: parent}
+	${VISUAL}$0
+}
+endsnippet
+
+snippet rectb "Rectangle + border"
+Rectangle {
+	color: ${1:"#ffffff"}
+	border.width: ${2:1}
+	border.color: ${3:"#000000"}
+	${4:anchors.fill: parent}
+	${VISUAL}$0
+}
+endsnippet
+
+snippet af "anchors.fill"
+anchors.fill: ${1:parent}
+endsnippet
+
+# vim:ft=snippets:

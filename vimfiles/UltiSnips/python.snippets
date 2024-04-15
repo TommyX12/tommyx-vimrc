@@ -1,0 +1,39 @@
+snippet forr "for range (forr)"
+for ${1:i} in range(${3:len(${2:arr})}):
+	${0}$2[$1]
+endsnippet
+
+snippet rforr "reversed for (rforr)"
+for ${1:i} in range(${3:len(${2:arr})} - 1, -1, -1):
+	${0}$2[$1]
+endsnippet
+
+snippet listc "list comprehension"
+[${3:$1} for ${1:i} in ${2:arr}]
+endsnippet
+
+snippet listcr "list comp range"
+[${4:$2[$1]} for ${1:i} in range(${3:len(${2:arr})})]
+endsnippet
+
+snippet cp "copy value" 
+${2:self}.${1:value} = $1
+endsnippet
+
+snippet pr "print"
+print(${1:i})
+endsnippet
+
+snippet pri "print value"
+print('${1:i} = {}'.format($1))
+endsnippet
+
+snippet prs "print string"
+print('${1:Hello World!}')
+endsnippet
+
+snippet swap "swap 2 variables"
+${1:a}, ${2:b} = $2, $1
+endsnippet
+
+# vim:ft=snippets:

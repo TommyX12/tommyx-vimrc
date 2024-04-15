@@ -1,0 +1,163 @@
+import os
+import sys
+import io
+import re
+import math
+
+
+# settings
+#  file_names = ["colors/github"]
+file_names = ["colors/github", "autoload/airline/themes/tommyx"]
+file_extension = ".vim"
+file_bak_extension = ".bak"
+file_name_dark = "dark"
+
+# utils
+_NUMERALS = '0123456789abcdefABCDEF'
+_HEXDEC = {v: int(v, 16) for v in (x+y for x in _NUMERALS for y in _NUMERALS)}
+LOWERCASE, UPPERCASE = 'x', 'X'
+
+
+def rgb(triplet_text):
+    return [_HEXDEC[triplet_text[0:2]], _HEXDEC[triplet_text[2:4]], _HEXDEC[triplet_text[4:6]]]
+
+def triplet(rgb_text, lettercase=LOWERCASE):
+    return format(round(rgb_text[0])<<16 | round(rgb_text[1])<<8 | round(rgb_text[2]), '06'+lettercase)
+
+def luma(r, g, b):
+    return 0.299 * (r / 255.0) + 0.587 * (g / 255.0) + 0.114 * (b / 255.0);
+
+
+def hue_2_RGB( v1, v2, vH ):
+    if vH < 0:
+        vH += 1
+    if vH > 1:
+        vH -= 1
+    if ( 6 * vH ) < 1:
+        return v1 + ( v2 - v1 ) * 6 * vH 
+    if ( 2 * vH ) < 1:
+        return v2 
+    if ( 3 * vH ) < 2:
+        return v1 + ( v2 - v1 ) * ( ( 2 / 3 ) - vH ) * 6 
+        
+    return v1 
+
+def hsl2rgb(H, S, L):
+    
+    # http://www.easyrgb.com/index.php?X=MATH&H=9#text9
+    
+    if S == 0:                       # HSL from 0 to 1
+        R = L * 255                      # RGB results from 0 to 255
+        G = L * 255
+        B = L * 255
+    else:
+        var_2 = 0
+        if L < 0.5:
+            var_2 = L * ( 1 + S )
+        else:
+            var_2 = ( L + S ) - ( S * L )
+
+        var_1 = 2 * L - var_2
+
+        R = 255 * hue_2_RGB( var_1, var_2, H + ( 1 / 3 ) ) 
+        G = 255 * hue_2_RGB( var_1, var_2, H )
+        B = 255 * hue_2_RGB( var_1, var_2, H - ( 1 / 3 ) )
+        
+    return [R, G, B]
+
+def rgb2hsl(r, g, b):
+    
+    # http://www.easyrgb.com/index.php?X=MATH&H=18#text18
+    
+    r = r / 255.0
+    g = g / 255.0
+    b = b / 255.0
+    
+    var_Min = min( r, g, b )    # Min. value of RGB
+    var_Max = max( r, g, b )    # Max. value of RGB
+    del_Max = var_Max - var_Min             # Delta RGB value
+    
+    L = ( var_Max + var_Min ) / 2
+    H = 0.0
+    S = 0.0
+    
+    if del_Max == 0:                      # This is a gray, no chroma...
+        H = 0                                # HSL results from 0 to 1
+        S = 0
+    else:                                    # Chromatic data...
+        if L < 0.5:
+            S = del_Max / ( var_Max + var_Min )
+        else: 
+            S = del_Max / ( 2 - var_Max - var_Min )
+
+        del_R = ( ( ( var_Max - r ) / 6 ) + ( del_Max / 2 ) ) / del_Max
+        del_G = ( ( ( var_Max - g ) / 6 ) + ( del_Max / 2 ) ) / del_Max
+        del_B = ( ( ( var_Max - b ) / 6 ) + ( del_Max / 2 ) ) / del_Max
+
+        if r == var_Max:
+            H = del_B - del_G
+        elif g == var_Max:
+             H = ( 1 / 3 ) + del_R - del_B
+        elif b == var_Max:
+             H = ( 2 / 3 ) + del_G - del_R
+
+        if H < 0:
+            H += 1
+        if H > 1:
+            H -= 1
+        
+    return [H, S, L];
+
+# main
+def process_file(text):
+    result = ""
+    ptr = 0
+    while (True):
+        next = text.find('#', ptr)
+        if (next == -1):
+            result += text[ptr:]
+            break
+        
+        next += 1
+        result += text[ptr:next]
+        orig_color = text[next:next+6]
+        if re.match(r'[0-9abcdefABCDEF]{6}', orig_color):
+            result += process_color(orig_color)
+        else:
+            result += orig_color
+        
+        ptr = next + 6
+    
+    result = result.replace('tommyx', 'tommyxdark')
+    
+    return result
+
+def process_color(color_hex):
+    color_rgb = rgb(color_hex)
+    #  print(color_rgb)
+    #  color_rgb = [255 for i in color_rgb]
+    color_hsl = rgb2hsl(color_rgb[0], color_rgb[1], color_rgb[2])
+    #  print(color_hsl)
+    color_hsl[2] = 0.9 * ((1.0 - luma(color_rgb[0], color_rgb[1], color_rgb[2]))**(0.675))
+    color_hsl[1] *= 1.0 - ((1.0 - color_hsl[2])**(4.0))
+    color_rgb = hsl2rgb(color_hsl[0], color_hsl[1], color_hsl[2])
+    #  color_rgb[0], color_rgb[1] = color_rgb[1], color_rgb[0]
+    return triplet(color_rgb, UPPERCASE)
+
+cwd = os.getcwd() + '\\'
+
+for file_name in file_names:
+    in_file = io.open(cwd + file_name + file_extension, 'r', encoding='utf8')
+    in_text = in_file.read()
+    in_file.close()
+
+    out_file = io.open(cwd + file_name + file_extension + file_bak_extension, 'w', encoding='utf8')
+    out_file.write(in_text)
+    out_file.close()
+
+    out_text = process_file(in_text)
+
+    out_file = io.open(cwd + file_name + file_name_dark + file_extension, 'w', encoding='utf8')
+    out_file.write(out_text)
+    out_file.close()
+

@@ -1,0 +1,3667 @@
+FUNCTION  <SNR>70_get_char()
+Called 46 times
+Total time:   0.001700
+ Self time:   0.001700
+
+count  total (s)   self (s)
+   46              0.000143   let idx = col('.') - 1
+   46              0.000103   if !a:0 || (a:0 && a:1 >= 0)
+                                " Get char from cursor.
+    3              0.000013     let line = getline('.')[idx :]
+    3              0.000007     let pos = a:0 ? a:1 : 0
+    3              0.000029     return matchstr(line, '^'.repeat('.', pos).'\zs.')
+                              endif
+                              " Get char behind cursor.
+   43              0.000191   let line = getline('.')[: idx - 1]
+   43              0.000121   let pos = 0 - (1 + a:1)
+   43              0.000625   return matchstr(line, '.\ze'.repeat('.', pos).'$')
+
+FUNCTION  <SNR>70_cursor_idx()
+Called 21 times
+Total time:   0.001226
+ Self time:   0.001226
+
+count  total (s)   self (s)
+   21              0.001176   let idx = len(split(getline('.')[: col('.') - 1], '\zs')) - 1
+   21              0.000033   return idx
+
+FUNCTION  <SNR>70_is_cr_expansion()
+Called 2 times
+Total time:   0.000228
+ Self time:   0.000117
+
+count  total (s)   self (s)
+    2              0.000014   let nchar = getline(line('.')-1)[-1:]
+    2              0.000024   let schar = matchstr(getline(line('.')+1), '^\s*\zs\S')
+    2              0.000013   let isEmpty = a:0 ? getline('.') =~ '^\s*$' : empty(getline('.'))
+    2   0.000086   0.000026   if index(s:get('left_delims'), nchar) > -1 && index(s:get('left_delims'), nchar)    == index(s:get('right_delims'), schar) && isEmpty
+                                return 1
+                              elseif index(s:get('quotes_list'), nchar) > -1 && index(s:get('quotes_list'), nchar)    == index(s:get('quotes_list'), schar) && isEmpty
+                                return 1
+                              else
+    2              0.000002     return 0
+                              endif
+
+FUNCTION  airline#check_mode()
+Called 430 times
+Total time:   0.135218
+ Self time:   0.041190
+
+count  total (s)   self (s)
+  430              0.002210   let context = s:contexts[a:winnr]
+                            
+  430              0.001785   if get(w:, 'airline_active', 1)
+  306              0.001118     let l:m = mode()
+  306              0.000663     if l:m ==# "i"
+  300              0.000817       let l:mode = ['insert']
+  300              0.000500     elseif l:m ==# "R"
+                                  let l:mode = ['replace']
+                                elseif l:m =~# '\v(v|V||s|S|)'
+                                  let l:mode = ['visual']
+                                elseif l:m ==# "t"
+                                  let l:mode = ['terminal']
+                                else
+    6              0.000017       let l:mode = ['normal']
+    6              0.000007     endif
+  306              0.001824     let w:airline_current_mode = get(g:airline_mode_map, l:m, l:m)
+  306              0.000257   else
+  124              0.000288     let l:mode = ['inactive']
+  124              0.000601     let w:airline_current_mode = get(g:airline_mode_map, '__')
+  124              0.000096   endif
+                            
+  430              0.001557   if g:airline_detect_modified && &modified
+  302              0.001347     call add(l:mode, 'modified')
+  302              0.000234   endif
+                            
+  430              0.000837   if g:airline_detect_paste && &paste
+                                call add(l:mode, 'paste')
+                              endif
+                            
+  430              0.002262   if g:airline_detect_crypt && exists("+key") && !empty(&key)
+                                call add(l:mode, 'crypt')
+                              endif
+                            
+  430              0.000635   if g:airline_detect_spell && &spell
+                                call add(l:mode, 'spell')
+                              endif
+                            
+  430              0.000723   if &readonly || ! &modifiable
+                                call add(l:mode, 'readonly')
+                              endif
+                            
+  430              0.001980   let mode_string = join(l:mode)
+  430              0.001933   if get(w:, 'airline_lastmode', '') != mode_string
+    2   0.000666   0.000024     call airline#highlighter#highlight_modified_inactive(context.bufnr)
+    2   0.093414   0.000027     call airline#highlighter#highlight(l:mode, context.bufnr)
+    2              0.000007     let w:airline_lastmode = mode_string
+    2              0.000002   endif
+                            
+  430              0.000581   return ''
+
+FUNCTION  <SNR>159_CloseCompletionMenu()
+Called 503 times
+Total time:   0.005146
+ Self time:   0.004139
+
+count  total (s)   self (s)
+  503              0.001363   if pumvisible()
+  106   0.001800   0.000792     call s:SendKeys( "\<C-e>" )
+  106              0.000118   endif
+
+FUNCTION  <SNR>159_InsideCommentOrStringAndShouldStop()
+Called 254 times
+Total time:   0.051459
+ Self time:   0.004826
+
+count  total (s)   self (s)
+  254   0.048173   0.001541   let retval = s:InsideCommentOrString()
+  254              0.000624   let inside_comment = retval == 1
+  254              0.000492   let inside_string = retval == 2
+                            
+  254              0.000858   if inside_comment && g:ycm_complete_in_comments || inside_string && g:ycm_complete_in_strings
+                                return 0
+                              endif
+                            
+  254              0.000286   return retval
+
+FUNCTION  <SNR>159_Pyeval()
+Called 1740 times
+Total time:   0.238117
+ Self time:   0.238117
+
+count  total (s)   self (s)
+ 1740              0.003329   if s:using_python3
+ 1740              0.233085     return py3eval( a:eval_string )
+                              endif
+                              return pyeval( a:eval_string )
+
+FUNCTION  delimitMate#ExpandSpace()
+Called 20 times
+Total time:   0.013260
+ Self time:   0.000981
+
+count  total (s)   self (s)
+   20   0.008582   0.000232   if s:is_forbidden("\<Space>")
+                                return "\<Space>"
+                              endif
+   20   0.002270   0.000237   let escaped = s:cursor_idx() >= 2 && s:get_char(-2) == '\'
+   20   0.000602   0.000169   let expand_inside_quotes = s:get('expand_inside_quotes')     && s:is_empty_quotes()     && !escaped
+   20   0.001578   0.000115   if s:is_empty_matchpair() || expand_inside_quotes
+                                " Expand:
+                                return "\<Space>\<Space>" . s:joinUndo() . "\<Left>"
+                              else
+   20              0.000045     return "\<Space>"
+                              endif
+
+FUNCTION  airline#parts#filetype()
+Called 430 times
+Total time:   0.004427
+ Self time:   0.004427
+
+count  total (s)   self (s)
+  430              0.004032   return winwidth(0) < 100 && strlen(&filetype) > 3 ? matchstr(&filetype, '...'). (&encoding is? 'utf-8' ? '…' : '>') : &filetype
+
+FUNCTION  airline#parts#iminsert()
+Called 306 times
+Total time:   0.002511
+ Self time:   0.002511
+
+count  total (s)   self (s)
+  306              0.000973   if g:airline_detect_iminsert && &iminsert && exists('b:keymap_name')
+                                return toupper(b:keymap_name)
+                              endif
+  306              0.000302   return ''
+
+FUNCTION  gitgutter#utility#use_known_shell()
+Called 2 times
+Total time:   0.000054
+ Self time:   0.000054
+
+count  total (s)   self (s)
+    2              0.000026   if has('unix')
+                                if &shell !=# 'sh'
+                                  let s:shell = &shell
+                                  let s:shellcmdflag = &shellcmdflag
+                                  let s:shellredir = &shellredir
+                                  let &shell = 'sh'
+                                  set shellcmdflag=-c
+                                  set shellredir=>%s\ 2>&1
+                                endif
+                              endif
+
+FUNCTION  SCC_OnCursorMovedI()
+Called 254 times
+Total time:   0.031905
+ Self time:   0.031905
+
+count  total (s)   self (s)
+                            
+  254              0.000393 python3 << endpython
+                            scc.setup_vars()
+                            
+                            if scc.triggered():
+                                # scc.disable_ycm()
+                                scc.complete(False)
+                            
+                            else:
+                                # scc.restore_ycm()
+                                pass
+                            endpython
+                            
+
+FUNCTION  gitgutter#process_buffer()
+Called 2 times
+Total time:   0.678028
+ Self time:   0.000757
+
+count  total (s)   self (s)
+    2   0.000070   0.000015   call gitgutter#utility#use_known_shell()
+                            
+    2   0.000040   0.000017   call gitgutter#utility#set_buffer(a:bufnr)
+    2   0.001765   0.000015   if gitgutter#utility#is_active()
+    2              0.000009     if g:gitgutter_sign_column_always
+                                  call gitgutter#sign#add_dummy_sign()
+                                endif
+    2              0.000004     try
+    2   0.000059   0.000025       if !a:realtime || gitgutter#utility#has_fresh_changes()
+    2   0.675325   0.000036         let diff = gitgutter#diff#run_diff(a:realtime || gitgutter#utility#has_unsaved_changes(), 0)
+    2              0.000006         if diff != 'async'
+                                      call gitgutter#handle_diff(diff)
+                                    endif
+    2              0.000001       endif
+    2              0.000003     catch /diff failed/
+                                  call gitgutter#debug#log('diff failed')
+                                  call gitgutter#hunk#reset()
+                                endtry
+    2   0.000633   0.000551     execute "silent doautocmd" s:nomodeline "User GitGutter"
+    2              0.000004   else
+                                call gitgutter#hunk#reset()
+                              endif
+                            
+    2   0.000057   0.000019   call gitgutter#utility#restore_shell()
+
+FUNCTION  <SNR>159_DisableOnLargeFile()
+Called 260 times
+Total time:   0.001632
+ Self time:   0.001632
+
+count  total (s)   self (s)
+  260              0.000962   if exists( 'b:ycm_largefile' )
+  260              0.000434     return b:ycm_largefile
+                              endif
+                            
+                              let threshold = g:ycm_disable_for_files_larger_than_kb * 1024
+                              let b:ycm_largefile = threshold > 0 && getfsize( expand( a:buffer ) ) > threshold
+                              if b:ycm_largefile
+                                exec s:python_command "vimsupport.PostVimMessage(" . "'YouCompleteMe is disabled in this buffer; " . "the file exceeded the max size (see YCM options).' )"
+                              endif
+                              return b:ycm_largefile
+
+FUNCTION  <SNR>41_repo_head_ref()
+Called 306 times
+Total time:   0.057488
+ Self time:   0.053125
+
+count  total (s)   self (s)
+  306   0.034269   0.031926   if !filereadable(self.dir('HEAD'))
+                                return ''
+                              endif
+  306   0.021756   0.019736   return readfile(self.dir('HEAD'))[0]
+
+FUNCTION  gitgutter#diff#is_added()
+Called 1 time
+Total time:   0.000003
+ Self time:   0.000003
+
+count  total (s)   self (s)
+    1              0.000003   return a:from_count == 0 && a:to_count > 0
+
+FUNCTION  <SNR>161_SetStatusLine()
+Called 1 time
+Total time:   0.000835
+ Self time:   0.000818
+
+count  total (s)   self (s)
+    1   0.000828   0.000811     let tagbarwinnr = bufwinnr(s:TagbarBufName())
+    1              0.000004     if tagbarwinnr == -1
+    1              0.000001         return
+                                endif
+                            
+                                " Make sure we're actually in the Tagbar window
+                                if tagbarwinnr != winnr()
+                                    let in_tagbar = 0
+                                    let prevwinnr = winnr()
+                                    call s:goto_win('p', 1)
+                                    let pprevwinnr = winnr()
+                                    call s:goto_win(tagbarwinnr, 1)
+                                else
+                                    let in_tagbar = 1
+                                endif
+                            
+                                if !empty(tagbar#state#get_current_file(0))
+                                    let fileinfo = tagbar#state#get_current_file(0)
+                                    let fname = fnamemodify(fileinfo.fpath, ':t')
+                                    let sorted = get(fileinfo.typeinfo, 'sort', g:tagbar_sort)
+                                else
+                                    let fname = ''
+                                    let sorted = g:tagbar_sort
+                                endif
+                                let sortstr = sorted ? 'Name' : 'Order'
+                            
+                                let flags = []
+                                let flags += exists('w:autoclose') && w:autoclose ? ['c'] : []
+                                let flags += g:tagbar_autoclose ? ['C'] : []
+                                let flags += (sorted && g:tagbar_case_insensitive) ? ['i'] : []
+                                let flags += g:tagbar_hide_nonpublic ? ['v'] : []
+                            
+                                if exists('g:tagbar_status_func')
+                                    let args = [in_tagbar, sortstr, fname, flags]
+                                    let &l:statusline = call(g:tagbar_status_func, args)
+                                else
+                                    let colour = in_tagbar ? '%#StatusLine#' : '%#StatusLineNC#'
+                                    let flagstr = join(flags, '')
+                                    if flagstr != ''
+                                        let flagstr = '[' . flagstr . '] '
+                                    endif
+                                    let text = colour . '[' . sortstr . '] ' . flagstr . fname
+                                    let &l:statusline = text
+                                endif
+                            
+                                if !in_tagbar
+                                    call s:goto_win(pprevwinnr, 1)
+                                    call s:goto_win(prevwinnr, 1)
+                                endif
+
+FUNCTION  <SNR>146_get_syn()
+Called 904 times
+Total time:   0.027186
+ Self time:   0.027186
+
+count  total (s)   self (s)
+  904              0.002585   if !exists("g:airline_gui_mode")
+                                let g:airline_gui_mode = airline#init#gui_mode()
+                              endif
+  904              0.010255   let color = synIDattr(synIDtrans(hlID(a:group)), a:what, g:airline_gui_mode)
+  904              0.002253   if empty(color) || color == -1
+   32              0.000393     let color = synIDattr(synIDtrans(hlID('Normal')), a:what, g:airline_gui_mode)
+   32              0.000029   endif
+  904              0.001850   if empty(color) || color == -1
+                                let color = 'NONE'
+                              endif
+  904              0.001049   return color
+
+FUNCTION  gitgutter#hunk#increment_lines_added()
+Called 1 time
+Total time:   0.000028
+ Self time:   0.000020
+
+count  total (s)   self (s)
+    1   0.000006   0.000005   let bufnr = gitgutter#utility#bufnr()
+    1   0.000014   0.000008   let summary = gitgutter#hunk#summary(bufnr)
+    1              0.000003   let summary[0] += a:count
+    1              0.000004   call setbufvar(bufnr, 'gitgutter_summary', summary)
+
+FUNCTION  delimitMate#IsEmptyPair()
+Called 2 times
+Total time:   0.000027
+ Self time:   0.000027
+
+count  total (s)   self (s)
+    2              0.000023   if strlen(substitute(a:str, ".", "x", "g")) != 2
+    2              0.000003     return 0
+                              endif
+                              let idx = index(s:get('left_delims'), matchstr(a:str, '^.'))
+                              if idx > -1 && s:get('right_delims')[idx] == matchstr(a:str, '.$')
+                                return 1
+                              endif
+                              let idx = index(s:get('quotes_list'), matchstr(a:str, '^.'))
+                              if idx > -1 && s:get('quotes_list')[idx] == matchstr(a:str, '.$')
+                                return 1
+                              endif
+                              return 0
+
+FUNCTION  <SNR>159_IdentifierFinishedOperations()
+Called 254 times
+Total time:   0.048673
+ Self time:   0.028039
+
+count  total (s)   self (s)
+  254   0.022114   0.001480   if !s:Pyeval( 'base.CurrentIdentifierFinished()' )
+  207              0.000289     return
+                              endif
+   47              0.025472   exec s:python_command "ycm_state.OnCurrentIdentifierFinished()"
+   47              0.000246   let s:force_semantic = 0
+   47              0.000183   let s:completion = s:default_completion
+
+FUNCTION  <SNR>64_watch_callback()
+Called 1 time
+Total time:   0.000037
+ Self time:   0.000018
+
+count  total (s)   self (s)
+    1   0.000025   0.000006   call battery#update()
+    1              0.000010   let s:timer = timer_start( g:battery#update_interval, function('s:watch_callback'))
+
+FUNCTION  <SNR>161_Init()
+Called 31 times
+Total time:   0.001011
+ Self time:   0.001011
+
+count  total (s)   self (s)
+   31              0.000076     if s:checked_ctags == 2 && a:silent
+                                    return 0
+                                elseif s:checked_ctags != 1
+                                    if !s:CheckForExCtags(a:silent)
+                                        return 0
+                                    endif
+                                endif
+                            
+   31              0.000056     if !s:type_init_done
+                                    call s:InitTypes()
+                                endif
+                            
+   31              0.000055     if !s:autocommands_done
+                                    call s:CreateAutocommands()
+                                    call s:AutoUpdate(fnamemodify(expand('%'), ':p'), 0)
+                                endif
+                            
+   31              0.000061     let s:init_done = 1
+   31              0.000033     return 1
+
+FUNCTION  tagbar#is_paused()
+Called 34 times
+Total time:   0.000076
+ Self time:   0.000076
+
+count  total (s)   self (s)
+   34              0.000058     return s:paused
+
+FUNCTION  SCC_OnInsertLeave()
+Called 2 times
+Total time:   0.000166
+ Self time:   0.000166
+
+count  total (s)   self (s)
+                            
+    2              0.000003 python3 << endpython
+                            scc.setup_vars()
+                            
+                            # scc.restore_ycm()
+                            endpython
+                                
+
+FUNCTION  gitgutter#diff#parse_diff()
+Called 2 times
+Total time:   0.000131
+ Self time:   0.000083
+
+count  total (s)   self (s)
+    2              0.000005   let hunks = []
+    3              0.000018   for line in split(a:diff, '\n')
+    1   0.000078   0.000030     let hunk_info = gitgutter#diff#parse_hunk(line)
+    1              0.000002     if len(hunk_info) == 4
+    1              0.000003       call add(hunks, hunk_info)
+    1              0.000001     endif
+    1              0.000001   endfor
+    2              0.000003   return hunks
+
+FUNCTION  <SNR>159_PollCompletion()
+Called 421 times
+Total time:   0.139625
+ Self time:   0.018663
+
+count  total (s)   self (s)
+  421   0.072043   0.005783   if !s:Pyeval( 'ycm_state.CompletionRequestReady()' )
+  228              0.004163     let s:pollers.completion.id = timer_start( s:pollers.completion.wait_milliseconds, function( 's:PollCompletion' ) )
+  228              0.000343     return
+                              endif
+                            
+  193   0.049439   0.001820   let response = s:Pyeval( 'ycm_state.GetCompletionResponse()' )
+  193              0.001756   let s:completion = {   'start_column': response.completion_start_column,   'candidates': response.completions }
+  193   0.008450   0.001368   call s:Complete()
+
+FUNCTION  gitgutter#sign#add_dummy_sign()
+Called 1 time
+Total time:   0.026847
+ Self time:   0.026846
+
+count  total (s)   self (s)
+    1   0.000007   0.000005   let bufnr = gitgutter#utility#bufnr()
+    1              0.000003   if !getbufvar(bufnr, 'gitgutter_dummy_sign')
+    1              0.026804     execute "sign place" s:dummy_sign_id "line=" . 9999 "name=GitGutterDummy buffer=" . bufnr
+    1              0.000027     call setbufvar(bufnr, 'gitgutter_dummy_sign', 1)
+    1              0.000002   endif
+
+FUNCTION  <SNR>70_is_space_expansion()
+Called 2 times
+Total time:   0.000083
+ Self time:   0.000083
+
+count  total (s)   self (s)
+    2              0.000005   if col('.') > 2
+                                let pchar = s:get_char(-2)
+                                let nchar = s:get_char(1)
+                                let isSpaces = (s:get_char(-1)   == s:get_char(0) && s:get_char(-1) == " ")
+                            
+                                if index(s:get('left_delims'), pchar) > -1 && index(s:get('left_delims'), pchar)   == index(s:get('right_delims'), nchar) && isSpaces
+                                  return 1
+                                elseif index(s:get('quotes_list'), pchar) > -1 && index(s:get('quotes_list'), pchar)   == index(s:get('quotes_list'), nchar) && isSpaces
+                                  return 1
+                                endif
+                              endif
+    2              0.000002   return 0
+
+FUNCTION  GetVimIndentIntern()
+Called 2 times
+Total time:   0.000329
+ Self time:   0.000329
+
+count  total (s)   self (s)
+                              " Find a non-blank line above the current line.
+    2              0.000012   let lnum = prevnonblank(v:lnum - 1)
+                            
+                              " If the current line doesn't start with '\' and below a line that starts
+                              " with '\', use the indent of the line above it.
+    2              0.000007   let cur_text = getline(v:lnum)
+    2              0.000024   if cur_text !~ '^\s*\\'
+    2              0.000015     while lnum > 0 && getline(lnum) =~ '^\s*\\'
+                                  let lnum = lnum - 1
+                                endwhile
+    2              0.000002   endif
+                            
+                              " At the start of the file use zero indent.
+    2              0.000002   if lnum == 0
+                                return 0
+                              endif
+    2              0.000006   let prev_text = getline(lnum)
+                            
+                              " Add a 'shiftwidth' after :if, :while, :try, :catch, :finally, :function
+                              " and :else.  Add it three times for a line that starts with '\' after
+                              " a line that doesn't (or g:vim_indent_cont if it exists).
+    2              0.000005   let ind = indent(lnum)
+    2              0.000009   if cur_text =~ '^\s*\\' && v:lnum > 1 && prev_text !~ '^\s*\\'
+                                if exists("g:vim_indent_cont")
+                                  let ind = ind + g:vim_indent_cont
+                                else
+                                  let ind = ind + shiftwidth() * 3
+                                endif
+                              elseif prev_text =~ '^\s*aug\%[roup]\s\+' && prev_text !~ '^\s*aug\%[roup]\s\+[eE][nN][dD]\>'
+                                let ind = ind + shiftwidth()
+                              else
+                                " A line starting with :au does not increment/decrement indent.
+    2              0.000016     if prev_text !~ '^\s*au\%[tocmd]'
+    2              0.000048       let i = match(prev_text, '\(^\||\)\s*\(if\|wh\%[ile]\|for\|try\|cat\%[ch]\|fina\%[lly]\|fu\%[nction]\|el\%[seif]\)\>')
+    2              0.000002       if i >= 0
+                            	let ind += shiftwidth()
+                            	if strpart(prev_text, i, 1) == '|' && has('syntax_items') && synIDattr(synID(lnum, i, 1), "name") =~ '\(Comment\|String\)$'
+                            	  let ind -= shiftwidth()
+                            	endif
+                                  endif
+    2              0.000002     endif
+    2              0.000002   endif
+                            
+                              " If the previous line contains an "end" after a pipe, but not in an ":au"
+                              " command.  And not when there is a backslash before the pipe.
+                              " And when syntax HL is enabled avoid a match inside a string.
+    2              0.000025   let i = match(prev_text, '[^\\]|\s*\(ene\@!\)')
+    2              0.000003   if i > 0 && prev_text !~ '^\s*au\%[tocmd]'
+                                if !has('syntax_items') || synIDattr(synID(lnum, i + 2, 1), "name") !~ '\(Comment\|String\)$'
+                                  let ind = ind - shiftwidth()
+                                endif
+                              endif
+                            
+                            
+                              " Subtract a 'shiftwidth' on a :endif, :endwhile, :catch, :finally, :endtry,
+                              " :endfun, :else and :augroup END.
+    2              0.000026   if cur_text =~ '^\s*\(ene\@!\|cat\|fina\|el\|aug\%[roup]\s\+[eE][nN][dD]\)'
+                                let ind = ind - shiftwidth()
+                              endif
+                            
+    2              0.000003   return ind
+
+FUNCTION  <SNR>160_searchpos()
+Called 2 times
+Total time:   0.000580
+ Self time:   0.000118
+
+count  total (s)   self (s)
+    2              0.000014 	let bufnr = get(a:, 1, bufnr("%"))
+    2              0.000006 	let uncache = get(a:, 2, 0)
+    2              0.000002 	if uncache
+                            		return s:searchpos_all(a:pattern)
+                            	endif
+    2              0.000009 	let cache = getbufvar(bufnr, "anzu_searchpos_cache")
+    2              0.000006 	if type(cache) == type("")
+                            		unlet cache
+                            		let cache = {}
+                            	endif
+                            
+    2              0.000006 	if has_key(cache, a:pattern)
+                            		return deepcopy(cache[a:pattern])
+                            	endif
+    2   0.000483   0.000021 	let searchpos = s:searchpos_all(a:pattern)
+    2              0.000008 	let cache[a:pattern] = searchpos
+    2              0.000011 	call setbufvar(bufnr, "anzu_searchpos_cache", cache)
+    2              0.000003 	return searchpos
+
+FUNCTION  419()
+Called 2 times
+Total time:   0.000010
+ Self time:   0.000010
+
+count  total (s)   self (s)
+    2              0.000009     return get(self._files, a:fname, {})
+
+FUNCTION  <SNR>159_OnTextChangedInsertMode()
+Called 254 times
+Total time:   0.433114
+ Self time:   0.057415
+
+count  total (s)   self (s)
+  254   0.017882   0.001620   if !s:AllowedToCompleteInCurrentBuffer()
+                                return
+                              endif
+                            
+  254              0.000432   if s:completion_stopped
+                                let s:completion_stopped = 0
+                                let s:completion = s:default_completion
+                                return
+                              endif
+                            
+  254   0.050114   0.001440   call s:IdentifierFinishedOperations()
+                            
+                              " We have to make sure we correctly leave semantic mode even when the user
+                              " inserts something like a "operator[]" candidate string which fails
+                              " CurrentIdentifierFinished check.
+  254              0.001119   if s:force_semantic && !s:Pyeval( 'base.LastEnteredCharIsIdentifierChar()' )
+                                let s:force_semantic = 0
+                              endif
+                            
+  254   0.082293   0.003957   if &completefunc == "youcompleteme#CompleteFunc" && ( g:ycm_auto_trigger || s:force_semantic ) && !s:InsideCommentOrStringAndShouldStop() && !s:OnBlankLine()
+                                " Immediately call previous completion to avoid flickers.
+  228   0.007866   0.001387     call s:Complete()
+  228   0.227058   0.001109     call s:InvokeCompletion()
+  228              0.000230   endif
+                            
+  254              0.038779   exec s:python_command "ycm_state.OnCursorMoved()"
+                            
+  254              0.000977   if g:ycm_autoclose_preview_window_after_completion
+                                call s:ClosePreviewWindowIfNeeded()
+                              endif
+
+FUNCTION  anzu#get_on_pattern_pos()
+Called 2 times
+Total time:   0.000460
+ Self time:   0.000397
+
+count  total (s)   self (s)
+    2              0.000006 	if a:pat == ""
+                            		return getpos(".")
+                            	endif
+    2              0.000010 	let pos = getpos(".")
+    2              0.000075 	let first = searchpos(a:pat, 'nWbc')
+    2              0.000042 	let last  = searchpos(a:pat, 'nWeb')
+    2   0.000046   0.000024 	if s:pos_less_equal(last, first)
+    2              0.000191 		let last  = searchpos(a:pat, 'nWec')
+    2              0.000002 	endif
+    2   0.000062   0.000021 	if s:clamp_pos(pos[1:2], first, last)
+                            		return [0, first[0], first[1], 0]
+                            	endif
+    2              0.000002 	return pos
+
+FUNCTION  gitgutter#utility#set_buffer()
+Called 6 times
+Total time:   0.000079
+ Self time:   0.000079
+
+count  total (s)   self (s)
+    6              0.000016   let s:bufnr = a:bufnr
+    6              0.000058   let s:file = resolve(bufname(a:bufnr))
+
+FUNCTION  gitgutter#utility#extension()
+Called 2 times
+Total time:   0.000012
+ Self time:   0.000012
+
+count  total (s)   self (s)
+    2              0.000011   return fnamemodify(s:file, ':e')
+
+FUNCTION  <SNR>159_AllowedToCompleteInCurrentBuffer()
+Called 260 times
+Total time:   0.016675
+ Self time:   0.001999
+
+count  total (s)   self (s)
+  260   0.016498   0.001823   return s:AllowedToCompleteInBuffer( '%' )
+
+FUNCTION  gitgutter#hunk#hunks()
+Called 2 times
+Total time:   0.000003
+ Self time:   0.000003
+
+count  total (s)   self (s)
+    2              0.000002   return s:hunks
+
+FUNCTION  tagbar#state#get_current_file()
+Called 34 times
+Total time:   0.001265
+ Self time:   0.000522
+
+count  total (s)   self (s)
+   34   0.001237   0.000493     return s:get().getCurrent(a:force_current)
+
+FUNCTION  undotree#UndotreeUpdate()
+Called 4 times
+Total time:   0.000037
+ Self time:   0.000037
+
+count  total (s)   self (s)
+    4              0.000023     if !exists('t:undotree')
+    4              0.000007         return
+                                endif
+                                if !exists('w:undotree_id')
+                                    let w:undotree_id = 'id_'.s:getUniqueID()
+                                    call s:log("Unique window id assigned: ".w:undotree_id)
+                                endif
+                                " assume window layout won't change during updating.
+                                let thiswinnr = winnr()
+                                call t:undotree.Update()
+                                " focus moved
+                                if winnr() != thiswinnr
+                                    call s:exec("norm! ".thiswinnr."\<c-w>\<c-w>")
+                                endif
+
+FUNCTION  <SNR>159_OnInsertChar()
+Called 216 times
+Total time:   0.005747
+ Self time:   0.002937
+
+count  total (s)   self (s)
+  216              0.001431   call timer_stop( s:pollers.completion.id )
+  216   0.004035   0.001225   call s:CloseCompletionMenu()
+
+FUNCTION  xolox#misc#msg#debug()
+Called 4 times
+Total time:   0.000069
+ Self time:   0.000069
+
+count  total (s)   self (s)
+                              " Show a formatted debugging message to the user, *if the user has enabled
+                              " increased verbosity by setting Vim's ['verbose'] [] option to one
+                              " (1) or higher*.
+                              "
+                              " This function has the same argument handling as the
+                              " `xolox#misc#msg#info()` function.
+                              "
+                              " In the case of `xolox#misc#msg#debug()`, automatic string coercion
+                              " provides lazy evaluation in the sense that complex data structures are
+                              " only converted to strings when the user has enabled increased verbosity.
+                              "
+                              " ['verbose']: http://vimdoc.sourceforge.net/htmldoc/options.html#'verbose'
+    4              0.000015   if &vbs >= 1
+                                call s:show_message('Question', a:000)
+                              endif
+
+FUNCTION  WorkBreakMoved()
+Called 256 times
+Total time:   0.004279
+ Self time:   0.004279
+
+count  total (s)   self (s)
+                                
+  256              0.000956     if g:workbreak_overheated == 1
+                                    exec '!echo Please take a break to alleviate all sitting-related health problems. Close this window to start timing.'
+                                    
+                                elseif g:workbreak_enabled == 1
+  256              0.000825         let g:workbreak_hasmoved = 1
+                                
+  256              0.000230     endif
+                                    
+
+FUNCTION  xolox#session#auto_save_periodic()
+Called 1 time
+Total time:   0.000059
+ Self time:   0.000059
+
+count  total (s)   self (s)
+                              " Automatically saves the current editing session every few minutes.
+                              " Normally called by the [CursorHold] [] and [CursorHoldI] [] automatic
+                              " command events.
+                              "
+                              " [CursorHold]: http://vimdoc.sourceforge.net/htmldoc/autocmd.html#CursorHold
+                              " [CursorHoldI]: http://vimdoc.sourceforge.net/htmldoc/autocmd.html#CursorHoldI
+    1              0.000003   if g:session_autosave_periodic > 0
+                                let interval = g:session_autosave_periodic * 60
+                                let next_save = s:session_last_flushed + interval
+                                if localtime() > next_save
+                                  let name = xolox#session#find_current_session()
+                                  if !empty(name)
+                                    if xolox#session#is_tab_scoped()
+                                      let function = 'xolox#session#save_tab_cmd'
+                                      let arguments = [name, '', 'SaveTabSession']
+                                    else
+                                      let function = 'xolox#session#save_cmd'
+                                      let arguments = [name, '', 'SaveSession']
+                                    endif
+                                    if xolox#misc#option#get('session_autosave_silent', 0)
+                                      " Silence informational messages perceived as noisy.
+                                      " https://github.com/xolox/vim-session/issues/120
+                                      silent call call(function, arguments)
+                                    else
+                                      call call(function, arguments)
+                                    endif
+                                  endif
+                                endif
+                              endif
+
+FUNCTION  gitgutter#sign#remove_dummy_sign()
+Called 1 time
+Total time:   0.000050
+ Self time:   0.000046
+
+count  total (s)   self (s)
+    1   0.000016   0.000012   let bufnr = gitgutter#utility#bufnr()
+    1              0.000010   if getbufvar(bufnr, 'gitgutter_dummy_sign') && (a:force || !g:gitgutter_sign_column_always)
+    1              0.000012     execute "sign unplace" s:dummy_sign_id "buffer=" . bufnr
+    1              0.000008     call setbufvar(bufnr, 'gitgutter_dummy_sign', 0)
+    1              0.000002   endif
+
+FUNCTION  <SNR>161_HighlightTag()
+Called 1 time
+Total time:   0.000376
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    1              0.000003     let tagline = 0
+                            
+    1              0.000004     let force = a:0 > 0 ? a:1 : 0
+                            
+    1              0.000002     if a:0 > 1
+                                    let tag = s:GetNearbyTag(1, 0, a:2)
+                                else
+    1   0.000338   0.000009         let tag = s:GetNearbyTag(1, 0)
+    1              0.000001     endif
+    1              0.000003     if !empty(tag)
+    1              0.000003         let tagline = tag.tline
+    1              0.000001     endif
+                            
+                                " Don't highlight the tag again if it's the same one as last time.
+                                " This prevents the Tagbar window from jumping back after scrolling with
+                                " the mouse.
+    1              0.000004     if !force && tagline == s:last_highlight_tline
+    1              0.000001         return
+                                else
+                                    let s:last_highlight_tline = tagline
+                                endif
+                            
+                                let tagbarwinnr = bufwinnr(s:TagbarBufName())
+                                if tagbarwinnr == -1
+                                    return
+                                endif
+                            
+                                if tagbarwinnr == winnr()
+                                    let in_tagbar = 1
+                                else
+                                    let in_tagbar = 0
+                                    let prevwinnr = winnr()
+                                    call s:goto_win('p', 1)
+                                    let pprevwinnr = winnr()
+                                    call s:goto_win(tagbarwinnr, 1)
+                                endif
+                            
+                                try
+                                    match none
+                            
+                                    " No tag above cursor position so don't do anything
+                                    if tagline == 0
+                                        return
+                                    endif
+                            
+                                    if g:tagbar_autoshowtag == 1 || a:openfolds
+                                        call s:OpenParents(tag)
+                                    endif
+                            
+                                    " Check whether the tag is inside a closed fold and highlight the parent
+                                    " instead in that case
+                                    let tagline = tag.getClosedParentTline()
+                            
+                                    " Parent tag line number is invalid, better don't do anything
+                                    if tagline <= 0
+                                        return
+                                    endif
+                            
+                                    " Go to the line containing the tag
+                                    execute tagline
+                            
+                                    " Make sure the tag is visible in the window
+                                    call winline()
+                            
+                                    let foldpat = '[' . g:tagbar#icon_open . g:tagbar#icon_closed . ' ]'
+                                    let pattern = '/^\%' . tagline . 'l\s*' . foldpat . '[-+# ]\zs[^( ]\+\ze/'
+                                    call tagbar#debug#log("Highlight pattern: '" . pattern . "'")
+                                    if hlexists('TagbarHighlight') " Safeguard in case syntax highlighting is disabled
+                                        execute 'match TagbarHighlight ' . pattern
+                                    else
+                                        execute 'match Search ' . pattern
+                                    endif
+                                finally
+                                    if !in_tagbar
+                                        call s:goto_win(pprevwinnr, 1)
+                                        call s:goto_win(prevwinnr, 1)
+                                    endif
+                                    redraw
+                                endtry
+
+FUNCTION  xolox#misc#cursorhold#autocmd()
+Called 2 times
+Total time:   0.000408
+ Self time:   0.000280
+
+count  total (s)   self (s)
+                              " The 'top level event handler' that's called by Vim whenever the
+                              " [CursorHold][] or [CursorHoldI][] event fires. It iterates through the
+                              " event handlers registered using `xolox#misc#cursorhold#register()` and
+                              " calls each event handler at the appropriate interval, keeping track of
+                              " the time when each event handler was last run.
+    4              0.000022   for handler in g:xolox#misc#cursorhold#handlers
+    2              0.000013     let function = handler['function']
+    2              0.000014     let last_run = get(handler, 'last_run', 0)
+    2              0.000008     let interval = get(handler, 'interval', 4)
+    2   0.000077   0.000034     call xolox#misc#msg#debug("vim-misc %s: Checking handler %s with interval %i and last run %i ..", g:xolox#misc#version, function, interval, last_run)
+                                " Rate limit in case &updatetime is set (very) low.
+    2              0.000019     let time_until_next_run = (last_run + interval) - localtime()
+    2              0.000004     if time_until_next_run > 0
+    1   0.000019   0.000009       call xolox#misc#msg#debug("vim-misc %s: Rate limiting handler %s (time until next run: %i seconds).", g:xolox#misc#version, function, time_until_next_run)
+    1              0.000001     else
+    1   0.000030   0.000013       call xolox#misc#msg#debug("vim-misc %s: Running handler %s ..", g:xolox#misc#version, function)
+    1   0.000081   0.000022       call call(function, get(handler, 'arguments', []))
+    1              0.000006       let handler['last_run'] = localtime()
+    1              0.000001     endif
+    2              0.000003   endfor
+
+FUNCTION  gitgutter#utility#command_in_directory_of_file()
+Called 2 times
+Total time:   0.000097
+ Self time:   0.000029
+
+count  total (s)   self (s)
+    2   0.000095   0.000028   return 'cd '.gitgutter#utility#shellescape(gitgutter#utility#directory_of_file()).' && '.a:cmd
+
+FUNCTION  delimitMate#WithinEmptyPair()
+Called 2 times
+Total time:   0.000227
+ Self time:   0.000069
+
+count  total (s)   self (s)
+                              " if cursor is at column 1 return 0
+    2              0.000006   if col('.') == 1
+                                return 0
+                              endif
+                              " get char before the cursor.
+    2   0.000101   0.000017   let char1 = s:get_char(-1)
+                              " get char under the cursor.
+    2   0.000062   0.000015   let char2 = s:get_char(0)
+    2   0.000046   0.000019   return delimitMate#IsEmptyPair( char1.char2 )
+
+FUNCTION  gitgutter#diff#process_added()
+Called 1 time
+Total time:   0.000031
+ Self time:   0.000031
+
+count  total (s)   self (s)
+    1              0.000001   let offset = 0
+    3              0.000005   while offset < a:to_count
+    2              0.000005     let line_number = a:to_line + offset
+    2              0.000007     call add(a:modifications, [line_number, 'added'])
+    2              0.000003     let offset += 1
+    2              0.000002   endwhile
+
+FUNCTION  <SNR>168_get()
+Called 35 times
+Total time:   0.000403
+ Self time:   0.000403
+
+count  total (s)   self (s)
+   35              0.000163     if !exists('t:tagbar_state')
+                                    let t:tagbar_state = s:State.New()
+                                endif
+                            
+   35              0.000062     return t:tagbar_state
+
+FUNCTION  gitgutter#sign#upsert_new_gitgutter_signs()
+Called 2 times
+Total time:   0.001762
+ Self time:   0.001723
+
+count  total (s)   self (s)
+    2   0.000022   0.000016   let bufnr = gitgutter#utility#bufnr()
+    2              0.000011   let other_signs         = getbufvar(bufnr, 'gitgutter_other_signs')
+    2              0.000008   let old_gitgutter_signs = getbufvar(bufnr, 'gitgutter_gitgutter_signs')
+                            
+    4              0.000011   for line in a:modified_lines
+    2              0.000013     let line_number = line[0]  " <number>
+    2              0.000012     if index(other_signs, line_number) == -1  " don't clobber others' signs
+    2   0.000049   0.000035       let name = gitgutter#utility#highlight_name_for_change(line[1])
+    2              0.000011       if !has_key(old_gitgutter_signs, line_number)  " insert
+    2   0.000041   0.000023         let id = gitgutter#sign#next_sign_id()
+    2              0.001463         execute "sign place" id "line=" . line_number "name=" . name "buffer=" . bufnr
+    2              0.000008       else  " update if sign has changed
+                                    let old_sign = old_gitgutter_signs[line_number]
+                                    if old_sign.name !=# name
+                                      execute "sign place" old_sign.id "name=" . name "buffer=" . bufnr
+                                    end
+                                  endif
+    2              0.000002     endif
+    2              0.000004   endfor
+                              " At this point b:gitgutter_gitgutter_signs is out of date.
+
+FUNCTION  <SNR>160_clamp_pos()
+Called 2 times
+Total time:   0.000041
+ Self time:   0.000022
+
+count  total (s)   self (s)
+    2   0.000040   0.000021 	return s:pos_less_equal(a:min, a:pos) && s:pos_less_equal(a:pos, a:max)
+
+FUNCTION  <SNR>41_repo_dir()
+Called 612 times
+Total time:   0.004363
+ Self time:   0.004363
+
+count  total (s)   self (s)
+  612              0.004026   return join([self.git_dir]+a:000,'/')
+
+FUNCTION  gitgutter#async#available()
+Called 2 times
+Total time:   0.000004
+ Self time:   0.000004
+
+count  total (s)   self (s)
+    2              0.000004   return s:available
+
+FUNCTION  <SNR>159_OnCompleteDone()
+Called 134 times
+Total time:   0.014774
+ Self time:   0.014774
+
+count  total (s)   self (s)
+  134              0.014616   exec s:python_command "ycm_state.OnCompleteDone()"
+
+FUNCTION  gitgutter#diff#parse_hunk()
+Called 1 time
+Total time:   0.000048
+ Self time:   0.000048
+
+count  total (s)   self (s)
+    1              0.000023   let matches = matchlist(a:line, s:hunk_re)
+    1              0.000002   if len(matches) > 0
+    1              0.000005     let from_line  = str2nr(matches[1])
+    1              0.000005     let from_count = (matches[2] == '') ? 1 : str2nr(matches[2])
+    1              0.000003     let to_line    = str2nr(matches[3])
+    1              0.000004     let to_count   = (matches[4] == '') ? 1 : str2nr(matches[4])
+    1              0.000004     return [from_line, from_count, to_line, to_count]
+                              else
+                                return []
+                              end
+
+FUNCTION  airline#parts#paste()
+Called 306 times
+Total time:   0.001260
+ Self time:   0.001260
+
+count  total (s)   self (s)
+  306              0.001050   return g:airline_detect_paste && &paste ? g:airline_symbols.paste : ''
+
+FUNCTION  gitgutter#sign#obsolete_gitgutter_signs_to_remove()
+Called 2 times
+Total time:   0.000069
+ Self time:   0.000066
+
+count  total (s)   self (s)
+    2   0.000015   0.000011   let bufnr = gitgutter#utility#bufnr()
+    2              0.000004   let signs_to_remove = []  " list of [<id (number)>, ...]
+    2              0.000004   let remove_all_signs = 1
+    2              0.000008   let old_gitgutter_signs = getbufvar(bufnr, 'gitgutter_gitgutter_signs')
+    2              0.000007   for line_number in keys(old_gitgutter_signs)
+                                if index(a:new_gitgutter_signs_line_numbers, str2nr(line_number)) == -1
+                                  call add(signs_to_remove, old_gitgutter_signs[line_number].id)
+                                else
+                                  let remove_all_signs = 0
+                                endif
+                              endfor
+    2              0.000006   let s:remove_all_old_signs = remove_all_signs
+    2              0.000002   return signs_to_remove
+
+FUNCTION  UltiSnips#TrackChange()
+Called 470 times
+Total time:   0.086822
+ Self time:   0.086822
+
+count  total (s)   self (s)
+  470              0.086353     exec g:_uspy "UltiSnips_Manager._track_change()"
+
+FUNCTION  airline#highlighter#exec()
+Called 324 times
+Total time:   0.063101
+ Self time:   0.020562
+
+count  total (s)   self (s)
+  324              0.000605   if pumvisible()
+                                return
+                              endif
+  324              0.000559   let colors = a:colors
+  324              0.000445   if s:is_win32term
+                                let colors[2] = s:gui2cui(get(colors, 0, ''), get(colors, 2, ''))
+                                let colors[3] = s:gui2cui(get(colors, 1, ''), get(colors, 3, ''))
+                              endif
+  324   0.035046   0.001814   let old_hi = airline#highlighter#get_highlight(a:group)
+  324              0.000628   if len(colors) == 4
+   64              0.000183     call add(colors, '')
+   64              0.000045   endif
+  324              0.000561   if old_hi != colors
+  204   0.015142   0.005835     let cmd = printf('hi %s %s %s %s %s %s %s %s', a:group, s:Get(colors, 0, 'guifg=', ''), s:Get(colors, 1, 'guibg=', ''), s:Get(colors, 2, 'ctermfg=', ''), s:Get(colors, 3, 'ctermbg=', ''), s:Get(colors, 4, 'gui=', ''), s:Get(colors, 4, 'cterm=', ''), s:Get(colors, 4, 'term=', ''))
+  204              0.003448     exe cmd
+  204              0.000163   endif
+
+FUNCTION  <SNR>146_get_array()
+Called 452 times
+Total time:   0.003415
+ Self time:   0.003415
+
+count  total (s)   self (s)
+  452              0.003231   return g:airline_gui_mode ==# 'gui' ? [ a:fg, a:bg, '', '', join(a:opts, ',') ] : [ '', '', a:fg, a:bg, join(a:opts, ',') ]
+
+FUNCTION  anzu#update()
+Called 2 times
+Total time:   0.000764
+ Self time:   0.000070
+
+count  total (s)   self (s)
+    2              0.000005 	let pattern = a:pattern
+    2              0.000004 	let cursor = a:cursor_pos
+    2              0.000004 	if pattern == ""
+                            		return
+                            	endif
+                            
+    2   0.000595   0.000015 	let pos_all = s:searchpos(pattern)
+                            	
+    2              0.000005 	if empty(pos_all)
+    2   0.000138   0.000025 		let s:status_cache = s:print_status(g:anzu_no_match_word, pattern, "", "", "")
+    2              0.000002 		return -1
+                            	endif
+                            
+                            	let index = index(pos_all, [cursor[1], cursor[2]])
+                            	if index == -1
+                            		return -1
+                            	endif
+                            
+                            	let wrap_mes = get(a:, 1, "")
+                            
+                            	let pattern = substitute(pattern, '\\', '\\\\', 'g')
+                            	let s:status_cache = s:print_status(g:anzu_status_format, pattern, index+1, len(pos_all), wrap_mes)
+
+FUNCTION  airline#parts#spell()
+Called 306 times
+Total time:   0.001119
+ Self time:   0.001119
+
+count  total (s)   self (s)
+  306              0.000930   return g:airline_detect_spell && &spell ? g:airline_symbols.spell : ''
+
+FUNCTION  airline#extensions#tagbar#currenttag()
+Called 430 times
+Total time:   0.015814
+ Self time:   0.008179
+
+count  total (s)   self (s)
+  430              0.001728   if get(w:, 'airline_active', 0)
+  306              0.001348     if s:airline_tagbar_last_lookup_time != localtime()
+   31   0.007939   0.000304       let s:airline_tagbar_last_lookup_val = tagbar#currenttag('%s', '', s:flags)
+   31              0.000127       let s:airline_tagbar_last_lookup_time = localtime()
+   31              0.000024     endif
+  306              0.000708     return s:airline_tagbar_last_lookup_val
+                              endif
+  124              0.000123   return ''
+
+FUNCTION  <SNR>159_PollFileParseResponse()
+Called 2 times
+Total time:   0.000400
+ Self time:   0.000192
+
+count  total (s)   self (s)
+    2   0.000241   0.000033   if !s:Pyeval( "ycm_state.FileParseRequestReady()" )
+                                let s:pollers.file_parse_response.id = timer_start( s:pollers.file_parse_response.wait_milliseconds, function( 's:PollFileParseResponse' ) )
+                                return
+                              endif
+                            
+    2              0.000131   exec s:python_command "ycm_state.HandleFileParseRequest()"
+
+FUNCTION  <SNR>185_job_finished()
+Called 2 times
+Total time:   0.000038
+ Self time:   0.000038
+
+count  total (s)   self (s)
+    2              0.000014   if has_key(s:jobs, a:id)
+    2              0.000017     unlet s:jobs[a:id]
+    2              0.000003   endif
+
+FUNCTION  421()
+Called 1 time
+Total time:   0.000004
+ Self time:   0.000004
+
+count  total (s)   self (s)
+    1              0.000004     return has_key(self._files, a:fname)
+
+FUNCTION  423()
+Called 1 time
+Total time:   0.000000
+ Self time:   0.000000
+
+count  total (s)   self (s)
+
+FUNCTION  427()
+Called 34 times
+Total time:   0.000357
+ Self time:   0.000281
+
+count  total (s)   self (s)
+   34   0.000264   0.000187     if !tagbar#is_paused() || a:force_current
+   34              0.000063         return self._current
+                                else
+                                    return self._paused
+                                endif
+
+FUNCTION  428()
+Called 1 time
+Total time:   0.000005
+ Self time:   0.000005
+
+count  total (s)   self (s)
+    1              0.000005     let self._current = a:fileinfo
+
+FUNCTION  airline#extensions#branch#head()
+Called 306 times
+Total time:   0.597774
+ Self time:   0.010073
+
+count  total (s)   self (s)
+  306              0.001406   if !exists('b:buffer_vcs_config')
+                                call s:init_buffer()
+                              endif
+                            
+  306   0.371087   0.001994   call s:update_branch()
+  306   0.219871   0.001957   call s:update_untracked()
+                            
+  306              0.001851   if exists('b:airline_head') && !empty(b:airline_head)
+  305              0.000522     return b:airline_head
+                              endif
+                            
+    1              0.000002   let b:airline_head = ''
+    1              0.000006   let l:vcs_priority = get(g:, "airline#extensions#branch#vcs_priority", ["git", "mercurial"])
+                            
+    1              0.000002   let l:heads = {}
+    3              0.000005   for vcs in l:vcs_priority
+    2              0.000006     if !empty(b:buffer_vcs_config[vcs].branch)
+    1              0.000004       let l:heads[vcs] = b:buffer_vcs_config[vcs].branch
+    1              0.000001     endif
+    2              0.000002   endfor
+                            
+    2              0.000004   for vcs in keys(l:heads)
+    1              0.000002     if !empty(b:airline_head)
+                                  let b:airline_head .= ' | '
+                                endif
+    1   0.000019   0.000017     let b:airline_head .= (len(l:heads) > 1 ? s:vcs_config[l:vcs].exe : '') . s:format_name(l:heads[l:vcs])
+    1              0.000004     let b:airline_head .= b:buffer_vcs_config[vcs].untracked
+    1              0.000001   endfor
+                            
+    1              0.000002   if empty(l:heads)
+                                if s:has_vcscommand
+                                  call VCSCommandEnableBufferSetup()
+                                  if exists('b:VCSCommandBufferInfo')
+                                    let b:airline_head = s:format_name(get(b:VCSCommandBufferInfo, 0, ''))
+                                  endif
+                                endif
+                              endif
+                            
+    1              0.000004   if exists("g:airline#extensions#branch#displayed_head_limit")
+                                let w:displayed_head_limit = g:airline#extensions#branch#displayed_head_limit
+                                if len(b:airline_head) > w:displayed_head_limit - 1
+                                  let b:airline_head = b:airline_head[0:(w:displayed_head_limit - 1)].(&encoding ==? 'utf-8' ?  '…' : '.')
+                                endif
+                              endif
+                            
+    1   0.000677   0.000013   if has_key(l:heads, 'git') && !s:check_in_path()
+                                let b:airline_head = ''
+                              endif
+    1              0.000005   let minwidth = empty(get(b:, 'airline_hunks', '')) ? 14 : 7
+    1   0.000038   0.000011   let b:airline_head = airline#util#shorten(b:airline_head, 120, minwidth)
+    1              0.000002   return b:airline_head
+
+FUNCTION  <SNR>159_OnFileReadyToParse()
+Called 4 times
+Total time:   0.004009
+ Self time:   0.003659
+
+count  total (s)   self (s)
+                              " Accepts an optional parameter that is either 0 or 1. If 1, send a
+                              " FileReadyToParse event notification, whether the buffer has changed or not;
+                              " effectively forcing a parse of the buffer. Default is 0.
+    4              0.000011   let force_parsing = a:0 > 0 && a:1
+                            
+                              " We only want to send a new FileReadyToParse event notification if the buffer
+                              " has changed since the last time we sent one, or if forced.
+    4   0.000375   0.000025   if force_parsing || s:Pyeval( "ycm_state.NeedsReparse()" )
+    2              0.003489     exec s:python_command "ycm_state.OnFileReadyToParse()"
+                            
+    2              0.000030     call timer_stop( s:pollers.file_parse_response.id )
+    2              0.000041     let s:pollers.file_parse_response.id = timer_start( s:pollers.file_parse_response.wait_milliseconds, function( 's:PollFileParseResponse' ) )
+    2              0.000004   endif
+
+FUNCTION  gitgutter#diff#run_diff()
+Called 2 times
+Total time:   0.675289
+ Self time:   0.010257
+
+count  total (s)   self (s)
+                              " Wrap compound commands in parentheses to make Windows happy.
+                              " bash doesn't mind the parentheses.
+    2              0.000005   let cmd = '('
+                            
+    2   0.000020   0.000015   let bufnr = gitgutter#utility#bufnr()
+    2              0.000010   let tracked = getbufvar(bufnr, 'gitgutter_tracked')  " i.e. tracked by git
+    2              0.000003   if !tracked
+                                " Don't bother trying to realtime-diff an untracked file.
+                                " NOTE: perhaps we should pull this guard up to the caller?
+                                if a:realtime
+                                  throw 'diff failed'
+                                else
+                                  let cmd .= g:gitgutter_git_executable.' ls-files --error-unmatch '.gitgutter#utility#shellescape(gitgutter#utility#filename()).' && ('
+                                endif
+                              endif
+                            
+    2              0.000004   if a:realtime
+    2   0.000168   0.000047     let blob_name = g:gitgutter_diff_base.':'.gitgutter#utility#shellescape(gitgutter#utility#file_relative_to_repo_root())
+    2              0.000007     let blob_file = s:temp_index
+    2              0.000005     let buff_file = s:temp_buffer
+    2   0.000027   0.000015     let extension = gitgutter#utility#extension()
+    2              0.000006     if !empty(extension)
+    2              0.000008       let blob_file .= '.'.extension
+    2              0.000006       let buff_file .= '.'.extension
+    2              0.000002     endif
+    2              0.000015     let cmd .= g:gitgutter_git_executable.' show '.blob_name.' > '.blob_file.' && '
+                            
+                                " Writing the whole buffer resets the '[ and '] marks and also the
+                                " 'modified' flag (if &cpoptions includes '+').  These are unwanted
+                                " side-effects so we save and restore the values ourselves.
+    2              0.000020     let modified      = getbufvar(bufnr, "&mod")
+    2              0.000011     let op_mark_start = getpos("'[")
+    2              0.000007     let op_mark_end   = getpos("']")
+                            
+    2              0.009727     execute 'keepalt noautocmd silent write!' buff_file
+                            
+    2              0.000055     call setbufvar(bufnr, "&mod", modified)
+    2              0.000010     call setpos("'[", op_mark_start)
+    2              0.000005     call setpos("']", op_mark_end)
+    2              0.000003   endif
+                            
+    2              0.000015   let cmd .= g:gitgutter_git_executable
+    2              0.000005   if s:c_flag
+    2              0.000006     let cmd .= ' -c "diff.autorefreshindex=0"'
+    2              0.000002   endif
+    2              0.000010   let cmd .= ' diff --no-ext-diff --no-color -U0 '.g:gitgutter_diff_args.' '
+                            
+    2              0.000003   if a:realtime
+    2              0.000009     let cmd .= ' -- '.blob_file.' '.buff_file
+    2              0.000002   else
+                                let cmd .= g:gitgutter_diff_base.' -- '.gitgutter#utility#shellescape(gitgutter#utility#filename())
+                              endif
+                            
+    2              0.000005   if !a:preserve_full_diff && s:grep_available
+    2   0.000124   0.000027     let cmd .= ' | '.s:grep_command.' '.gitgutter#utility#shellescape('^@@ ')
+    2              0.000002   endif
+                            
+    2              0.000006   if (!a:preserve_full_diff && s:grep_available) || a:realtime
+                                " grep exits with 1 when no matches are found; diff exits with 1 when
+                                " differences are found.  However we want to treat non-matches and
+                                " differences as non-erroneous behaviour; so we OR the command with one
+                                " which always exits with success (0).
+    2              0.000007     let cmd .= ' || exit 0'
+    2              0.000002   endif
+                            
+    2              0.000004   let cmd .= ')'
+                            
+    2              0.000002   if !tracked
+                                let cmd .= ')'
+                              endif
+                            
+    2   0.000120   0.000023   let cmd = gitgutter#utility#command_in_directory_of_file(cmd)
+                            
+    2   0.000020   0.000015   if g:gitgutter_async && gitgutter#async#available() && !a:preserve_full_diff
+    2   0.664714   0.000018     call gitgutter#async#execute(cmd)
+    2              0.000003     return 'async'
+                            
+                              else
+                                let diff = gitgutter#utility#system(cmd)
+                            
+                                if gitgutter#utility#shell_error()
+                                  " A shell error indicates the file is not tracked by git (unless something bizarre is going on).
+                                  throw 'diff failed'
+                                endif
+                            
+                                return diff
+                              endif
+
+FUNCTION  airline#extensions#ycm#get_warning_count()
+Called 306 times
+Total time:   0.062699
+ Self time:   0.010656
+
+count  total (s)   self (s)
+  306              0.005241   if exists(':YcmDiag') && exists("*youcompleteme#GetWarningCount")
+  306   0.054205   0.002162     let cnt = youcompleteme#GetWarningCount()
+                            
+  306              0.000748     if cnt != 0
+                                  return s:warning_symbol.cnt.s:spc
+                                endif
+  306              0.000222   endif
+                            
+  306              0.000351   return ''
+
+FUNCTION  <SNR>161_IsValidFile()
+Called 1 time
+Total time:   0.000293
+ Self time:   0.000286
+
+count  total (s)   self (s)
+    1   0.000014   0.000006     call tagbar#debug#log('Checking if file is valid [' . a:fname . ']')
+                            
+    1              0.000003     if a:fname == '' || a:ftype == ''
+                                    call tagbar#debug#log('Empty filename or type')
+                                    return 0
+                                endif
+                            
+    1              0.000094     if !filereadable(a:fname) && getbufvar(a:fname, 'netrw_tmpfile') == ''
+                                    call tagbar#debug#log('File not readable')
+                                    return 0
+                                endif
+                            
+    1              0.000071     if getbufvar(a:fname, 'tagbar_ignore') == 1
+                                    call tagbar#debug#log('File is marked as ignored')
+                                    return 0
+                                endif
+                            
+    1              0.000061     let winnr = bufwinnr(a:fname)
+    1              0.000005     if winnr != -1 && getwinvar(winnr, '&diff')
+                                    call tagbar#debug#log('Window is in diff mode')
+                                    return 0
+                                endif
+                            
+    1              0.000001     if &previewwindow
+                                    call tagbar#debug#log('In preview window')
+                                    return 0
+                                endif
+                            
+    1              0.000004     if !has_key(s:known_types, a:ftype)
+                                    if exists('g:tagbar_type_' . a:ftype)
+                                        " Filetype definition must have been specified in an 'ftplugin'
+                                        " file, so load it now
+                                        call s:LoadUserTypeDefs(a:ftype)
+                                    else
+                                        call tagbar#debug#log('Unsupported filetype: ' . a:ftype)
+                                        return 0
+                                    endif
+                                endif
+                            
+    1              0.000001     return 1
+
+FUNCTION  fugitive#head()
+Called 306 times
+Total time:   0.106319
+ Self time:   0.007002
+
+count  total (s)   self (s)
+  306              0.001426   if !exists('b:git_dir')
+                                return ''
+                              endif
+                            
+  306   0.103676   0.004359   return s:repo().head(a:0 ? a:1 : 0)
+
+FUNCTION  MyTabLine()
+Called 142 times
+Total time:   0.025694
+ Self time:   0.008384
+
+count  total (s)   self (s)
+  142   0.015363   0.001074     let s = WorkBreakDisplay() . '%#TabLineFill#|'
+  142              0.000403     if &modified
+  141              0.000331         let s .= '%#TabLineSelMod# + '
+  141              0.000111     else
+    1              0.000002         let s .= '%#TabLineSel# - '
+    1              0.000001     endif
+                                " let s .= expand('%:t') . ' %#TabLineFill#|'. g:indent_path_str . '%=' . '%#TabLineFill#|%#TabLine#' . strftime(' %m-%d %H:%M ')
+  142   0.008448   0.005427     let s .= expand('%:t') . ' %#TabLineFill#|'. '%=%#TabLineDark#' . getcwd() . ' %#TabLineFill#| ' . TabooTabName(tabpagenr()) . ' |%#TabLine#' . strftime(' %m-%d %H:%M ')
+  142              0.000239     return s
+
+FUNCTION  <SNR>180_str()
+Called 31 times
+Total time:   0.000712
+ Self time:   0.000712
+
+count  total (s)   self (s)
+   31              0.000064     if a:full && self.path != ''
+                                    let str = self.path . self.typeinfo.sro . self.name
+                                else
+   31              0.000068         let str = self.name
+   31              0.000025     endif
+                            
+   31              0.000088     if has_key(self.fields, 'signature')
+                                    if a:longsig
+                                        let str .= self.fields.signature
+                                    else
+                                        let str .= '()'
+                                    endif
+                                endif
+                            
+   31              0.000042     return str
+
+FUNCTION  <SNR>142_update_untracked()
+Called 306 times
+Total time:   0.217914
+ Self time:   0.211945
+
+count  total (s)   self (s)
+  306              0.178137   let l:file = expand("%:p")
+  306              0.014306   if empty(l:file) || isdirectory(l:file)
+                                return
+                              endif
+                            
+  306              0.001053   let l:needs_update = 1
+  918              0.002546   for vcs in keys(s:vcs_config)
+  612              0.002919     if has_key(s:vcs_config[vcs].untracked, l:file)
+  306              0.000657       let l:needs_update = 0
+  306   0.009411   0.003441       call s:update_untracked_in_buffer_config(l:file, vcs)
+  306              0.000254     endif
+  612              0.000557   endfor
+                            
+  306              0.000512   if !l:needs_update
+  306              0.000323     return
+                              endif
+                            
+                              for vcs in keys(s:vcs_config)
+                                let l:config = s:vcs_config[vcs]
+                                if s:has_async
+                                  " Note that asynchronous update updates s:vcs_config only, and only
+                                  " s:update_untracked updates b:buffer_vcs_config. If s:vcs_config is
+                                  " invalidated again before s:update_untracked is called, then we lose the
+                                  " result of the previous call, i.e. the head string is not updated. It
+                                  " doesn't happen often in practice, so we let it be.
+                                  call s:get_vcs_untracked_async(l:config, l:file)
+                                else
+                                  let output = airline#util#system(l:config.cmd . shellescape(l:file))
+                                  if output =~? ('^' . l:config.untracked_mark)
+                                    let l:config.untracked[l:file] = get(g:, 'airline#extensions#branch#notexists', g:airline_symbols.notexists)
+                                  else
+                                    let l:config.untracked[l:file] = ''
+                                  endif
+                                  call s:update_untracked_in_buffer_config(l:file, vcs)
+                                endif
+                              endfor
+
+FUNCTION  <SNR>160_print_status()
+Called 2 times
+Total time:   0.000113
+ Self time:   0.000113
+
+count  total (s)   self (s)
+    2              0.000004 	let result = a:format
+    2              0.000027 	let result = substitute(result, '%#\(.\{-}\)#', '<anzustatushighlight>\1<\/anzustatushighlight>', "g")
+    2              0.000014 	let result = substitute(result, '%i', a:index, "g")
+    2              0.000009 	let result = substitute(result, '%l', a:len, "g")
+    2              0.000009 	let result = substitute(result, '%w', a:wrap, "g")
+    2              0.000009 	let result = substitute(result, '%p', a:pattern, "g")
+                            	" Fix \<homu\> to view
+    2              0.000032 	let result = substitute(result, '%/', substitute(histget("/", -1), '\\', '\\\\', "g"), "g")
+    2              0.000004 	return result
+
+FUNCTION  airline#statusline()
+Called 430 times
+Total time:   0.009267
+ Self time:   0.009267
+
+count  total (s)   self (s)
+  430              0.003901   if has_key(s:contexts, a:winnr)
+  430              0.004623     return '%{airline#check_mode('.a:winnr.')}'.s:contexts[a:winnr].line
+                              endif
+                            
+                              " in rare circumstances this happens...see #276
+                              return ''
+
+FUNCTION  <SNR>124_Highlight_Matching_Pair()
+Called 512 times
+Total time:   0.057826
+ Self time:   0.057826
+
+count  total (s)   self (s)
+                              " Remove any previous match.
+  512              0.002757   if exists('w:paren_hl_on') && w:paren_hl_on
+                                silent! call matchdelete(3)
+                                let w:paren_hl_on = 0
+                              endif
+                            
+                              " Avoid that we remove the popup menu.
+                              " Return when there are no colors (looks like the cursor jumps).
+  512              0.006892   if pumvisible() || (&t_Co < 8 && !has("gui_running"))
+                                return
+                              endif
+                            
+                              " Get the character under the cursor and check if it's in 'matchpairs'.
+  512              0.001677   let c_lnum = line('.')
+  512              0.001309   let c_col = col('.')
+  512              0.000734   let before = 0
+                            
+  512              0.001747   let text = getline(c_lnum)
+  512              0.010656   let matches = matchlist(text, '\(.\)\=\%'.c_col.'c\(.\=\)')
+  512              0.001290   if empty(matches)
+                                let [c_before, c] = ['', '']
+                              else
+  512              0.002694     let [c_before, c] = matches[1:2]
+  512              0.000409   endif
+  512              0.007639   let plist = split(&matchpairs, '.\zs[:,]')
+  512              0.001803   let i = index(plist, c)
+  512              0.000672   if i < 0
+                                " not found, in Insert mode try character before the cursor
+  512              0.002203     if c_col > 1 && (mode() == 'i' || mode() == 'R')
+  456              0.001339       let before = strlen(c_before)
+  456              0.000693       let c = c_before
+  456              0.001131       let i = index(plist, c)
+  456              0.000332     endif
+  512              0.000553     if i < 0
+                                  " not found, nothing to do
+  512              0.000583       return
+                                endif
+                              endif
+                            
+                              " Figure out the arguments for searchpairpos().
+                              if i % 2 == 0
+                                let s_flags = 'nW'
+                                let c2 = plist[i + 1]
+                              else
+                                let s_flags = 'nbW'
+                                let c2 = c
+                                let c = plist[i - 1]
+                              endif
+                              if c == '['
+                                let c = '\['
+                                let c2 = '\]'
+                              endif
+                            
+                              " Find the match.  When it was just before the cursor move it there for a
+                              " moment.
+                              if before > 0
+                                let has_getcurpos = exists("*getcurpos")
+                                if has_getcurpos
+                                  " getcurpos() is more efficient but doesn't exist before 7.4.313.
+                                  let save_cursor = getcurpos()
+                                else
+                                  let save_cursor = winsaveview()
+                                endif
+                                call cursor(c_lnum, c_col - before)
+                              endif
+                            
+                              " Build an expression that detects whether the current cursor position is in
+                              " certain syntax types (string, comment, etc.), for use as searchpairpos()'s
+                              " skip argument.
+                              " We match "escape" for special items, such as lispEscapeSpecial.
+                              let s_skip = '!empty(filter(map(synstack(line("."), col(".")), ''synIDattr(v:val, "name")''), ' . '''v:val =~? "string\\|character\\|singlequote\\|escape\\|comment"''))'
+                              " If executing the expression determines that the cursor is currently in
+                              " one of the syntax types, then we want searchpairpos() to find the pair
+                              " within those syntax types (i.e., not skip).  Otherwise, the cursor is
+                              " outside of the syntax types and s_skip should keep its value so we skip any
+                              " matching pair inside the syntax types.
+                              execute 'if' s_skip '| let s_skip = 0 | endif'
+                            
+                              " Limit the search to lines visible in the window.
+                              let stoplinebottom = line('w$')
+                              let stoplinetop = line('w0')
+                              if i % 2 == 0
+                                let stopline = stoplinebottom
+                              else
+                                let stopline = stoplinetop
+                              endif
+                            
+                              " Limit the search time to 300 msec to avoid a hang on very long lines.
+                              " This fails when a timeout is not supported.
+                              if mode() == 'i' || mode() == 'R'
+                                let timeout = exists("b:matchparen_insert_timeout") ? b:matchparen_insert_timeout : g:matchparen_insert_timeout
+                              else
+                                let timeout = exists("b:matchparen_timeout") ? b:matchparen_timeout : g:matchparen_timeout
+                              endif
+                              try
+                                let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline, timeout)
+                              catch /E118/
+                                " Can't use the timeout, restrict the stopline a bit more to avoid taking
+                                " a long time on closed folds and long lines.
+                                " The "viewable" variables give a range in which we can scroll while
+                                " keeping the cursor at the same position.
+                                " adjustedScrolloff accounts for very large numbers of scrolloff.
+                                let adjustedScrolloff = min([&scrolloff, (line('w$') - line('w0')) / 2])
+                                let bottom_viewable = min([line('$'), c_lnum + &lines - adjustedScrolloff - 2])
+                                let top_viewable = max([1, c_lnum-&lines+adjustedScrolloff + 2])
+                                " one of these stoplines will be adjusted below, but the current values are
+                                " minimal boundaries within the current window
+                                if i % 2 == 0
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = min([line2byte("$"), line2byte(".") + col(".") + &smc * 2])
+                            	let stopline = min([bottom_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = min([bottom_viewable, c_lnum + 100])
+                                  endif
+                                  let stoplinebottom = stopline
+                                else
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = max([1, line2byte(".") + col(".") - &smc * 2])
+                            	let stopline = max([top_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = max([top_viewable, c_lnum - 100])
+                                  endif
+                                  let stoplinetop = stopline
+                                endif
+                                let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline)
+                              endtry
+                            
+                              if before > 0
+                                if has_getcurpos
+                                  call setpos('.', save_cursor)
+                                else
+                                  call winrestview(save_cursor)
+                                endif
+                              endif
+                            
+                              " If a match is found setup match highlighting.
+                              if m_lnum > 0 && m_lnum >= stoplinetop && m_lnum <= stoplinebottom 
+                                if exists('*matchaddpos')
+                                  call matchaddpos('MatchParen', [[c_lnum, c_col - before], [m_lnum, m_col]], 10, 3)
+                                else
+                                  exe '3match MatchParen /\(\%' . c_lnum . 'l\%' . (c_col - before) . 'c\)\|\(\%' . m_lnum . 'l\%' . m_col . 'c\)/'
+                                endif
+                                let w:paren_hl_on = 1
+                              endif
+
+FUNCTION  gitgutter#utility#is_file_buffer()
+Called 4 times
+Total time:   0.000032
+ Self time:   0.000032
+
+count  total (s)   self (s)
+    4              0.000030   return empty(getbufvar(s:bufnr, '&buftype'))
+
+FUNCTION  <SNR>62_tabname()
+Called 142 times
+Total time:   0.002080
+ Self time:   0.000983
+
+count  total (s)   self (s)
+  142   0.001951   0.000853     return s:gettabvar(a:tabnr, "taboo_tab_name")
+
+FUNCTION  RefreshTabLine()
+Called 1 time
+Total time:   0.000047
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    1              0.000019     if !argc() && (line2byte('$') == -1) && (v:progname =~? '^[-gmnq]\=vim\=x\=\%[\.exe]$')
+                                    return
+                                endif
+    1              0.000003     if &showtabline == 2
+    1              0.000015         set showtabline=2
+    1              0.000001     endif
+
+FUNCTION  gitgutter#utility#is_active()
+Called 4 times
+Total time:   0.003234
+ Self time:   0.000103
+
+count  total (s)   self (s)
+    4   0.003230   0.000099   return g:gitgutter_enabled && !pumvisible() && gitgutter#utility#is_file_buffer() && gitgutter#utility#exists_file() && gitgutter#utility#not_git_dir()
+
+FUNCTION  youcompleteme#CompleteFunc()
+Called 268 times
+Total time:   0.002215
+ Self time:   0.002215
+
+count  total (s)   self (s)
+  268              0.000632   if a:findstart
+  134              0.000656     return s:completion.start_column - 1
+                              endif
+  134              0.000247   return s:completion.candidates
+
+FUNCTION  airline#highlighter#get_highlight()
+Called 452 times
+Total time:   0.047516
+ Self time:   0.016915
+
+count  total (s)   self (s)
+  452   0.016659   0.002560   let fg = s:get_syn(a:group, 'fg')
+  452   0.015687   0.002600   let bg = s:get_syn(a:group, 'bg')
+  452              0.007493   let reverse = g:airline_gui_mode ==# 'gui' ? synIDattr(synIDtrans(hlID(a:group)), 'reverse', 'gui') : synIDattr(synIDtrans(hlID(a:group)), 'reverse', 'cterm')|| synIDattr(synIDtrans(hlID(a:group)), 'reverse', 'term')
+  452   0.007180   0.003765   return reverse ? s:get_array(bg, fg, a:000) : s:get_array(fg, bg, a:000)
+
+FUNCTION  airline#extensions#syntastic#get_warnings()
+Called 306 times
+Total time:   0.065250
+ Self time:   0.004296
+
+count  total (s)   self (s)
+  306   0.062788   0.001834   let errors = SyntasticStatuslineFlag()
+  306              0.000844   if strlen(errors) > 0
+                                return errors.(g:airline_symbols.space)
+                              endif
+  306              0.000308   return ''
+
+FUNCTION  <SNR>159_OnBlankLine()
+Called 254 times
+Total time:   0.026877
+ Self time:   0.001655
+
+count  total (s)   self (s)
+  254   0.026728   0.001506   return s:Pyeval( 'not vim.current.line or vim.current.line.isspace()' )
+
+FUNCTION  <SNR>146_exec_separator()
+Called 64 times
+Total time:   0.028404
+ Self time:   0.002914
+
+count  total (s)   self (s)
+   64              0.000137   if pumvisible()
+                                return
+                              endif
+   64   0.008163   0.000425   let l:from = airline#themes#get_highlight(a:from.a:suffix)
+   64   0.008034   0.000403   let l:to = airline#themes#get_highlight(a:to.a:suffix)
+   64              0.000232   let group = a:from.'_to_'.a:to.a:suffix
+   64              0.000080   if a:inverse
+   32              0.000189     let colors = [ l:from[1], l:to[1], l:from[3], l:to[3] ]
+   32              0.000028   else
+   32              0.000190     let colors = [ l:to[1], l:from[1], l:to[3], l:from[3] ]
+   32              0.000025   endif
+   64              0.000272   let a:dict[group] = colors
+   64   0.010551   0.000430   call airline#highlighter#exec(group, colors)
+
+FUNCTION  airline#parts#mode()
+Called 306 times
+Total time:   0.007309
+ Self time:   0.003270
+
+count  total (s)   self (s)
+  306   0.007040   0.003000   return airline#util#shorten(get(w:, 'airline_current_mode', ''), 79, 1)
+
+FUNCTION  airline#extensions#branch#get_head()
+Called 306 times
+Total time:   0.606019
+ Self time:   0.008245
+
+count  total (s)   self (s)
+  306   0.599789   0.002015   let head = airline#extensions#branch#head()
+  306              0.001483   let empty_message = get(g:, 'airline#extensions#branch#empty_message', '')
+  306              0.001517   let symbol = get(g:, 'airline#extensions#branch#symbol', g:airline_symbols.branch)
+  306              0.002714   return empty(head) ? empty_message : printf('%s%s', empty(symbol) ? '' : symbol.(g:airline_symbols.space), head)
+
+FUNCTION  <SNR>185_job_output()
+Called 2 times
+Total time:   0.000039
+ Self time:   0.000030
+
+count  total (s)   self (s)
+    2              0.000010   if has_key(s:jobs, a:id)
+    2   0.000027   0.000018     return gitgutter#utility#stringify(s:jobs[a:id].output)
+                              else
+                                return ""
+                              endif
+
+FUNCTION  <SNR>142_update_hg_branch()
+Called 306 times
+Total time:   0.008156
+ Self time:   0.008156
+
+count  total (s)   self (s)
+  306              0.000546   if s:has_lawrencium
+                                let stl=lawrencium#statusline()
+                                if !empty(stl) && s:has_async
+                                  call s:get_mq_async('hg qtop', expand('%:p'))
+                                endif
+                                if exists("s:mq") && !empty(s:mq)
+                                  if stl is# 'default'
+                                    " Shorten default a bit
+                                    let stl='def'
+                                  endif
+                                  let stl.=' ['.s:mq.']'
+                                endif
+                                let s:vcs_config['mercurial'].branch = stl
+                              else
+  306              0.000929     let s:vcs_config['mercurial'].branch = ''
+  306              0.000231   endif
+
+FUNCTION  <SNR>185_accumulate_job_output()
+Called 1 time
+Total time:   0.000007
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    1              0.000006   call add(s:jobs[a:id].output, a:line)
+
+FUNCTION  SyntasticStatuslineFlag()
+Called 306 times
+Total time:   0.060954
+ Self time:   0.005077
+
+count  total (s)   self (s)
+  306   0.060691   0.004813     return g:SyntasticLoclist.current().getStatuslineFlag()
+
+FUNCTION  airline#util#prepend()
+Called 430 times
+Total time:   0.004776
+ Self time:   0.004776
+
+count  total (s)   self (s)
+  430              0.001205   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+  430              0.002387   return empty(a:text) ? '' : a:text.s:spc.g:airline_right_alt_sep.s:spc
+
+FUNCTION  <SNR>135_sync_active_winnr()
+Called 2 times
+Total time:   0.000027
+ Self time:   0.000027
+
+count  total (s)   self (s)
+    2              0.000017   if exists('#airline') && winnr() != s:active_winnr
+                                call airline#update_statusline()
+                              endif
+
+FUNCTION  <SNR>159_InvokeCompletion()
+Called 228 times
+Total time:   0.225949
+ Self time:   0.173273
+
+count  total (s)   self (s)
+  228              0.169860   exec s:python_command "ycm_state.SendCompletionRequest(" . "vimsupport.GetBoolValue( 's:force_semantic' ) )"
+                            
+  228   0.055531   0.002856   call s:PollCompletion()
+
+FUNCTION  <SNR>86_wrapscan_mes()
+Called 2 times
+Total time:   0.000013
+ Self time:   0.000013
+
+count  total (s)   self (s)
+    2              0.000009 	if !exists("s:start_pos") || !exists("s:is_back")
+    2              0.000002 		return ""
+                            	endif
+                            	let prev_pos = s:start_pos
+                            	let pos = getpos(".")
+                            	let result = ""
+                            	if !empty(prev_pos) && s:pos_less(pos, prev_pos) && !s:is_back
+                            		let result = g:anzu_bottomtop_word
+                            	elseif !empty(prev_pos) && s:pos_less(prev_pos, pos) && s:is_back
+                            		let result = g:anzu_topbottom_word
+                            	endif
+                            	unlet s:start_pos
+                            	unlet s:is_back
+                            
+                            	return result
+
+FUNCTION  gitgutter#handle_diff()
+Called 2 times
+Total time:   0.042667
+ Self time:   0.000155
+
+count  total (s)   self (s)
+    2   0.000093   0.000009   call gitgutter#debug#log(a:diff)
+                            
+    2   0.000020   0.000017   call setbufvar(gitgutter#utility#bufnr(), 'gitgutter_tracked', 1)
+                            
+    2   0.000161   0.000024   call gitgutter#hunk#set_hunks(gitgutter#diff#parse_diff(a:diff))
+    2   0.000253   0.000021   let modified_lines = gitgutter#diff#process_hunks(gitgutter#hunk#hunks())
+                            
+    2              0.000006   if len(modified_lines) > g:gitgutter_max_signs
+                                call gitgutter#utility#warn_once('exceeded maximum number of signs (configured by g:gitgutter_max_signs).', 'max_signs')
+                                call gitgutter#sign#clear_signs()
+                                return
+                              endif
+                            
+    2              0.000005   if g:gitgutter_signs || g:gitgutter_highlight_lines
+    2   0.042057   0.000023     call gitgutter#sign#update_signs(modified_lines)
+    2              0.000002   endif
+                            
+    2   0.000042   0.000022   call gitgutter#utility#save_last_seen_change()
+
+FUNCTION  <SNR>159_OnInsertLeave()
+Called 2 times
+Total time:   0.007044
+ Self time:   0.003180
+
+count  total (s)   self (s)
+    2   0.000142   0.000012   if !s:AllowedToCompleteInCurrentBuffer()
+                                return
+                              endif
+                            
+    2              0.000007   call timer_stop( s:pollers.completion.id )
+    2              0.000004   let s:force_semantic = 0
+    2              0.000006   let s:completion = s:default_completion
+                            
+    2   0.003755   0.000021   call s:OnFileReadyToParse()
+    2              0.003066   exec s:python_command "ycm_state.OnInsertLeave()"
+    2              0.000026   if g:ycm_autoclose_preview_window_after_completion || g:ycm_autoclose_preview_window_after_insertion
+                                call s:ClosePreviewWindowIfNeeded()
+                              endif
+
+FUNCTION  gitgutter#hunk#set_hunks()
+Called 2 times
+Total time:   0.000006
+ Self time:   0.000006
+
+count  total (s)   self (s)
+    2              0.000006   let s:hunks = a:hunks
+
+FUNCTION  gitgutter#utility#highlight_name_for_change()
+Called 2 times
+Total time:   0.000014
+ Self time:   0.000014
+
+count  total (s)   self (s)
+    2              0.000007   if a:text ==# 'added'
+    2              0.000005     return 'GitGutterLineAdded'
+                              elseif a:text ==# 'removed'
+                                return 'GitGutterLineRemoved'
+                              elseif a:text ==# 'removed_first_line'
+                                return 'GitGutterLineRemovedFirstLine'
+                              elseif a:text ==# 'modified'
+                                return 'GitGutterLineModified'
+                              elseif a:text ==# 'modified_removed'
+                                return 'GitGutterLineModifiedRemoved'
+                              endif
+
+FUNCTION  <SNR>41_repo()
+Called 612 times
+Total time:   0.019427
+ Self time:   0.019427
+
+count  total (s)   self (s)
+  612              0.005254   let dir = a:0 ? a:1 : (exists('b:git_dir') && b:git_dir !=# '' ? b:git_dir : fugitive#extract_git_dir(expand('%:p')))
+  612              0.000944   if dir !=# ''
+  612              0.001947     if has_key(s:repos, dir)
+  612              0.001958       let repo = get(s:repos, dir)
+  612              0.000555     else
+                                  let repo = {'git_dir': dir}
+                                  let s:repos[dir] = repo
+                                endif
+  612              0.004815     return extend(extend(repo, s:repo_prototype, 'keep'), s:abstract_prototype, 'keep')
+                              endif
+                              call s:throw('not a git repository: '.expand('%:p'))
+
+FUNCTION  airline#util#append()
+Called 1530 times
+Total time:   0.019596
+ Self time:   0.019596
+
+count  total (s)   self (s)
+ 1530              0.004047   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+ 1530              0.006088   let prefix = s:spc == "\ua0" ? s:spc : s:spc.s:spc
+ 1530              0.005432   return empty(a:text) ? '' : prefix.g:airline_left_alt_sep.s:spc.a:text
+
+FUNCTION  <SNR>86_update_search_status()
+Called 2 times
+Total time:   0.001395
+ Self time:   0.000158
+
+count  total (s)   self (s)
+    2              0.000012 	if mode() !=# 'n'
+                            		return
+                            	endif
+                            
+    2              0.000019 	let curs_hold = get(g:, 'anzu_enable_CursorHold_AnzuUpdateSearchStatus', 0)
+    2              0.000011 	let curs_mov	= get(g:, 'anzu_enable_CursorMoved_AnzuUpdateSearchStatus', 0)
+                            
+    2              0.000008 	let anzu_echo_output = (curs_hold == 1 || curs_mov == 1)
+                            
+    2              0.000003 	try
+    2              0.000003 		if curs_hold || curs_mov
+    2   0.001286   0.000050 			if anzu#update(@/,	anzu#get_on_pattern_pos(@/), s:wrapscan_mes()) != -1	 && anzu_echo_output
+                            				call feedkeys("\<Plug>(anzu-echohl_search_status)")
+                            			endif
+    2              0.000001 		endif
+    2              0.000003 	catch /^Vim\%((\a\+)\)\=:E/
+                            		echohl ErrorMsg | echo matchstr(v:exception, '^Vim(\a\+):\zs.*\ze$') | echohl None
+                            		return
+                            	endtry
+
+FUNCTION  <SNR>146_Get()
+Called 1428 times
+Total time:   0.009307
+ Self time:   0.009307
+
+count  total (s)   self (s)
+ 1428              0.004384   if get(a:dict, a:key, a:default) isnot# a:default
+  868              0.002359     return a:prefix. get(a:dict, a:key)
+                              else
+  560              0.000499     return ''
+                              endif
+
+FUNCTION  airline#themes#get_highlight()
+Called 128 times
+Total time:   0.015369
+ Self time:   0.001086
+
+count  total (s)   self (s)
+  128   0.015326   0.001043   return call('airline#highlighter#get_highlight', [a:group] + a:000)
+
+FUNCTION  <SNR>142_update_branch()
+Called 306 times
+Total time:   0.369093
+ Self time:   0.235429
+
+count  total (s)   self (s)
+  306              0.212847   let l:path = exists("*fnamemodify") ? fnamemodify(resolve(@%), ":p:h") : expand("%:p:h")
+  918              0.003683   for vcs in keys(s:vcs_config)
+  612   0.141622   0.007959     call {s:vcs_config[vcs].update_branch}(l:path)
+  612              0.003145     if b:buffer_vcs_config[vcs].branch != s:vcs_config[vcs].branch
+                                  let b:buffer_vcs_config[vcs].branch = s:vcs_config[vcs].branch
+                                  unlet! b:airline_head
+                                endif
+  612              0.000585   endfor
+
+FUNCTION  <SNR>159_OnCursorMovedNormalMode()
+Called 2 times
+Total time:   0.000591
+ Self time:   0.000433
+
+count  total (s)   self (s)
+    2   0.000171   0.000014   if !s:AllowedToCompleteInCurrentBuffer()
+                                return
+                              endif
+                            
+    2              0.000412   exec s:python_command "ycm_state.OnCursorMoved()"
+
+FUNCTION  <SNR>161_AutoUpdate()
+Called 1 time
+Total time:   0.003054
+ Self time:   0.001423
+
+count  total (s)   self (s)
+    1   0.000029   0.000016     call tagbar#debug#log('AutoUpdate called [' . a:fname . ']')
+                            
+                                " Whether we want to skip actually displaying the tags in Tagbar and only
+                                " update the fileinfo
+    1              0.000004     let no_display = a:0 > 0 ? a:1 : 0
+                            
+                                " This file is being loaded due to a quickfix command like vimgrep, so
+                                " don't process it
+    1              0.000004     if exists('s:tagbar_qf_active')
+                                    return
+                                elseif exists('s:window_opening')
+                                    " This can happen if another plugin causes the active window to change
+                                    " with an autocmd during the initial Tagbar window creation. In that
+                                    " case InitWindow() hasn't had a chance to run yet and things can
+                                    " break. MiniBufExplorer does this, for example. Completely disabling
+                                    " autocmds at that point is also not ideal since for example
+                                    " statusline plugins won't be able to update.
+                                    call tagbar#debug#log('Still opening window, stopping processing')
+                                    return
+                                endif
+                            
+                                " Get the filetype of the file we're about to process
+    1              0.000093     let bufnr = bufnr(a:fname)
+    1              0.000006     let ftype = getbufvar(bufnr, '&filetype')
+                            
+                                " Don't do anything if we're in the tagbar window
+    1              0.000003     if ftype == 'tagbar'
+                                    call tagbar#debug#log('In Tagbar window, stopping processing')
+                                    return
+                                endif
+                            
+                                " Only consider the main filetype in cases like 'python.django'
+    1              0.000013     let sftype = get(split(ftype, '\.'), 0, '')
+    1   0.000018   0.000008     call tagbar#debug#log("Vim filetype: '" . ftype . "', " . "sanitized filetype: '" . sftype . "'")
+                            
+                                " Don't do anything if the file isn't supported
+    1   0.000306   0.000013     if !s:IsValidFile(a:fname, sftype)
+                                    call tagbar#debug#log('Not a valid file, stopping processing')
+                                    let s:nearby_disabled = 1
+                                    return
+                                endif
+                            
+    1              0.000002     let updated = 0
+                            
+                                " Process the file if it's unknown or the information is outdated.
+                                " Testing the mtime of the file is necessary in case it got changed
+                                " outside of Vim, for example by checking out a different version from a
+                                " VCS.
+    1   0.000015   0.000011     if s:known_files.has(a:fname)
+    1   0.000013   0.000007         let curfile = s:known_files.get(a:fname)
+                                    " if a:force || getbufvar(curfile.bufnr, '&modified') ||
+    1              0.000132         if a:force || empty(curfile) || curfile.ftype != sftype || (filereadable(a:fname) && getftime(a:fname) > curfile.mtime)
+                                        call tagbar#debug#log('File data outdated, updating [' . a:fname . ']')
+                                        call s:ProcessFile(a:fname, sftype)
+                                        let updated = 1
+                                    else
+    1   0.000017   0.000008             call tagbar#debug#log('File data seems up to date [' . a:fname . ']')
+    1              0.000001         endif
+    1              0.000002     elseif !s:known_files.has(a:fname)
+                                    call tagbar#debug#log('New file, processing [' . a:fname . ']')
+                                    call s:ProcessFile(a:fname, sftype)
+                                    let updated = 1
+                                endif
+                            
+    1              0.000001     if no_display
+                                    return
+                                endif
+                            
+    1   0.000011   0.000006     let fileinfo = s:known_files.get(a:fname)
+                            
+                                " If we don't have an entry for the file by now something must have gone
+                                " wrong, so don't change the tagbar content
+    1              0.000002     if empty(fileinfo)
+                                    call tagbar#debug#log('fileinfo empty after processing [' . a:fname . ']')
+                                    return
+                                endif
+                            
+                                " Display the tagbar content if the tags have been updated or a different
+                                " file is being displayed
+    1   0.000937   0.000926     if bufwinnr(s:TagbarBufName()) != -1 && !s:paused && (s:new_window || updated || (!empty(tagbar#state#get_current_file(0)) && a:fname != tagbar#state#get_current_file(0).fpath))
+                                    call s:RenderContent(fileinfo)
+                                endif
+                            
+                                " Call setCurrent after rendering so RenderContent can check whether the
+                                " same file is being redisplayed
+    1              0.000005     if !empty(fileinfo)
+    1   0.000030   0.000014         call tagbar#debug#log('Setting current file [' . a:fname . ']')
+    1   0.000060   0.000017         call tagbar#state#set_current_file(fileinfo)
+    1              0.000004         let s:nearby_disabled = 0
+    1              0.000001     endif
+                            
+    1   0.000393   0.000017     call s:HighlightTag(0)
+    1   0.000852   0.000017     call s:SetStatusLine()
+    1   0.000017   0.000007     call tagbar#debug#log('AutoUpdate finished successfully')
+
+FUNCTION  <SNR>70_is_forbidden()
+Called 23 times
+Total time:   0.009042
+ Self time:   0.000860
+
+count  total (s)   self (s)
+   23   0.000399   0.000186   if s:is_excluded_ft(&filetype)
+                                return 1
+                              endif
+   23   0.000873   0.000139   if !s:get('excluded_regions_enabled')
+                                return 0
+                              endif
+   23   0.006750   0.000159   let region = s:get_syn_name()
+   23   0.000872   0.000228   return index(s:get('excluded_regions_list'), region) >= 0
+
+FUNCTION  WorkBreakDisplay()
+Called 142 times
+Total time:   0.014289
+ Self time:   0.014289
+
+count  total (s)   self (s)
+  142              0.000370     let result = ''
+                                
+  142              0.000364     if g:workbreak_overheated == 1
+                                    let i = 0
+                                    let filled = floor((g:workbreak_overheat_time - g:workbreak_counter) * 1.0 / (g:workbreak_overheat_time / g:workbreak_display_blocks))
+                                    let result .= '%#WorkBreakFilled#'
+                                    while i < filled
+                                        let result .= "\u2588"
+                                        let i += 1
+                                    endwhile
+                                    let result .= '%#WorkBreakOverheat#'
+                                    while i < g:workbreak_display_blocks
+                                        let result .= "\u2588"
+                                        let i += 1
+                                    endwhile
+                                    
+                                else
+  142              0.000218         let i = 0
+  142              0.001340         let filled = ceil((g:workbreak_overheat_time - g:workbreak_counter) * 1.0 / (g:workbreak_overheat_time / g:workbreak_display_blocks))
+  142              0.000498         if g:workbreak_overheat_time - g:workbreak_counter <= g:workbreak_warning_time
+                                        let result .= '%#WorkBreakOverheat#'
+                                    else
+  142              0.000402             let result .= '%#WorkBreakFilled#'
+  142              0.000113         endif
+  426              0.000619         while i < filled
+  284              0.000672             let result .= "\u2588"
+  284              0.000380             let i += 1
+  284              0.000252         endwhile
+  142              0.000315         let result .= '%#WorkBreakEmpty#'
+  568              0.000981         while i < g:workbreak_display_blocks
+  426              0.000805             let result .= "\u2588"
+  426              0.000468             let i += 1
+  426              0.000311         endwhile
+                                    
+  142              0.000107     endif
+                                
+  142              0.000262     return result
+
+FUNCTION  gitgutter#sign#find_current_signs()
+Called 2 times
+Total time:   0.000270
+ Self time:   0.000267
+
+count  total (s)   self (s)
+    2   0.000013   0.000010   let bufnr = gitgutter#utility#bufnr()
+    2              0.000005   let gitgutter_signs = {}  " <line_number (string)>: {'id': <id (number)>, 'name': <name (string)>}
+    2              0.000003   let other_signs = []      " [<line_number (number),...]
+    2              0.000004   let dummy_sign_placed = 0
+                            
+    2              0.000008   redir => signs
+    2              0.000104     silent execute "sign place buffer=" . bufnr
+    2              0.000006   redir END
+                            
+    2              0.000023   for sign_line in filter(split(signs, '\n')[2:], 'v:val =~# "="')
+                                " Typical sign line:  line=88 id=1234 name=GitGutterLineAdded
+                                " We assume splitting is faster than a regexp.
+                                let components  = split(sign_line)
+                                let name        = split(components[2], '=')[1]
+                                if name =~# 'GitGutterDummy'
+                                  let dummy_sign_placed = 1
+                                else
+                                  let line_number = str2nr(split(components[0], '=')[1])
+                                  if name =~# 'GitGutter'
+                                    let id = str2nr(split(components[1], '=')[1])
+                                    " Remove orphaned signs (signs placed on lines which have been deleted).
+                                    " (When a line is deleted its sign lingers.  Subsequent lines' signs'
+                                    " line numbers are decremented appropriately.)
+                                    if has_key(gitgutter_signs, line_number)
+                                      execute "sign unplace" gitgutter_signs[line_number].id
+                                    endif
+                                    let gitgutter_signs[line_number] = {'id': id, 'name': name}
+                                  else
+                                    call add(other_signs, line_number)
+                                  endif
+                                end
+                              endfor
+                            
+    2              0.000010   call setbufvar(bufnr, 'gitgutter_dummy_sign', dummy_sign_placed)
+    2              0.000009   call setbufvar(bufnr, 'gitgutter_gitgutter_signs', gitgutter_signs)
+    2              0.000008   call setbufvar(bufnr, 'gitgutter_other_signs', other_signs)
+
+FUNCTION  TDiffMoved()
+Called 2 times
+Total time:   0.000036
+ Self time:   0.000036
+
+count  total (s)   self (s)
+    2              0.000005     if g:tdiff_matched > 1
+                                    let g:tdiff_matched -= 1
+                                elseif g:tdiff_matched == 1
+                                    if g:tdiff_match_id >= 0
+                                        silent! call matchdelete(g:tdiff_match_id)
+                                    endif
+                                    let g:tdiff_matched = 0
+                                endif
+
+FUNCTION  gitgutter#async#handle_diff_job_vim()
+Called 1 time
+Total time:   0.000118
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    1   0.000078   0.000026   call gitgutter#debug#log('channel: '.a:channel.', line: '.a:line)
+                            
+    1   0.000038   0.000018   call s:accumulate_job_output(s:channel_id(a:channel), a:line)
+
+FUNCTION  gitgutter#sign#next_sign_id()
+Called 2 times
+Total time:   0.000019
+ Self time:   0.000019
+
+count  total (s)   self (s)
+    2              0.000007   let next_id = s:next_sign_id
+    2              0.000006   let s:next_sign_id += 1
+    2              0.000003   return next_id
+
+FUNCTION  anzu#search_status()
+Called 430 times
+Total time:   0.008595
+ Self time:   0.008595
+
+count  total (s)   self (s)
+  430              0.008289 	return substitute(s:status_cache, '<anzustatushighlight>.\{-}<\/anzustatushighlight>', "", "g")
+
+FUNCTION  gitgutter#utility#exists_file()
+Called 4 times
+Total time:   0.000529
+ Self time:   0.000529
+
+count  total (s)   self (s)
+    4              0.000528   return filereadable(s:file)
+
+FUNCTION  <SNR>70_is_empty_matchpair()
+Called 21 times
+Total time:   0.001523
+ Self time:   0.000346
+
+count  total (s)   self (s)
+                              " get char before the cursor.
+   21   0.000841   0.000116   let open = s:get_char(-1)
+   21   0.000597   0.000145   let idx = index(s:get('left_delims'), open)
+   21              0.000028   if idx == -1
+   21              0.000021     return 0
+                              endif
+                              let close = get(s:get('right_delims'), idx, '')
+                              return close ==# s:get_char(0)
+
+FUNCTION  <SNR>185_channel_id()
+Called 5 times
+Total time:   0.000070
+ Self time:   0.000070
+
+count  total (s)   self (s)
+    5              0.000066   return ch_info(a:channel)['id']
+
+FUNCTION  40()
+Called 306 times
+Total time:   0.015733
+ Self time:   0.015733
+
+count  total (s)   self (s)
+  306              0.005676     let newObj = copy(self)
+                            
+  306              0.001939     let llist = filter(copy(a:rawLoclist), 'v:val["valid"]')
+                            
+  306              0.000858     for e in llist
+                                    if get(e, 'type', '') ==# ''
+                                        let e['type'] = 'E'
+                                    endif
+                                endfor
+                            
+  306              0.000866     let newObj._rawLoclist = llist
+  306              0.000576     let newObj._name = ''
+  306              0.000876     let newObj._owner = bufnr('')
+  306              0.000519     let newObj._sorted = 0
+  306              0.000812     let newObj._columns = g:syntastic_cursor_columns
+                            
+  306              0.000393     return newObj
+
+FUNCTION  41()
+Called 306 times
+Total time:   0.028391
+ Self time:   0.010022
+
+count  total (s)   self (s)
+  306              0.001395     let buf = a:0 ? a:1 : bufnr('')
+  306   0.005160   0.002524     let loclist = syntastic#util#getbufvar(buf, 'syntastic_loclist', {})
+  306              0.001790     if type(loclist) != type({}) || empty(loclist)
+  306              0.000696         unlet! loclist
+  306   0.018001   0.002268         let loclist = g:SyntasticLoclist.New([])
+  306              0.000246     endif
+  306              0.000357     return loclist
+
+FUNCTION  50()
+Called 306 times
+Total time:   0.027487
+ Self time:   0.027487
+
+count  total (s)   self (s)
+  306              0.001055     if !exists('self._stl_format')
+  306              0.000640         let self._stl_format = ''
+  306              0.000220     endif
+  306              0.000732     if !exists('self._stl_flag')
+  306              0.000557         let self._stl_flag = ''
+  306              0.000201     endif
+                            
+  306              0.000845     if g:syntastic_stl_format !=# self._stl_format
+  306              0.000723         let self._stl_format = g:syntastic_stl_format
+                            
+  306              0.000658         if !empty(self._rawLoclist)
+                                        let errors = self.errors()
+                                        let warnings = self.warnings()
+                            
+                                        let num_errors = len(errors)
+                                        let num_warnings = len(warnings)
+                                        let num_issues = len(self._rawLoclist)
+                            
+                                        let output = self._stl_format
+                            
+                                        "hide stuff wrapped in %E(...) unless there are errors
+                                        let output = substitute(output, '\m\C%E{\([^}]*\)}', num_errors ? '\1' : '' , 'g')
+                            
+                                        "hide stuff wrapped in %W(...) unless there are warnings
+                                        let output = substitute(output, '\m\C%W{\([^}]*\)}', num_warnings ? '\1' : '' , 'g')
+                            
+                                        "hide stuff wrapped in %B(...) unless there are both errors and warnings
+                                        let output = substitute(output, '\m\C%B{\([^}]*\)}', (num_warnings && num_errors) ? '\1' : '' , 'g')
+                            
+                                        let flags = { '%':  '%', 't':  num_issues, 'e':  num_errors, 'w':  num_warnings, 'N':  (num_issues ? fnamemodify( bufname(self._rawLoclist[0]['bufnr']), ':t') : ''), 'P':  (num_issues ? fnamemodify( bufname(self._rawLoclist[0]['bufnr']), ':p:~:.') : ''), 'F':  (num_issues ? self._rawLoclist[0]['lnum'] : ''), 'ne': (num_errors ? fnamemodify( bufname(errors[0]['bufnr']), ':t') : ''), 'pe': (num_errors ? fnamemodify( bufname(errors[0]['bufnr']), ':p:~:.') : ''), 'fe': (num_errors ? errors[0]['lnum'] : ''), 'nw': (num_warnings ? fnamemodify( bufname(warnings[0]['bufnr']), ':t') : ''), 'pw': (num_warnings ? fnamemodify( bufname(warnings[0]['bufnr']), ':p:~:.') : ''), 'fw': (num_warnings ? warnings[0]['lnum'] : '') }
+                                        let output = substitute(output, '\v\C\%(-?\d*%(\.\d+)?)([npf][ew]|[NPFtew%])', '\=syntastic#util#wformat(submatch(1), flags[submatch(2)])', 'g')
+                            
+                                        let self._stl_flag = output
+                                    else
+  306              0.000540             let self._stl_flag = ''
+  306              0.000256         endif
+  306              0.000211     endif
+                            
+  306              0.000444     return self._stl_flag
+
+FUNCTION  gitgutter#diff#process_hunks()
+Called 2 times
+Total time:   0.000230
+ Self time:   0.000047
+
+count  total (s)   self (s)
+    2   0.000037   0.000010   call gitgutter#hunk#reset()
+    2              0.000004   let modified_lines = []
+    3              0.000005   for hunk in a:hunks
+    1   0.000168   0.000012     call extend(modified_lines, gitgutter#diff#process_hunk(hunk))
+    1              0.000001   endfor
+    2              0.000002   return modified_lines
+
+FUNCTION  airline#util#shorten()
+Called 307 times
+Total time:   0.004067
+ Self time:   0.004067
+
+count  total (s)   self (s)
+  307              0.001861   if winwidth(0) < a:winwidth && len(split(a:text, '\zs')) > a:minwidth
+                                return matchstr(a:text, '^.\{'.a:minwidth.'}').'…'
+                              else
+  307              0.000445     return a:text
+                              endif
+
+FUNCTION  <SNR>160_pos_less_equal()
+Called 6 times
+Total time:   0.000041
+ Self time:   0.000041
+
+count  total (s)   self (s)
+    6              0.000038 	return a:a[0] == a:b[0] ? a:a[1] <= a:b[1] : a:a[0] <= a:b[0]
+
+FUNCTION  <SNR>161_GetNearbyTag()
+Called 32 times
+Total time:   0.004196
+ Self time:   0.002771
+
+count  total (s)   self (s)
+   32              0.000059     if s:nearby_disabled
+                                    return {}
+                                endif
+                            
+   32   0.001437   0.000232     let fileinfo = tagbar#state#get_current_file(a:forcecurrent)
+   32              0.000081     if empty(fileinfo)
+                                    return {}
+                                endif
+                            
+   32              0.000078     let typeinfo = fileinfo.typeinfo
+   32              0.000045     if a:0 > 0
+                                    let curline = a:1
+                                else
+   32              0.000095         let curline = line('.')
+   32              0.000024     endif
+   32              0.000068     let tag = {}
+                            
+                                " If a tag appears in a file more than once (for example namespaces in
+                                " C++) only one of them has a 'tline' entry and can thus be highlighted.
+                                " The only way to solve this would be to go over the whole tag list again,
+                                " making everything slower. Since this should be a rare occurence and
+                                " highlighting isn't /that/ important ignore it for now.
+   72              0.000277     for line in range(curline, 1, -1)
+   72              0.000265         if has_key(fileinfo.fline, line)
+   32              0.000109             let curtag = fileinfo.fline[line]
+   32   0.000523   0.000304             if a:all || typeinfo.getKind(curtag.fields.kind).stl
+   32              0.000071                 let tag = curtag
+   32              0.000055                 break
+                                        endif
+                                    endif
+   40              0.000030     endfor
+                            
+   32              0.000042     return tag
+
+FUNCTION  airline#util#wrap()
+Called 2820 times
+Total time:   0.018781
+ Self time:   0.018781
+
+count  total (s)   self (s)
+ 2820              0.008248   if a:minwidth > 0 && winwidth(0) < a:minwidth
+                                return ''
+                              endif
+ 2820              0.003665   return a:text
+
+FUNCTION  gitgutter#debug#log()
+Called 7 times
+Total time:   0.000349
+ Self time:   0.000349
+
+count  total (s)   self (s)
+    7              0.000023   if g:gitgutter_log
+                                if s:new_log_session && gitgutter#async#available()
+                                  if exists('*ch_logfile')
+                                    call ch_logfile(s:channel_log, 'w')
+                                  endif
+                                endif
+                            
+                                execute 'redir >> '.s:log_file
+                                  if s:new_log_session
+                                    let s:start = reltime()
+                                    silent echo "\n==== start log session ===="
+                                  endif
+                            
+                                  let elapsed = reltimestr(reltime(s:start)).' '
+                                  silent echo ''
+                                  " callers excluding this function
+                                  silent echo elapsed.expand('<sfile>')[:-22].':'
+                                  silent echo elapsed.s:format_for_log(a:message)
+                                  if a:0 && !empty(a:1)
+                                    for msg in a:000
+                                      silent echo elapsed.s:format_for_log(msg)
+                                    endfor
+                                  endif
+                                redir END
+                            
+                                let s:new_log_session = 0
+                              endif
+
+FUNCTION  airline#extensions#ycm#get_error_count()
+Called 306 times
+Total time:   0.039240
+ Self time:   0.008724
+
+count  total (s)   self (s)
+  306              0.003892   if exists(':YcmDiag') && exists("*youcompleteme#GetErrorCount")
+  306   0.032506   0.001990     let cnt = youcompleteme#GetErrorCount()
+                            
+  306              0.000635     if cnt != 0
+                                  return s:error_symbol.cnt
+                                endif
+  306              0.000211   endif
+                            
+  306              0.000318   return ''
+
+FUNCTION  TabooTabName()
+Called 142 times
+Total time:   0.003021
+ Self time:   0.000940
+
+count  total (s)   self (s)
+  142   0.002920   0.000839     return s:tabname(a:tabnr)
+
+FUNCTION  <SNR>62_gettabvar()
+Called 142 times
+Total time:   0.001098
+ Self time:   0.001098
+
+count  total (s)   self (s)
+  142              0.000329     if v:version > 702
+  142              0.000609         return gettabvar(a:tabnr, a:var)
+                                endif
+                                for winnr in s:windows(a:tabnr)
+                                    let value = gettabwinvar(a:tabnr, winnr, a:var)
+                                    if !empty(value)
+                                        return value
+                                    endif
+                                endfor
+                                return ""
+
+FUNCTION  syntastic#util#getbufvar()
+Called 306 times
+Total time:   0.002635
+ Self time:   0.002635
+
+count  total (s)   self (s)
+  306              0.002411     return a:0 ? s:_getbufvar(a:buf, a:name, a:1) : getbufvar(a:buf, a:name)
+
+FUNCTION  <SNR>159_OnTextChangedNormalMode()
+Called 2 times
+Total time:   0.000426
+ Self time:   0.000027
+
+count  total (s)   self (s)
+    2   0.000136   0.000011   if !s:AllowedToCompleteInCurrentBuffer()
+                                return
+                              endif
+                            
+    2   0.000285   0.000011   call s:OnFileReadyToParse()
+
+FUNCTION  WorkBreakSave()
+Called 1 time
+Total time:   0.000719
+ Self time:   0.000719
+
+count  total (s)   self (s)
+    1              0.000715     call writefile([g:workbreak_counter, localtime(), g:workbreak_overheated], g:workbreak_save_path)
+
+FUNCTION  airline#highlighter#highlight_modified_inactive()
+Called 2 times
+Total time:   0.000641
+ Self time:   0.000079
+
+count  total (s)   self (s)
+    2              0.000009   if getbufvar(a:bufnr, '&modified')
+    2              0.000024     let colors = exists('g:airline#themes#{g:airline_theme}#palette.inactive_modified.airline_c') ? g:airline#themes#{g:airline_theme}#palette.inactive_modified.airline_c : []
+    2              0.000002   else
+                                let colors = exists('g:airline#themes#{g:airline_theme}#palette.inactive.airline_c') ? g:airline#themes#{g:airline_theme}#palette.inactive.airline_c : []
+                              endif
+                            
+    2              0.000004   if !empty(colors)
+    2   0.000585   0.000023     call airline#highlighter#exec('airline_c'.(a:bufnr).'_inactive', colors)
+    2              0.000002   endif
+
+FUNCTION  <SNR>159_InsideCommentOrString()
+Called 254 times
+Total time:   0.046632
+ Self time:   0.046632
+
+count  total (s)   self (s)
+                              " Has to be col('.') -1 because col('.') doesn't exist at this point. We are
+                              " in insert mode when this func is called.
+  254              0.042676   let syntax_group = synIDattr( synIDtrans( synID( line( '.' ), col( '.' ) - 1, 1 ) ), 'name')
+                            
+  254              0.001024   if stridx(syntax_group, 'Comment') > -1
+                                return 1
+                              endif
+                            
+  254              0.000660   if stridx(syntax_group, 'String') > -1
+                                return 2
+                              endif
+                            
+  254              0.000251   return 0
+
+FUNCTION  gitgutter#utility#directory_of_file()
+Called 2 times
+Total time:   0.000015
+ Self time:   0.000015
+
+count  total (s)   self (s)
+    2              0.000013   return fnamemodify(s:file, ':h')
+
+FUNCTION  <SNR>161_do_delayed_update()
+Called 2 times
+Total time:   0.000123
+ Self time:   0.000062
+
+count  total (s)   self (s)
+    2   0.000076   0.000015     let curfile = tagbar#state#get_current_file(0)
+    2              0.000005     if empty(curfile)
+                                    let curfname = ''
+                                else
+    2              0.000006         let curfname = curfile.fpath
+    2              0.000002     endif
+                            
+    2              0.000008     while !empty(s:delayed_update_files)
+                                    let fname = remove(s:delayed_update_files, 0)
+                                    let no_display = curfname !=# fname
+                                    call s:AutoUpdate(fname, 1, no_display)
+                                endwhile
+
+FUNCTION  <SNR>142_format_name()
+Called 1 time
+Total time:   0.000002
+ Self time:   0.000002
+
+count  total (s)   self (s)
+    1              0.000002     return a:name
+
+FUNCTION  airline#highlighter#highlight()
+Called 2 times
+Total time:   0.093387
+ Self time:   0.012565
+
+count  total (s)   self (s)
+    2              0.000005   let bufnr = a:0 ? a:1 : ''
+    2              0.000008   let p = g:airline#themes#{g:airline_theme}#palette
+                            
+                              " draw the base mode, followed by any overrides
+    2              0.000029   let mapped = map(a:modes, 'v:val == a:modes[0] ? v:val : a:modes[0]."_".v:val')
+    2              0.000006   let suffix = a:modes[0] == 'inactive' ? '_inactive' : ''
+    6              0.000010   for mode in mapped
+    4              0.000027     if exists('g:airline#themes#{g:airline_theme}#palette[mode]')
+    4              0.000016       let dict = g:airline#themes#{g:airline_theme}#palette[mode]
+   90              0.000197       for kvp in items(dict)
+   86              0.000232         let mode_colors = kvp[1]
+   86              0.000184         let name = kvp[0]
+   86              0.000286         if name is# 'airline_c' && !empty(bufnr) && suffix is# '_inactive'
+                                      let name = 'airline_c'.bufnr
+                                    endif
+   86   0.015420   0.000561         call airline#highlighter#exec(name.suffix, mode_colors)
+                            
+  258              0.000524         for accent in keys(s:accents)
+  172              0.000475           if !has_key(p.accents, accent)
+                                        continue
+                                      endif
+  172              0.000639           let colors = copy(mode_colors)
+  172              0.000518           if p.accents[accent][0] != ''
+   86              0.000273             let colors[0] = p.accents[accent][0]
+   86              0.000062           endif
+  172              0.000393           if p.accents[accent][2] != ''
+   86              0.000236             let colors[2] = p.accents[accent][2]
+   86              0.000058           endif
+  172              0.000296           if len(colors) >= 5
+  172              0.000604             let colors[4] = get(p.accents[accent], 4, '')
+  172              0.000137           else
+                                        call add(colors, get(p.accents[accent], 4, ''))
+                                      endif
+  172   0.038947   0.001387           call airline#highlighter#exec(name.suffix.'_'.accent, colors)
+  172              0.000152         endfor
+   86              0.000062       endfor
+                            
+                                  " TODO: optimize this
+   68              0.000182       for sep in items(s:separators)
+   64   0.029298   0.000894         call <sid>exec_separator(dict, sep[1][0], sep[1][1], sep[1][2], suffix)
+   64              0.000068       endfor
+    4              0.000002     endif
+    4              0.000003   endfor
+
+FUNCTION  tagbar#state#set_current_file()
+Called 1 time
+Total time:   0.000042
+ Self time:   0.000020
+
+count  total (s)   self (s)
+    1   0.000042   0.000020     call s:get().setCurrentFile(a:fileinfo)
+
+FUNCTION  <SNR>185_job_buffer()
+Called 2 times
+Total time:   0.000008
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    2              0.000008   return s:jobs[a:id].buffer
+
+FUNCTION  GetVimIndent()
+Called 2 times
+Total time:   0.000394
+ Self time:   0.000064
+
+count  total (s)   self (s)
+    2              0.000013   let ignorecase_save = &ignorecase
+    2              0.000003   try
+    2              0.000013     let &ignorecase = 0
+    2   0.000346   0.000017     return GetVimIndentIntern()
+                              finally
+    2              0.000009     let &ignorecase = ignorecase_save
+    2              0.000003   endtry
+
+FUNCTION  airline#parts#ffenc()
+Called 430 times
+Total time:   0.007306
+ Self time:   0.007306
+
+count  total (s)   self (s)
+  430              0.006961   return printf('%s%s%s', &fenc, &l:bomb ? '[BOM]' : '', strlen(&ff) > 0 ? '['.&ff.']' : '')
+
+FUNCTION  gitgutter#utility#shellescape()
+Called 6 times
+Total time:   0.000197
+ Self time:   0.000197
+
+count  total (s)   self (s)
+    6              0.000105   if a:arg =~ '^[A-Za-z0-9_/.-]\+$'
+    2              0.000004     return a:arg
+                              elseif &shell =~# 'cmd' || gitgutter#utility#using_xolox_shell()
+    4              0.000043     return '"' . substitute(substitute(a:arg, '"', '""', 'g'), '%', '"%"', 'g') . '"'
+                              else
+                                return shellescape(a:arg)
+                              endif
+
+FUNCTION  tagbar#debug#log()
+Called 6 times
+Total time:   0.000066
+ Self time:   0.000066
+
+count  total (s)   self (s)
+    6              0.000013     if s:debug_enabled
+                                    execute 'redir >> ' . s:debug_file
+                                    silent echon s:gettime() . ': ' . a:msg . "\n"
+                                    redir END
+                                endif
+
+FUNCTION  tagbar#currenttag()
+Called 31 times
+Total time:   0.007635
+ Self time:   0.002046
+
+count  total (s)   self (s)
+                                " Indicate that the statusline functionality is being used. This prevents
+                                " the CloseWindow() function from removing the autocommands.
+   31              0.000093     let s:statusline_in_use = 1
+                            
+   31              0.000045     if a:0 > 0
+                                    " also test for non-zero value for backwards compatibility
+   31              0.000339         let longsig   = a:1 =~# 's' || (type(a:1) == type(0) && a:1 != 0)
+   31              0.000117         let fullpath  = a:1 =~# 'f'
+   31              0.000106         let prototype = a:1 =~# 'p'
+   31              0.000029     else
+                                    let longsig   = 0
+                                    let fullpath  = 0
+                                    let prototype = 0
+                                endif
+                            
+   31   0.001188   0.000178     if !s:Init(1)
+                                    return a:default
+                                endif
+                            
+   31   0.004076   0.000209     let tag = s:GetNearbyTag(0, 1)
+                            
+   31              0.000066     if !empty(tag)
+   31              0.000038         if prototype
+                                        return tag.getPrototype(1)
+                                    else
+   31   0.001011   0.000299             return printf(a:fmt, tag.str(longsig, fullpath))
+                                    endif
+                                else
+                                    return a:default
+                                endif
+
+FUNCTION  gitgutter#utility#has_fresh_changes()
+Called 2 times
+Total time:   0.000034
+ Self time:   0.000034
+
+count  total (s)   self (s)
+    2              0.000032   return getbufvar(s:bufnr, 'changedtick') != getbufvar(s:bufnr, 'gitgutter_last_tick')
+
+FUNCTION  youcompleteme#GetWarningCount()
+Called 306 times
+Total time:   0.052043
+ Self time:   0.002632
+
+count  total (s)   self (s)
+  306   0.051743   0.002332   return s:Pyeval( 'ycm_state.GetWarningCount()' )
+
+FUNCTION  gitgutter#sign#update_signs()
+Called 2 times
+Total time:   0.042035
+ Self time:   0.000186
+
+count  total (s)   self (s)
+    2   0.000284   0.000014   call gitgutter#sign#find_current_signs()
+                            
+    2              0.000015   let new_gitgutter_signs_line_numbers = map(copy(a:modified_lines), 'v:val[0]')
+    2   0.000090   0.000021   let obsolete_signs = gitgutter#sign#obsolete_gitgutter_signs_to_remove(new_gitgutter_signs_line_numbers)
+                            
+    2              0.000009   let flicker_possible = s:remove_all_old_signs && !empty(a:modified_lines)
+    2              0.000002   if flicker_possible
+    1   0.026861   0.000013     call gitgutter#sign#add_dummy_sign()
+    1              0.000001   endif
+                            
+    2   0.012886   0.000035   call gitgutter#sign#remove_signs(obsolete_signs, s:remove_all_old_signs)
+    2   0.001790   0.000029   call gitgutter#sign#upsert_new_gitgutter_signs(a:modified_lines)
+                            
+    2              0.000004   if flicker_possible
+    1   0.000071   0.000021     call gitgutter#sign#remove_dummy_sign(0)
+    1              0.000001   endif
+
+FUNCTION  gitgutter#utility#restore_shell()
+Called 2 times
+Total time:   0.000038
+ Self time:   0.000038
+
+count  total (s)   self (s)
+    2              0.000022   if has('unix')
+                                if exists('s:shell')
+                                  let &shell = s:shell
+                                  let &shellcmdflag = s:shellcmdflag
+                                  let &shellredir = s:shellredir
+                                endif
+                              endif
+
+FUNCTION  <SNR>159_AllowedToCompleteInBuffer()
+Called 260 times
+Total time:   0.014675
+ Self time:   0.013043
+
+count  total (s)   self (s)
+  260              0.001672   let buffer_filetype = getbufvar( a:buffer, '&filetype' )
+                            
+  260              0.001972   if empty( buffer_filetype ) || getbufvar( a:buffer, '&buftype' ) ==# 'nofile' || buffer_filetype ==# 'qf'
+                                return 0
+                              endif
+                            
+  260   0.003160   0.001527   if s:DisableOnLargeFile( a:buffer )
+                                return 0
+                              endif
+                            
+  260              0.001766   let whitelist_allows = has_key( g:ycm_filetype_whitelist, '*' ) || has_key( g:ycm_filetype_whitelist, buffer_filetype )
+  260              0.001088   let blacklist_allows = !has_key( g:ycm_filetype_blacklist, buffer_filetype )
+                            
+  260              0.000645   let allowed = whitelist_allows && blacklist_allows
+  260              0.000281   if allowed
+  260              0.001179     let s:previous_allowed_buffer_number = bufnr( a:buffer )
+  260              0.000196   endif
+  260              0.000311   return allowed
+
+FUNCTION  youcompleteme#GetErrorCount()
+Called 306 times
+Total time:   0.030516
+ Self time:   0.002104
+
+count  total (s)   self (s)
+  306   0.030328   0.001916   return s:Pyeval( 'ycm_state.GetErrorCount()' )
+
+FUNCTION  airline#parts#readonly()
+Called 430 times
+Total time:   0.004563
+ Self time:   0.004563
+
+count  total (s)   self (s)
+  430              0.002016   if &readonly && &modifiable && !filereadable(bufname('%'))
+                                return '[noperm]'
+                              else
+  430              0.000983     return &readonly ? g:airline_symbols.readonly : ''
+                              endif
+
+FUNCTION  battery#backend()
+Called 1 time
+Total time:   0.000006
+ Self time:   0.000006
+
+count  total (s)   self (s)
+    1              0.000004   if exists('s:backend')
+    1              0.000002     return s:backend
+                              endif
+                              let s:backend = battery#backend#get(g:battery#backend)
+                              let s:backend.callback = function('s:update_callback')
+                              return s:backend
+
+FUNCTION  WorkBreakCheck()
+Called 36 times
+Total time:   0.002837
+ Self time:   0.002837
+
+count  total (s)   self (s)
+   36              0.000477     let time = localtime()
+   36              0.000124     if g:workbreak_last_time == 0
+                                    let g:workbreak_last_time = time - (g:workbreak_check_interval / 1000)
+                                endif
+                                
+   36              0.000260     let delta_time = (time - g:workbreak_last_time) * 1000
+                                
+   36              0.000151     if delta_time > g:workbreak_check_interval * 2 && delta_time > (g:workbreak_overheat_time / g:workbreak_cooldown_rate)
+                                    let g:workbreak_counter = 0
+                                endif
+                                
+   36              0.000060     if g:workbreak_hasmoved == 1
+   28              0.000083         let g:workbreak_cooldown_counter = g:workbreak_cooldown_delay
+                                    
+   28              0.000021     endif
+                                
+   36              0.000059     if g:workbreak_cooldown_counter > 0
+   36              0.000116         let g:workbreak_counter += g:workbreak_check_interval
+   36              0.000096         let g:workbreak_cooldown_counter -= g:workbreak_check_interval
+                                
+   36              0.000037     else
+                                    let g:workbreak_counter -= g:workbreak_check_interval * g:workbreak_cooldown_rate
+                                    
+                                endif
+                                
+   36              0.000051     if g:workbreak_counter <= 0
+                                    let g:workbreak_counter = 0
+                                    let g:workbreak_overheated = 0
+                                    
+                                elseif g:workbreak_counter >= g:workbreak_overheat_time
+                                    let g:workbreak_overheated = 1
+                                    let g:workbreak_cooldown_counter = 0
+                                    
+                                endif
+                                
+   36              0.000064     let g:workbreak_hasmoved = 0
+                                
+   36              0.000070     let g:workbreak_last_time = time
+
+FUNCTION  TDiffStop()
+Called 2 times
+Total time:   0.000126
+ Self time:   0.000126
+
+count  total (s)   self (s)
+    2              0.000005     if g:tdiff_match_id >= 0
+    2              0.000111         silent! call matchdelete(g:tdiff_match_id)
+    2              0.000002     endif
+    2              0.000004     let g:tdiff_matched = 0
+
+FUNCTION  delimitMate#ExpandReturn()
+Called 1 time
+Total time:   0.000320
+ Self time:   0.000088
+
+count  total (s)   self (s)
+    1   0.000090   0.000005   if s:is_forbidden("")
+                                return "\<CR>"
+                              endif
+    1   0.000023   0.000008   let escaped = s:cursor_idx() >= 2 && s:get_char(-2) == '\'
+    1   0.000068   0.000013   let expand_right_matchpair = s:get('expand_cr') == 2     && index(s:get('right_delims'), s:get_char(0)) > -1
+    1   0.000023   0.000007   let expand_inside_quotes = s:get('expand_inside_quotes')     && s:is_empty_quotes()     && !escaped
+    1   0.000068   0.000008   let is_empty_matchpair = s:is_empty_matchpair()
+    1              0.000004   if !pumvisible(  ) && (   is_empty_matchpair     || expand_right_matchpair     || expand_inside_quotes)
+                                let val = "\<Esc>a"
+                                if is_empty_matchpair && s:get('insert_eol_marker') == 2 && !search(escape(s:get('eol_marker'), '[]\.*^$').'$', 'cnW', '.')
+                                  let tail = getline('.')[col('.') - 1 : ]
+                                  let times = len(split(tail, '\zs'))
+                                  let val .= repeat(s:joinUndo() . "\<Right>", times) . s:get('eol_marker') . repeat(s:joinUndo() . "\<Left>", times + 1)
+                                endif
+                                let val .= "\<CR>"
+                                if &smartindent && !&cindent && !&indentexpr && s:get_char(0) == '}'
+                                  " indentation is controlled by 'smartindent', and the first character on
+                                  " the new line is '}'. If this were typed manually it would reindent to
+                                  " match the current line. Let's reproduce that behavior.
+                                  let shifts = indent('.') / &sw
+                                  let spaces = indent('.') - (shifts * &sw)
+                                  let val .= "^\<C-D>".repeat("\<C-T>", shifts).repeat(' ', spaces)
+                                endif
+                                " Expand:
+                                " XXX zv prevents breaking expansion with syntax folding enabled by
+                                " InsertLeave.
+                                let val .= "\<Esc>zvO"
+                                return val
+                              else
+    1              0.000002     return "\<CR>"
+                              endif
+
+FUNCTION  gitgutter#utility#not_git_dir()
+Called 4 times
+Total time:   0.002570
+ Self time:   0.000143
+
+count  total (s)   self (s)
+    4   0.002565   0.000138   return gitgutter#utility#full_path_to_directory_of_file() !~ '[/\\]\.git\($\|[/\\]\)'
+
+FUNCTION  gitgutter#utility#full_path_to_directory_of_file()
+Called 4 times
+Total time:   0.002427
+ Self time:   0.002427
+
+count  total (s)   self (s)
+    4              0.002424   return fnamemodify(s:file, ':p:h')
+
+FUNCTION  gitgutter#diff#process_hunk()
+Called 1 time
+Total time:   0.000156
+ Self time:   0.000094
+
+count  total (s)   self (s)
+    1              0.000002   let modifications = []
+    1              0.000003   let from_line  = a:hunk[0]
+    1              0.000002   let from_count = a:hunk[1]
+    1              0.000002   let to_line    = a:hunk[2]
+    1              0.000002   let to_count   = a:hunk[3]
+                            
+    1   0.000019   0.000016   if gitgutter#diff#is_added(from_count, to_count)
+    1   0.000043   0.000011     call gitgutter#diff#process_added(modifications, from_count, to_count, to_line)
+    1   0.000039   0.000010     call gitgutter#hunk#increment_lines_added(to_count)
+                            
+    1              0.000003   elseif gitgutter#diff#is_removed(from_count, to_count)
+                                call gitgutter#diff#process_removed(modifications, from_count, to_count, to_line)
+                                call gitgutter#hunk#increment_lines_removed(from_count)
+                            
+                              elseif gitgutter#diff#is_modified(from_count, to_count)
+                                call gitgutter#diff#process_modified(modifications, from_count, to_count, to_line)
+                                call gitgutter#hunk#increment_lines_modified(to_count)
+                            
+                              elseif gitgutter#diff#is_modified_and_added(from_count, to_count)
+                                call gitgutter#diff#process_modified_and_added(modifications, from_count, to_count, to_line)
+                                call gitgutter#hunk#increment_lines_added(to_count - from_count)
+                                call gitgutter#hunk#increment_lines_modified(from_count)
+                            
+                              elseif gitgutter#diff#is_modified_and_removed(from_count, to_count)
+                                call gitgutter#diff#process_modified_and_removed(modifications, from_count, to_count, to_line)
+                                call gitgutter#hunk#increment_lines_modified(to_count)
+                                call gitgutter#hunk#increment_lines_removed(from_count - to_count)
+                            
+                              endif
+    1              0.000001   return modifications
+
+FUNCTION  <SNR>164_getKind()
+Called 31 times
+Total time:   0.000220
+ Self time:   0.000220
+
+count  total (s)   self (s)
+   31              0.000102     let idx = self.kinddict[a:kind]
+   31              0.000093     return self.kinds[idx]
+
+FUNCTION  <SNR>70_get()
+Called 94 times
+Total time:   0.002424
+ Self time:   0.002424
+
+count  total (s)   self (s)
+   94              0.000145   if a:0 == 2
+                                return deepcopy(get(a:2, 'delimitMate_' . a:name, a:1))
+                              elseif a:0 == 1
+                                let bufoptions = get(s:options, bufnr('%'), {})
+                                return deepcopy(get(bufoptions, a:name, a:1))
+                              else
+   94              0.000993     return deepcopy(eval('s:options.' . bufnr('%') . '.' . a:name))
+                              endif
+
+FUNCTION  gitgutter#hunk#summary()
+Called 1 time
+Total time:   0.000007
+ Self time:   0.000007
+
+count  total (s)   self (s)
+    1              0.000006   return get(getbufvar(a:bufnr,''), 'gitgutter_summary', [0,0,0])
+
+FUNCTION  <SNR>185_job_started()
+Called 2 times
+Total time:   0.000030
+ Self time:   0.000030
+
+count  total (s)   self (s)
+    2              0.000004   if a:0  " vim
+    2              0.000017     let s:jobs[a:id] = {'output': [], 'buffer': a:1}
+    2              0.000002   else    " nvim
+                                let s:jobs[a:id] = 1
+                              endif
+
+FUNCTION  gitgutter#utility#bufnr()
+Called 21 times
+Total time:   0.000049
+ Self time:   0.000049
+
+count  total (s)   self (s)
+   21              0.000036   return s:bufnr
+
+FUNCTION  <SNR>70_get_syn_name()
+Called 23 times
+Total time:   0.006591
+ Self time:   0.006591
+
+count  total (s)   self (s)
+   23              0.000097   let col = col('.')
+   23              0.000068   if  col == col('$')
+   23              0.000056     let col = col - 1
+   23              0.000019   endif
+   23              0.006314   return synIDattr(synIDtrans(synID(line('.'), col, 1)), 'name')
+
+FUNCTION  <SNR>142_update_untracked_in_buffer_config()
+Called 306 times
+Total time:   0.005969
+ Self time:   0.005969
+
+count  total (s)   self (s)
+  306              0.001477   if !has_key(s:vcs_config[a:vcs].untracked, a:file)
+                                return
+                              elseif s:vcs_config[a:vcs].untracked[a:file] != b:buffer_vcs_config[a:vcs].untracked
+                                let b:buffer_vcs_config[a:vcs].untracked = s:vcs_config[a:vcs].untracked[a:file]
+                                unlet! b:airline_head
+                              endif
+
+FUNCTION  airline#parts#crypt()
+Called 306 times
+Total time:   0.002480
+ Self time:   0.002480
+
+count  total (s)   self (s)
+  306              0.002161   return g:airline_detect_crypt && exists("+key") && !empty(&key) ? g:airline_symbols.crypt : ''
+
+FUNCTION  <SNR>70_is_excluded_ft()
+Called 23 times
+Total time:   0.000212
+ Self time:   0.000212
+
+count  total (s)   self (s)
+   23              0.000137   if !exists("g:delimitMate_excluded_ft")
+   23              0.000046     return 0
+                              endif
+                              return index(split(g:delimitMate_excluded_ft, ','), a:ft, 0, 1) >= 0
+
+FUNCTION  gitgutter#utility#stringify()
+Called 2 times
+Total time:   0.000009
+ Self time:   0.000009
+
+count  total (s)   self (s)
+    2              0.000009   return join(a:list, "\n")."\n"
+
+FUNCTION  gitgutter#async#execute()
+Called 2 times
+Total time:   0.664696
+ Self time:   0.664523
+
+count  total (s)   self (s)
+    2   0.000013   0.000010   let bufnr = gitgutter#utility#bufnr()
+                            
+    2              0.000021   if has('nvim')
+                                if has('unix')
+                                  let command = ["sh", "-c", a:cmd]
+                                elseif has('win32')
+                                  let command = ["cmd.exe", "/c", a:cmd]
+                                else
+                                  throw 'unknown os'
+                                endif
+                                " Make the job use a shell while avoiding (un)quoting problems.
+                                let job_id = jobstart(command, { 'buffer':    bufnr, 'on_stdout': function('gitgutter#async#handle_diff_job_nvim'), 'on_stderr': function('gitgutter#async#handle_diff_job_nvim'), 'on_exit':   function('gitgutter#async#handle_diff_job_nvim') })
+                                call gitgutter#debug#log('[nvim job: '.job_id.', buffer: '.bufnr.'] '.a:cmd)
+                                if job_id < 1
+                                  throw 'diff failed'
+                                endif
+                            
+                                " Note that when `cmd` doesn't produce any output, i.e. the diff is empty,
+                                " the `stdout` event is not fired on the job handler.  Therefore we keep
+                                " track of the jobs ourselves so we can spot empty diffs.
+                                call s:job_started(job_id)
+                            
+                              else
+                                " Make the job use a shell.
+                                "
+                                " Pass a handler for stdout but not for stderr so that errors are
+                                " ignored (and thus signs are not updated; this assumes that an error
+                                " only occurs when a file is not tracked by git).
+                            
+    2              0.000017     if has('unix')
+                                  let command = ["sh", "-c", a:cmd]
+                                elseif has('win32')
+    2              0.000007       let command = "cmd.exe /c ".a:cmd
+    2              0.000001     else
+                                  throw 'unknown os'
+                                endif
+                            
+    2              0.664225     let job = job_start(command, { 'out_cb':   'gitgutter#async#handle_diff_job_vim', 'close_cb': 'gitgutter#async#handle_diff_job_vim_close' })
+    2   0.000224   0.000116     call gitgutter#debug#log('[vim job: '.string(job_info(job)).', buffer: '.bufnr.'] '.a:cmd)
+                            
+    2   0.000098   0.000036     call s:job_started(s:channel_id(job_getchannel(job)), bufnr)
+    2              0.000002   endif
+
+FUNCTION  gitgutter#utility#file_relative_to_repo_root()
+Called 2 times
+Total time:   0.000074
+ Self time:   0.000074
+
+count  total (s)   self (s)
+    2              0.000017   let file_path_relative_to_repo_root = getbufvar(s:bufnr, 'gitgutter_repo_relative_path')
+    2              0.000008   if empty(file_path_relative_to_repo_root)
+                                let dir_path_relative_to_repo_root = gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file(g:gitgutter_git_executable.' rev-parse --show-prefix'))
+                                let dir_path_relative_to_repo_root = gitgutter#utility#strip_trailing_new_line(dir_path_relative_to_repo_root)
+                                let file_path_relative_to_repo_root = dir_path_relative_to_repo_root . gitgutter#utility#filename()
+                                call setbufvar(s:bufnr, 'gitgutter_repo_relative_path', file_path_relative_to_repo_root)
+                              endif
+    2              0.000005   return file_path_relative_to_repo_root
+
+FUNCTION  <SNR>160_searchpos_all()
+Called 2 times
+Total time:   0.000462
+ Self time:   0.000462
+
+count  total (s)   self (s)
+                            	" winsave view correctly restores curswant
+    2              0.000018 	let old_pos = winsaveview()
+    2              0.000006 	let result = []
+    2              0.000003 	try
+    2              0.000026 		call setpos(".", [0, line("$"), strlen(getline("$")), 0])
+    2              0.000014 		while 1
+    2              0.000235 			silent! let pos = searchpos(a:pattern, "w")
+    2              0.000011 			if pos == [0, 0] || index(result, pos) != -1
+    2              0.000004 				break
+                            			endif
+                            			call add(result, pos)
+                            			if len(result) >= g:anzu_search_limit
+                            				break
+                            			endif
+                            		endwhile
+    2              0.000003 	finally
+    2              0.000103 		call winrestview(old_pos)
+    2              0.000003 	endtry
+    2              0.000003 	return result
+
+FUNCTION  <SNR>161_TagbarBufName()
+Called 2 times
+Total time:   0.000028
+ Self time:   0.000028
+
+count  total (s)   self (s)
+    2              0.000011     if !exists('t:tagbar_buf_name')
+                                    let s:buffer_seqno += 1
+                                    let t:tagbar_buf_name = '__Tagbar__.' . s:buffer_seqno
+                                endif
+                            
+    2              0.000005     return t:tagbar_buf_name
+
+FUNCTION  <SNR>41_sub()
+Called 306 times
+Total time:   0.007135
+ Self time:   0.007135
+
+count  total (s)   self (s)
+  306              0.006914   return substitute(a:str,'\v\C'.a:pat,a:rep,'')
+
+FUNCTION  <SNR>142_update_git_branch()
+Called 306 times
+Total time:   0.125508
+ Self time:   0.019189
+
+count  total (s)   self (s)
+  306              0.000606   if !s:has_fugitive
+                                let s:vcs_config['git'].branch = ''
+                                return
+                              endif
+                            
+  306   0.109553   0.003234   let name = fugitive#head(7)
+  306              0.000786   if empty(name)
+                                if has_key(s:git_dirs, a:path)
+                                  let s:vcs_config['git'].branch = s:git_dirs[a:path]
+                                  return
+                                endif
+                            
+                                let dir = fugitive#extract_git_dir(a:path)
+                                if empty(dir)
+                                  let name = ''
+                                else
+                                  try
+                                    let line = join(readfile(dir . '/HEAD'))
+                                    if strpart(line, 0, 16) == 'ref: refs/heads/'
+                                      let name = strpart(line, 16)
+                                    else
+                                      " raw commit hash
+                                      let name = strpart(line, 0, 7)
+                                    endif
+                                  catch
+                                    let name = ''
+                                  endtry
+                                endif
+                              endif
+                            
+  306              0.001330   let s:git_dirs[a:path] = name
+  306              0.001024   let s:vcs_config['git'].branch = name
+
+FUNCTION  <SNR>41_repo_head()
+Called 306 times
+Total time:   0.087989
+ Self time:   0.015266
+
+count  total (s)   self (s)
+  306   0.069148   0.003560     let head = s:repo().head_ref()
+                            
+  306              0.004343     if head =~# '^ref: '
+  306   0.010128   0.002993       let branch = s:sub(head,'^ref: %(refs/%(heads/|remotes/|tags/)=)=','')
+  306              0.000515     elseif head =~# '^\x\{40\}$'
+                                  " truncate hash to a:1 characters if we're in detached head mode
+                                  let len = a:0 ? a:1 : 0
+                                  let branch = len ? head[0:len-1] : ''
+                                else
+                                  return ''
+                                endif
+                            
+  306              0.000453     return branch
+
+FUNCTION  gitgutter#hunk#reset()
+Called 2 times
+Total time:   0.000027
+ Self time:   0.000024
+
+count  total (s)   self (s)
+    2   0.000026   0.000023   call setbufvar(gitgutter#utility#bufnr(), 'gitgutter_summary', [0,0,0])
+
+FUNCTION  <SNR>159_Complete()
+Called 421 times
+Total time:   0.013561
+ Self time:   0.010077
+
+count  total (s)   self (s)
+                              " Do not call user's completion function if the start column is after the
+                              " current column or if there are no candidates. Close the completion menu
+                              " instead. This avoids keeping the user in completion mode.
+  421              0.002867   if s:completion.start_column > col( '.' ) || empty( s:completion.candidates )
+  287   0.003923   0.001586     call s:CloseCompletionMenu()
+  287              0.000284   else
+                                " <c-x><c-u> invokes the user's completion function (which we have set to
+                                " youcompleteme#CompleteFunc), and <c-p> tells Vim to select the previous
+                                " completion candidate. This is necessary because by default, Vim selects the
+                                " first candidate when completion is invoked, and selecting a candidate
+                                " automatically replaces the current text with it. Calling <c-p> forces Vim to
+                                " deselect the first candidate and in turn preserve the user's current text
+                                " until he explicitly chooses to replace it with a completion.
+  134   0.002253   0.001106     call s:SendKeys( "\<C-X>\<C-U>\<C-P>" )
+  134              0.000113   endif
+
+FUNCTION  gitgutter#utility#save_last_seen_change()
+Called 2 times
+Total time:   0.000021
+ Self time:   0.000021
+
+count  total (s)   self (s)
+    2              0.000018   call setbufvar(s:bufnr, 'gitgutter_last_tick', getbufvar(s:bufnr, 'changedtick'))
+
+FUNCTION  <SNR>159_SendKeys()
+Called 240 times
+Total time:   0.002154
+ Self time:   0.002154
+
+count  total (s)   self (s)
+                              " By default keys are added to the end of the typeahead buffer. If there are
+                              " already keys in the buffer, they will be processed first and may change the
+                              " state that our keys combination was sent for (e.g. <C-X><C-U><C-P> in normal
+                              " mode instead of insert mode or <C-e> outside of completion mode). We avoid
+                              " that by inserting the keys at the start of the typeahead buffer with the 'i'
+                              " option. Also, we don't want the keys to be remapped to something else so we
+                              " add the 'n' option.
+  240              0.001233   call feedkeys( a:keys, 'in' )
+
+FUNCTION  anzu#clear_search_cache()
+Called 256 times
+Total time:   0.003887
+ Self time:   0.003887
+
+count  total (s)   self (s)
+  256              0.001909 	let bufnr = get(a:, 1, bufnr("%"))
+  256              0.001704 	call setbufvar(bufnr, "anzu_searchpos_cache", {})
+
+FUNCTION  <SNR>142_check_in_path()
+Called 1 time
+Total time:   0.000664
+ Self time:   0.000664
+
+count  total (s)   self (s)
+    1              0.000003   if !exists('b:airline_branch_path')
+    1              0.000005     let root = get(b:, 'git_dir', get(b:, 'mercurial_dir', ''))
+    1              0.000517     let bufferpath = resolve(fnamemodify(expand('%'), ':p'))
+                            
+    1              0.000043     if !filereadable(root) "not a file
+                                  " if .git is a directory, it's the old submodule format
+    1              0.000012       if match(root, '\.git$') >= 0
+    1              0.000059         let root = expand(fnamemodify(root, ':h'))
+    1              0.000002       else
+                                    " else it's the newer format, and we need to guesstimate
+                                    let pattern = '\.git\(\\\|\/\)modules\(\\\|\/\)'
+                                    if match(root, pattern) >= 0
+                                      let root = substitute(root, pattern, '', '')
+                                    endif
+                                  endif
+    1              0.000001     endif
+                            
+    1              0.000006     let b:airline_file_in_root = stridx(bufferpath, root) > -1
+    1              0.000001   endif
+    1              0.000002   return b:airline_file_in_root
+
+FUNCTION  gitgutter#sign#remove_signs()
+Called 2 times
+Total time:   0.012851
+ Self time:   0.012842
+
+count  total (s)   self (s)
+    2   0.000033   0.000024   let bufnr = gitgutter#utility#bufnr()
+    2              0.000018   if a:all_signs && s:supports_star && empty(getbufvar(bufnr, 'gitgutter_other_signs'))
+    2              0.000010     let dummy_sign_present = getbufvar(bufnr, 'gitgutter_dummy_sign')
+    2              0.000017     execute "sign unplace * buffer=" . bufnr
+    2              0.000004     if dummy_sign_present
+    1              0.012728       execute "sign place" s:dummy_sign_id "line=" . 9999 "name=GitGutterDummy buffer=" . bufnr
+    1              0.000008     endif
+    2              0.000002   else
+                                for id in a:sign_ids
+                                  execute "sign unplace" id
+                                endfor
+                              endif
+
+FUNCTION  delimitMate#BS()
+Called 2 times
+Total time:   0.001314
+ Self time:   0.000169
+
+count  total (s)   self (s)
+    2   0.000627   0.000020   if s:is_forbidden("")
+                                let extra = ''
+                              elseif &bs !~ 'start\|2'
+                                let extra = ''
+                              elseif delimitMate#WithinEmptyPair()
+                                let extra = "\<Del>"
+                              elseif s:is_space_expansion()
+                                let extra = "\<Del>"
+                              elseif s:is_cr_expansion()
+                                let extra = repeat("\<Del>", len(matchstr(getline(line('.') + 1), '^\s*\S')))
+                              else
+    2              0.000004     let extra = ''
+    2              0.000002   endif
+    2              0.000009   return "\<BS>" . extra
+
+FUNCTION  battery#update()
+Called 1 time
+Total time:   0.000019
+ Self time:   0.000013
+
+count  total (s)   self (s)
+    1   0.000013   0.000007   let backend = battery#backend()
+    1              0.000006   return backend.update()
+
+FUNCTION  gitgutter#async#handle_diff_job_vim_close()
+Called 2 times
+Total time:   0.044653
+ Self time:   0.000227
+
+count  total (s)   self (s)
+    2   0.000154   0.000049   call gitgutter#debug#log('channel: '.a:channel)
+                            
+    2   0.000041   0.000016   let channel_id = s:channel_id(a:channel)
+    2   0.000023   0.000015   let job_bufnr = s:job_buffer(channel_id)
+                            
+    2              0.000007   if bufexists(job_bufnr)
+    2   0.000015   0.000011     let current_buffer = gitgutter#utility#bufnr()
+    2   0.000029   0.000010     call gitgutter#utility#set_buffer(job_bufnr)
+                            
+    2   0.001493   0.000009     if gitgutter#utility#is_active()
+    2   0.042752   0.000046       call gitgutter#handle_diff(s:job_output(channel_id))
+    2              0.000002     endif
+                            
+    2   0.000058   0.000021     call gitgutter#utility#set_buffer(current_buffer)
+    2              0.000003   endif
+    2   0.000061   0.000023   call s:job_finished(channel_id)
+
+FUNCTION  <SNR>69_TriggerAbb()
+Called 21 times
+Total time:   0.000450
+ Self time:   0.000450
+
+count  total (s)   self (s)
+   21              0.000270   if v:version < 703 || ( v:version == 703 && !has('patch489') ) || pumvisible()
+    4              0.000009     return ''
+                              endif
+   17              0.000070   return "\<C-]>"
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+    2   0.678028   0.000757  gitgutter#process_buffer()
+    2   0.675289   0.010257  gitgutter#diff#run_diff()
+    2   0.664696   0.664523  gitgutter#async#execute()
+  306   0.606019   0.008245  airline#extensions#branch#get_head()
+  306   0.597774   0.010073  airline#extensions#branch#head()
+  254   0.433114   0.057415  <SNR>159_OnTextChangedInsertMode()
+  306   0.369093   0.235429  <SNR>142_update_branch()
+ 1740   0.238117             <SNR>159_Pyeval()
+  228   0.225949   0.173273  <SNR>159_InvokeCompletion()
+  306   0.217914   0.211945  <SNR>142_update_untracked()
+  421   0.139625   0.018663  <SNR>159_PollCompletion()
+  430   0.135218   0.041190  airline#check_mode()
+  306   0.125508   0.019189  <SNR>142_update_git_branch()
+  306   0.106319   0.007002  fugitive#head()
+    2   0.093387   0.012565  airline#highlighter#highlight()
+  306   0.087989   0.015266  <SNR>41_repo_head()
+  470   0.086822             UltiSnips#TrackChange()
+  306   0.065250   0.004296  airline#extensions#syntastic#get_warnings()
+  324   0.063101   0.020562  airline#highlighter#exec()
+  306   0.062699   0.010656  airline#extensions#ycm#get_warning_count()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+    2   0.664696   0.664523  gitgutter#async#execute()
+ 1740              0.238117  <SNR>159_Pyeval()
+  306   0.369093   0.235429  <SNR>142_update_branch()
+  306   0.217914   0.211945  <SNR>142_update_untracked()
+  228   0.225949   0.173273  <SNR>159_InvokeCompletion()
+  470              0.086822  UltiSnips#TrackChange()
+  512              0.057826  <SNR>124_Highlight_Matching_Pair()
+  254   0.433114   0.057415  <SNR>159_OnTextChangedInsertMode()
+  306   0.057488   0.053125  <SNR>41_repo_head_ref()
+  254              0.046632  <SNR>159_InsideCommentOrString()
+  430   0.135218   0.041190  airline#check_mode()
+  254              0.031905  SCC_OnCursorMovedI()
+  254   0.048673   0.028039  <SNR>159_IdentifierFinishedOperations()
+  306              0.027487  50()
+  904              0.027186  <SNR>146_get_syn()
+    1   0.026847   0.026846  gitgutter#sign#add_dummy_sign()
+  324   0.063101   0.020562  airline#highlighter#exec()
+ 1530              0.019596  airline#util#append()
+  612              0.019427  <SNR>41_repo()
+  306   0.125508   0.019189  <SNR>142_update_git_branch()
+

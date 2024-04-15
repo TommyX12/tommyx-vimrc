@@ -1,0 +1,249 @@
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+#+TITLE: TommyX's Vim Tutorial
+#+AUTHOR: TommyX
+
+* Setup Your Configuration
+1. Make a GitHub repository
+2. Clone the repository to somewhere (say =~/vicky-vim=)
+3. Add a file (say =vicky-vimrc.vim=)
+4. Add to =~/.vimrc=:
+   : set runtimepath+=~/vicky-vim
+   : runtime vicky-vimrc.vim
+   First line tells vim that vim can search for files in =~/vicky-vim=.
+   Second line tells vim to run the file ~vicky-vimrc.vim~, and vim will search under ~runtimepath~, which includes =~/vicky-vim=.
+5. Now add all your configuration to =vicky-vimrc.vim=, and make sure to sync it to GitHub.
+
+* Useful Default Key Bindings
+
+** Movement
+- =h= / =l=: move left / right
+- =j= / =k=: move down / up
+- =w= (next *word*) / =b= (*backward* word): move to next word / move to previous word
+- =e= (*end* of word): move to the end of current word
+- =gg=: move to top of the file
+- =G=: move to end of the file
+- =ctrl + u= (*up*): scroll up
+- =ctrl + d= (*down*): scroll down
+
+** Normal and visual mode editing
+Operator:
+- =d= + /movement/ (*delete*): delete /movement/
+- =c= + /movement/ (*change*): change /movement/
+- =y= + /movement/: copy /movement/
+- =p= (*paste*): paste what was copied
+- =<= / =>= + /movement/: indent /movement/
+- =.=: *very useful*: repeat the last command
+- =u=: *very useful*: undo
+- =ctrl + r=: *very useful*: redo. It is highly recommended to bind =U= (shift + =u=) to redo.
+  
+Movement (the most useful):
+- =iw=: inside word, which is the word itself
+- =aw=: around word, which is the word and the space after it
+- =i)=: inside current round bracket
+- =a)=: inside current round bracket, including the bracket itself
+- =i]=: inside current square bracket
+- =i}=: inside current curly bracket
+- i': inside current single quote
+- i": inside current double quote
+- if pressing the operator twice: the entire line
+- if shift + operator: from cursor to end of the line
+- if currently in visual model: the selection itself
+  
+Enter visual model from normal mode:
+- =v=: enter visual mode
+- =V=: enter visual line mode (select lines)
+
+Some *very useful* examples:
+- =dd=: delete the line
+- =cc=: delete the line, then go into insert mode
+- =yy=: copy the line
+- =C=: delete from cursor to end of the line, then go into insert mode
+- =daw= (*delete around word*): delete word, including the space after it
+- =ciw= (*change inside word*): delete word then go into insert mode. This is *very useful* during searching, if you press =n= and then =.= and repeat, since it can replace the next occurrence by going to it and repeating the command.
+- =ci)=: delete all content inside the current round bracket, and enter insert mode. For example, if you have ~a = (something else)~, and cursor is at ~else~, then press ~di)~ to get ~a = ()~.
+- =yiw=: copy word
+- =d= or =c= or =y= or =<= or =>= in visual mode: delete or change or copy or indent the visual selection.
+- =<<= / =>>=: indent current line to the left / right
+
+** Insert mode editing
+When in normal mode:
+- =i=: enter insert mode
+- =a=: go to next character, and enter insert mode
+- =I= (shift + =i=): go to start of line, and enter insert mode
+- =A= (shift + =a=): go to end of line, and enter insert mode
+
+When in insert mode:
+- =ctrl + n= (*next* auto complete): auto complete. Press again to select the next auto complete.
+- =ctrl + p= (*previous* auto complete): auto complete. Press again to select the previous auto complete.
+
+** Search
+- =/=: search forward
+- =?= (shift + =/=): search backward
+- =n= (*next* occurrence): jump to next occurrence of the previous search
+- =N= (shift + =n=): jump to previous occurrence of the previous search
+- =*=: *very useful*: search for the word under cursor and jump to the next occurrence
+
+** Opening multiple windows
+Window commands usually start with =ctrl + w=.
+- =ctrl + w= then =ctrl + s= (*window split*): split the window horizontally (into top and bottom)
+- =ctrl + w= then =ctrl + v= (*window vertical* split): split the window vertically (into left and right)
+- =ctrl + w= then =ctrl + q= (*window quit*): close current window
+- =ctrl + w= then =ctrl + h/j/k/l=: move to another window
+
+** Special commands
+To type in special commands, first press =:=. After typing the command, press =enter= to run it.
+
+*** Basics
+- =:q= (*quit*): quit vim
+- =:q!=: force quit vim
+- =:w= (*write*): save current file
+- =:e filename= (*edit*): edit a file called =filename=
+- =:123=: go to line 123
+
+* Changing Your Configuration
+
+** Basic syntax and example
+- Comment:
+  : " some comment
+
+- Key binding (example):
+  : nmap a b
+  This makes it so that pressing =a= in *normal* mode performs the same action as =b=.
+  : imap a b
+  This makes it so that pressing =a= in *insert* mode performs the same action as =b=.
+  : vmap a b
+  This makes it so that pressing =a= in *visual* mode performs the same action as =b=.
+  : nnoremap a b
+  This makes it so that pressing =a= in *normal* mode performs the same action as =b=, but =b= is *not recursive*, which means any other binding that make =b= do something else is ignored. This means we make =a= do the *original* action in =b=.
+  
+  example:
+  : inoremap jk <esc>
+  This makes it so that if you press =jk= (quickly) in insert mode, it quits insert mode (by simulating the =esc= key).
+
+- Some common keys:
+  - =<esc>=: escape
+  - =<cr>=: enter
+  - =<C-x>=: control + w
+  - =<S-x>=: shift + x
+  - =<leader>=: leader key. You can set this to anything you want, such as comma (=,=). For example:
+    : let mapleader = ","
+
+** Installing plugin manager
+Follow instructions here: https://github.com/VundleVim/Vundle.vim
+
+This allows you to super easily install any plugin that you can find on github.
+
+** Some useful key bindings
+#+BEGIN_EXAMPLE
+" Y copy to end of line
+noremap Y y$
+
+" very useful: make . work in visual mode, by repeating the command on each line
+vnoremap . :norm! .<cr>
+
+" set leader key to comma
+let mapleader = ","
+
+" very useful: make jk quit insert mode
+inoremap jk <esc>
+
+" make comma + space remove search highlight
+" here <leader> means comma, because we set it earlier
+nnoremap <leader><space> :noh<cr>
+
+" use shift + hjkl to move faster
+nnoremap H 8h
+nnoremap L 8l
+nnoremap J 5j
+nnoremap K 5k
+
+" use U for redo
+nnoremap U <C-r>
+
+" use ctrl+h and ctrl+l to go to start and end of line
+nnoremap <C-h> ^
+nnoremap <C-l> $
+" use ctrl+k and ctrl+j to go to start and end of file
+nnoremap <C-j> G
+nnoremap <C-k> gg
+#+END_EXAMPLE
+
+** Some useful settings
+Just copy these into your config.
+#+BEGIN_EXAMPLE
+" syntax highlighting
+syntax on
+
+" enable system clipboard
+set clipboard=unnamed
+
+" enable cursor line
+set cursorline
+
+" line numbering
+set number
+set norelativenumber
+
+" enable spellcheck
+set spell spelllang=en_us
+
+" disable cursor blinking in normal mode
+set guicursor+=n:blinkon0
+
+" omni completion
+set omnifunc=syntaxcomplete#Complete
+
+" indent wrapped lines
+set wrap
+set breakindent
+set breakindentopt=shift:2
+set showbreak=..
+
+" horizontal split below, vertical split right.
+set splitbelow
+set splitright
+
+" tab and indent settings
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab " use spaces instead of tabs.
+set smarttab " let's tab key insert 'tab stops', and backspace deletes tabs.
+set shiftround " tab / shifting moves to closest tab stop.
+set autoindent " Match indents on new lines.
+set copyindent " Copy existing indent char when auto indenting
+set smartindent " Intelligently un-indent / indent new lines based on rules.
+
+" backspace
+set backspace=indent,eol,start
+    
+set hidden " allow me to have buffers with unsaved changes.
+set autoread " automatically load file if changed on disk.
+
+" use utf-8 by default
+set encoding=utf-8
+
+" make search better
+set ignorecase " case insensitive search
+set smartcase " If there are uppercase letters, become case-sensitive.
+set incsearch " live incremental searching
+set showmatch " live match highlighting
+set hlsearch " highlight matches
+set gdefault " use the `g` flag by default.
+
+" allow the cursor to go anywhere in visual block mode.
+set virtualedit+=block
+
+" always display status line
+set laststatus=2
+
+" disable jumping to matching bracket when inserting
+set noshowmatch
+
+" enhance completion 
+set completeopt=longest,menuone
+
+" disable printing stuff when completing 
+set shortmess+=aoOc
+#+END_EXAMPLE
+
