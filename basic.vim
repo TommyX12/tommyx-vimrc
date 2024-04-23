@@ -97,7 +97,7 @@ set norelativenumber
 set noshowmatch
 
 " enable system clipboard
-" set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 
 " enhance completion
 set completeopt=menuone
@@ -251,8 +251,8 @@ nnoremap ,<C-s> :wa<cr>
 " nnoremap <C-cr> :WToggleFullscreen<cr>
 
 " system clipboard copy and paste using ctrl-c and ctrl-v
-noremap <C-c> "*y
-inoremap <C-v> <space><backspace><esc>"*]pa
+" noremap <C-c> "*y
+" inoremap <C-v> <space><backspace><esc>"*]pa
 " vnoremap <C-v> <esc>"*]p
 
 " buffer creation and navigation
@@ -272,8 +272,8 @@ cnoremap <S-space> <cr>:noh<cr>
 cnoremap <C-n> \.\*
 
 " Use jv to paste in insert mode
-inoremap jv <C-r><C-p>"
-cnoremap jv <C-r>"
+inoremap jv <C-r><C-p>+
+cnoremap jv <C-r>+
 
 " Use jp to quickly select completion in insert mode
 imap jp <C-n>
@@ -374,8 +374,8 @@ nnoremap ,x v<esc>`.``gvP``P
 vnoremap ,x <esc>`.``gvP``P
 
 " paste in insert mode with ctrl-b
-inoremap <C-b> <C-r><C-p>"
-cnoremap <C-b> <C-r>"
+inoremap <C-b> <C-r><C-p>+
+cnoremap <C-b> <C-r>+
 
 " correct last spell when shift-enter in insert mode
 inoremap <S-space><S-space> <C-g>u<esc>[s1z=`]a
