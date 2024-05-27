@@ -626,3 +626,6 @@ nnoremap ,v gv
 
 " use t to jump brackers
 noremap t %
+
+" markdown syntax highlighting for code blocks
+let g:markdown_fenced_languages = ['html', 'python', 'c', 'cpp', 'java', 'javascript', 'typescript', 'bash', 'sh', 'css', 'json', 'yaml', 'xml', 'sql', 'lua']
