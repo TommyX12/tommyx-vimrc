@@ -133,10 +133,10 @@ nnoremap ,O O<space><backspace><esc>j$
 nnoremap ,<C-o> o<space><backspace><esc>kO<space><backspace><esc>j$
 
 " better { } navigation
-nnoremap [[ ?{<CR>w99[{
-nnoremap ][ /}<CR>b99]}
-nnoremap ]] j0[[%/{<CR>
-nnoremap [] k$][%?}<CR>
+" nnoremap [[ ?{<CR>w99[{
+" nnoremap ][ /}<CR>b99]}
+" nnoremap ]] j0[[%/{<CR>
+" nnoremap [] k$][%?}<CR>
 
 " remove excess white space
 vnoremap ,rws :s/\%V\ \+/ <cr>:noh<cr>
@@ -446,11 +446,11 @@ noremap <silent> <A-S-k> gg
 " inoremap <C-k> <Up>
 " inoremap <C-l> <Right>
 
-" indent with shift-[ and shift-]
-nnoremap { <<
-nnoremap } >>
-vnoremap { <gv
-vnoremap } >gv
+" indent
+nnoremap ( <<
+nnoremap ) >>
+vnoremap ( <gv
+vnoremap ) >gv
 
 " easy mark jumps
 let g:fast_mark_total = 3
@@ -542,10 +542,10 @@ function! GotoNextBracketEnd(vis)
     call search('[)\]}]', 'W')
 endfunction
 
-nnoremap <silent> ( :call GotoPrevBracketStart(0)<cr>
-nnoremap <silent> ) :call GotoNextBracketEnd(0)<cr>
-vnoremap <silent> ( :call GotoPrevBracketStart(1)<cr>
-vnoremap <silent> ) :call GotoNextBracketEnd(1)<cr>
+" nnoremap <silent> ( :call GotoPrevBracketStart(0)<cr>
+" nnoremap <silent> ) :call GotoNextBracketEnd(0)<cr>
+" vnoremap <silent> ( :call GotoPrevBracketStart(1)<cr>
+" vnoremap <silent> ) :call GotoNextBracketEnd(1)<cr>
 
 " use q as @ for macro, Q as original q.
 nnoremap q @
@@ -629,3 +629,15 @@ noremap t %
 
 " markdown syntax highlighting for code blocks
 let g:markdown_fenced_languages = ['html', 'python', 'c', 'cpp', 'java', 'javascript', 'typescript', 'bash', 'sh', 'css', 'json', 'yaml', 'xml', 'sql', 'lua']
+
+" folding
+set foldmethod=indent
+set foldlevelstart=99
+noremap <tab> za
+noremap { zMzv
+noremap } zRzz
+noremap [1 zM
+noremap [2 zMzr
+noremap [3 zM2zr
+noremap [4 zM3zr
+noremap [5 zM4zr

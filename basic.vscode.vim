@@ -6,6 +6,12 @@ unmap ,<tab>
 unmap <space>f
 unmap <space>F
 unmap <space>wq
+unmap {
+unmap [1
+unmap [2
+unmap [3
+unmap [4
+unmap [5
 iunmap jv
 iunmap jp
 

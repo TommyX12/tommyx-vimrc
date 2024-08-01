@@ -120,3 +120,13 @@ vnoremap <space>iC :action sourcegraph.searchSelection<cr>
 
 " fix copy in visual mode
 vnoremap y y
+
+" folding
+noremap <tab> :action ExpandCollapseToggleAction<cr>
+noremap { :action CollapseAllRegions<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>:action ExpandRegion<cr>
+noremap } zRzz
+noremap [1 zM
+noremap [2 :action ExpandAllToLevel1<cr>
+noremap [3 :action ExpandAllToLevel2<cr>
+noremap [4 :action ExpandAllToLevel3<cr>
+noremap [5 :action ExpandAllToLevel4<cr>
