@@ -633,11 +633,16 @@ let g:markdown_fenced_languages = ['html', 'python', 'c', 'cpp', 'java', 'javasc
 " folding
 set foldmethod=indent
 set foldlevelstart=99
+" toggle fold
 noremap <tab> za
+" fold all except cursor
 noremap { zMzv
+" expand all
 noremap } zRzz
+" fold to level 1-5
 noremap [1 zM
 noremap [2 zMzr
 noremap [3 zM2zr
 noremap [4 zM3zr
 noremap [5 zM4zr
+" note that zO expand cursor recursively
