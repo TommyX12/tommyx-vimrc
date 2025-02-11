@@ -2,7 +2,23 @@
 
 My vim configuration.
 
-# Installation
+## Setup
+
+### Vim
+- Create `~/.vimrc`
+- Add `source /path/to/tommyx-vimrc/basic.vim`
+
+### Visual Studio Code
+- Create `~/.vscodevimrc`
+- Add `source /path/to/tommyx-vimrc/basic.vim`
+- Add `source /path/to/tommyx-vimrc/basic.vscode.vim`
+
+### JetBrain IDEs
+- Create `~/.ideavimrc`
+- Add `source /path/to/tommyx-vimrc/basic.vim`
+- Add `source /path/to/tommyx-vimrc/basic.idea.vim`
+
+## Legacy Installation
 
 1. Make sure Vim is properly installed: `$VIMRUNTIME` needs to be available.
 
