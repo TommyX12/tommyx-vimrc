@@ -72,6 +72,26 @@ local plugins = {
     {
         'ggandor/leap.nvim',
     },
+    {
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        -- build = "make install_jsregexp"
+    },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        opts = {},
+    },
+    -- {
+    --     "nvimdev/indentmini.nvim",
+    --     config = function()
+    --         require("indentmini").setup() -- use default config
+    --     end,
+    -- }
 }
 
 local opts = nil
