@@ -389,7 +389,7 @@ nnoremap ,N :NERDTreeFind<cr>
 " nnoremap ,m :TlistOpen<cr>:vert res 30<cr>
 nnoremap ,m :TagbarClose<cr>:TagbarOpen<cr>
 
-autocmd InsertEnter * silent! exec "norm! " . line(".") . "G" . col(".") . "|"
+autocmd InsertLeave * silent! exec "norm! " . line(".") . "G" . col(".") . "|"
 
 " bindings for easy split navigation
 nnoremap <C-h> <C-w>h

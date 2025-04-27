@@ -86,6 +86,52 @@ local plugins = {
         ---@type ibl.config
         opts = {},
     },
+    {
+        "catgoose/nvim-colorizer.lua",
+        event = "BufReadPre",
+        opts = { -- set to setup table
+        },
+    },
+    {
+        "petertriho/nvim-scrollbar",
+        config = function()
+            require("scrollbar").setup()
+        end,
+    },
+    {
+        "ibhagwan/fzf-lua",
+        -- optional for icon support
+        -- dependencies = { "nvim-tree/nvim-web-devicons" },
+        -- or if using mini.icons/mini.nvim
+        -- dependencies = { "echasnovski/mini.icons" },
+        opts = {
+            fzf_colors = {
+                ["fg+"] = { "fg", "Normal" },
+                ["bg+"] = { "bg", "CursorLine" },
+                ["hl+"] = { "fg", "Statement" },
+            },
+        },
+    },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true,
+        -- use opts = {} for passing setup options
+        -- this is equivalent to setup({}) function
+    },
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            toggler = {
+                ---Line-comment toggle keymap
+                line = ',c<space>',
+            },
+            opleader = {
+                ---Line-comment keymap
+                line = ',c<space>',
+            },
+        },
+    },
     -- {
     --     "nvimdev/indentmini.nvim",
     --     config = function()
@@ -113,3 +159,13 @@ vim.keymap.set({"n"}, "<space>cf", "<cmd>GpChatFinder<cr>", keymapOptions("Chat 
 
 -- leap
 vim.keymap.set({"n", "v"}, 'f', '<Plug>(leap)')
+
+-- navigation
+vim.keymap.set({"n", "v"}, '<space>x', '<cmd>FzfLua commands<cr>')
+vim.keymap.set({"n", "v"}, '<space>f', '<cmd>FzfLua blines<cr>')
+vim.keymap.set({"n"}, '<space>n', '<cmd>FzfLua files<cr>')
+vim.keymap.set({"n"}, '<space>if', '<cmd>FzfLua files<cr>')
+vim.keymap.set({"n"}, '<space>id', '<cmd>FzfLua live_grep<cr><C-g>')
+vim.keymap.set({"n"}, '<space><tab>', '<cmd>FzfLua oldfiles<cr>')
+
+-- custom colors

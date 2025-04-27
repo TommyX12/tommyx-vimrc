@@ -22,3 +22,8 @@ My vim configuration.
 - Create `~/.config/nvim/init.lua`
 - Add `vim.cmd [[source /path/to/tommyx-vimrc/basic.vim]]`
 - Add `dofile(vim.fn.expand("/path/to/tommyx-vimrc/nvim.lua"))`
+
+#### Optional dependencies
+- `fzf`
+- `rg`
+- `OPENAI_API_KEY`
