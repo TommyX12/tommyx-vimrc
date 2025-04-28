@@ -69,6 +69,19 @@ local plugins = {
         lazy = false,
         priority = 1001,
     },
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     opts = {
+    --         suggestion = { enabled = false },
+    --         panel = { enabled = false },
+    --         filetypes = {
+    --             markdown = true,
+    --             help = true,
+    --         },
+    --     },
+    -- },
     {
         'ggandor/leap.nvim',
     },
@@ -132,19 +145,49 @@ local plugins = {
             },
         },
     },
-    -- {
-    --     "nvimdev/indentmini.nvim",
-    --     config = function()
-    --         require("indentmini").setup() -- use default config
-    --     end,
-    -- }
+    {
+        'saghen/blink.cmp',
+        -- optional: provides snippets for the snippet source
+        -- dependencies = { 'rafamadriz/friendly-snippets' },
+        -- dependencies = {
+        --     "fang2hou/blink-copilot",
+        -- },
+        version = '1.*',
+        opts = {
+            snippets = { preset = 'luasnip' },
+
+            -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+            -- 'super-tab' for mappings similar to vscode (tab to accept)
+            -- 'enter' for enter to accept
+            -- 'none' for no mappings
+            -- All presets have the following mappings:
+            -- C-space: Open menu or open docs if already open
+            -- C-n/C-p or Up/Down: Select next/previous item
+            -- C-e: Hide menu
+            -- C-k: Toggle signature help (if signature.enabled = true)
+            keymap = {
+                preset = 'super-tab',
+            },
+            appearance = {
+                -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+                -- Adjusts spacing to ensure icons are aligned
+                nerd_font_variant = 'mono'
+            },
+            completion = { documentation = { auto_show = true } },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+            fuzzy = { implementation = "prefer_rust_with_warning" }
+        },
+        opts_extend = { "sources.default" }
+    },
 }
 
 local opts = nil
 
 require("lazy").setup(plugins, opts)
 
-local function keymapOptions(desc)
+local function gpt_keymap_options(desc)
     return {
         noremap = true,
         silent = true,
@@ -154,8 +197,8 @@ local function keymapOptions(desc)
 end
 
 -- Chat commands
-vim.keymap.set({"n"}, "<space>ca", "<cmd>GpChatNew<cr>", keymapOptions("New Chat"))
-vim.keymap.set({"n"}, "<space>cf", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder"))
+vim.keymap.set({"n"}, "<space>ca", "<cmd>GpChatNew<cr>", gpt_keymap_options("New Chat"))
+vim.keymap.set({"n"}, "<space>cf", "<cmd>GpChatFinder<cr>", gpt_keymap_options("Chat Finder"))
 
 -- leap
 vim.keymap.set({"n", "v"}, 'f', '<Plug>(leap)')
@@ -169,3 +212,42 @@ vim.keymap.set({"n"}, '<space>id', '<cmd>FzfLua live_grep<cr><C-g>')
 vim.keymap.set({"n"}, '<space><tab>', '<cmd>FzfLua oldfiles<cr>')
 
 -- custom colors
+
+vim.cmd('highlight StatusLineNC guibg=#dddddd guifg=#666666')
+
+-- undo the autocomplete key map
+vim.cmd('iunmap jp')
+
+-- snippets
+
+local ls = require("luasnip")
+
+vim.keymap.set({"i"}, "<C-l>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-j>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-k>", function() ls.jump(-1) end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<C-h>", function()
+    if ls.choice_active() then
+        ls.change_choice(1)
+    end
+end, {silent = true})
+
+local function add_snippets(name, filetypes, snippets)
+    for _, filetype in ipairs(filetypes) do
+        ls.add_snippets(filetype, snippets)
+    end
+end
+
+local gpt_prompt_filetypes = { "markdown", "text", "zsh" }
+
+add_snippets("pedit", gpt_prompt_filetypes, {
+    ls.parser.parse_snippet(
+        "pedit",
+        [[
+            hello world {
+                This ${1:Stuff} really ${2:works. ${3:Well, a bit.}}
+            }
+        ]]
+    ),
+})
+
