@@ -36,27 +36,30 @@ local plugins = {
                         secret = os.getenv("ANTHROPIC_API_KEY"),
                     },
                 },
+                default_chat_agent = "GPT-4.1",
                 agents = {
                     {
-                        name = "Claude-3.5-Sonnet",
-                        provider = "anthropic",
-                        chat = true,
-                        command = false,
-                        model = { model = "claude-3-5-sonnet-20240620", temperature = 1.0, top_p = 1 },
-                        system_prompt = "You are a helpful assistant.",
-                    },
-                    {
-                        name = "GPT-4o",
+                        name = "GPT-4.1",
                         chat = true,
                         command = false,
                         -- string with model name or table with model name and parameters
-                        model = { model = "gpt-4o", temperature = 1.0, top_p = 1 },
-                        -- syitem prompt (use this to specify the persona/role of the AI)
-                        system_prompt = "You are a helpful assistant.",
+                        model = { model = "gpt-4.1", temperature = 1.0, top_p = 1 },
+                        -- system prompt (use this to specify the persona/role of the AI)
+                        system_prompt = require("gp.defaults").chat_system_prompt,
+                    },
+                    {
+                        name = "o4-mini",
+                        chat = true,
+                        command = false,
+                        -- string with model name or table with model name and parameters
+                        model = { model = "o4-mini", temperature = 1.0, top_p = 1 },
+                        -- system prompt (use this to specify the persona/role of the AI)
+                        system_prompt = require("gp.defaults").chat_system_prompt,
                     },
                 },
-                -- TODO: there is a bug where using this shortcut in insert mode without save causes the model to not have historical context.
-                chat_shortcut_respond = { modes = { "n", "v", "x" }, shortcut = "<C-return>" },
+                -- TODO: there may be a bug where using this shortcut in insert mode without save causes the model to not have historical context.
+                chat_shortcut_respond = { modes = { "n", "i", "v", "x" }, shortcut = "<C-return>" },
+                -- chat_shortcut_respond = { modes = { "n", "v", "x" }, shortcut = "<C-return>" },
                 chat_shortcut_delete = { modes = { "n", "i", "v", "x" }, shortcut = "<C-g>d" },
                 chat_shortcut_stop = { modes = { "n", "i", "v", "x" }, shortcut = "<C-c>" },
             }
@@ -192,13 +195,15 @@ local function gpt_keymap_options(desc)
         noremap = true,
         silent = true,
         nowait = true,
-        desc = "GPT prompt " .. desc,
+        desc = desc,
     }
 end
 
 -- Chat commands
 vim.keymap.set({"n"}, "<space>ca", "<cmd>GpChatNew<cr>", gpt_keymap_options("New Chat"))
 vim.keymap.set({"n"}, "<space>cf", "<cmd>GpChatFinder<cr>", gpt_keymap_options("Chat Finder"))
+vim.keymap.set({"n"}, "<space>cc", "<cmd>GpAgent GPT-4.1<cr>", gpt_keymap_options("Switch to GPT-4.1"))
+vim.keymap.set({"n"}, "<space>co", "<cmd>GpAgent o4-mini<cr>", gpt_keymap_options("Switch to o4-mini"))
 
 -- leap
 vim.keymap.set({"n", "v"}, 'f', '<Plug>(leap)')
@@ -232,7 +237,7 @@ vim.keymap.set({"i", "s"}, "<C-h>", function()
     end
 end, {silent = true})
 
-local function add_snippets(name, filetypes, snippets)
+local function add_snippets(filetypes, snippets)
     for _, filetype in ipairs(filetypes) do
         ls.add_snippets(filetype, snippets)
     end
@@ -240,14 +245,50 @@ end
 
 local gpt_prompt_filetypes = { "markdown", "text", "zsh" }
 
-add_snippets("pedit", gpt_prompt_filetypes, {
-    ls.parser.parse_snippet(
-        "pedit",
-        [[
-            hello world {
-                This ${1:Stuff} really ${2:works. ${3:Well, a bit.}}
-            }
-        ]]
-    ),
+local prompt_code_style = [[
+- Code style:
+    - Use the same code style as the original code.
+    - Do not include extraneous comments or too much explanation. Only add comment for major sections of the code (if it's too long), as well as documentation for new functions.
+]]
+
+local snippet_context = [[
+Additional context: $1
+```
+$2
+```
+
+]]
+
+local snippet_code_new = [[
+$1
+
+General rules:
+- Think step by step, and then output the full version of the new code (without omitting anything).
+]] .. prompt_code_style .. [[
+
+Your instruction: Write code according to the following instructions:
+$2
+]]
+
+local snippet_code_edit = [[
+Original code: $1
+```
+$2
+```
+
+$3
+
+General rules:
+- Think step by step, and then output the full version of the edited code (without omitting anything).
+]] .. prompt_code_style .. [[
+
+Your instruction: Edit this code according to the following instructions:
+$4
+]]
+
+add_snippets(gpt_prompt_filetypes, {
+    ls.parser.parse_snippet("pc", snippet_context),
+    ls.parser.parse_snippet("pnew", snippet_code_new),
+    ls.parser.parse_snippet("pedit", snippet_code_edit),
 })
 
