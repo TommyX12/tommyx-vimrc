@@ -170,6 +170,14 @@ local plugins = {
             -- C-k: Toggle signature help (if signature.enabled = true)
             keymap = {
                 preset = 'super-tab',
+                ['<Tab>'] = {
+                    function(cmp)
+                        if cmp.snippet_active() then return cmp.accept()
+                        else return cmp.select_and_accept() end
+                    end,
+                    'fallback'
+                },
+                ['<S-Tab>'] = { 'fallback' },
             },
             appearance = {
                 -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
