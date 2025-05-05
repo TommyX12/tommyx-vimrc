@@ -294,9 +294,42 @@ Your instruction: Edit this code according to the following instructions:
 $4
 ]]
 
+local prompt_snippet_instructions = [[
+- First think about what key information is important to remember. Questions should be text based (e.g. not multiple choice).
+- After thinking, output the full version of the markdown note. Use tab for indentation.
+- The output note itself should be in a backtick block (surrounded with ```). Do not indent your questions.
+- Each question's answer should be in a block that looks like this (do not indent it either, there should be no whitespace before the "> "):
+
+> [!info]- Answer
+> <your-answer-text, which will be hidden in my markdown viewer until I click on it>
+> <the-answer-can-be-multiline>
+
+]]
+
+local snippet_obsidian_quiz_from_note = [[
+I have the following study material:
+```
+$1
+```
+
+Create a markdown note containing quizzes based on the study material.
+]] .. prompt_snippet_instructions .. [[
+$2
+]]
+
+local snippet_obsidian_quiz_from_topic = [[
+Create a markdown note containing quizzes regarding the following topic:
+$1
+
+]] .. prompt_snippet_instructions .. [[
+$2
+]]
+
 add_snippets(gpt_prompt_filetypes, {
     ls.parser.parse_snippet("pc", snippet_context),
     ls.parser.parse_snippet("pnew", snippet_code_new),
     ls.parser.parse_snippet("pedit", snippet_code_edit),
+    ls.parser.parse_snippet("pquizfromnote", snippet_obsidian_quiz_from_note),
+    ls.parser.parse_snippet("pquizfromtopic", snippet_obsidian_quiz_from_topic),
 })
 
