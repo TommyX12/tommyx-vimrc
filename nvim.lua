@@ -333,3 +333,11 @@ add_snippets(gpt_prompt_filetypes, {
     ls.parser.parse_snippet("pquizfromtopic", snippet_obsidian_quiz_from_topic),
 })
 
+ls.add_snippets("all", {
+    ls.snippet("date", {
+        ls.function_node(function()
+            return os.date("%Y-%m-%d")
+        end, {})
+    })
+})
+
