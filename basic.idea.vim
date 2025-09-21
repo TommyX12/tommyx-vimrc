@@ -130,3 +130,6 @@ noremap [2 :action ExpandAllToLevel1<cr>
 noremap [3 :action ExpandAllToLevel2<cr>
 noremap [4 :action ExpandAllToLevel3<cr>
 noremap [5 :action ExpandAllToLevel4<cr>
+
+" copy file path
+nnoremap <space>yf :action CopyPathFromRepositoryRootProvider<cr>
