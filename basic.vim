@@ -646,3 +646,6 @@ noremap [3 zM2zr
 noremap [4 zM3zr
 noremap [5 zM4zr
 " note that zO expand cursor recursively
+
+" copy entire file
+nnoremap <space>yy ggVGy
