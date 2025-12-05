@@ -88,6 +88,7 @@ set virtualedit+=block
 
 " always display status line
 set laststatus=2
+set statusline=%F\ %m%r%y\ %=%c\ \ %l/%L\ \ %p%%
 
 " line numbering
 set number
