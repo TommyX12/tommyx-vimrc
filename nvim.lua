@@ -195,7 +195,7 @@ local plugins = {
                         opts = {
                             get_cwd = function(context)
                                 local buf_dir = vim.fn.expand(('#%d:p:h'):format(context.bufnr))
-                                if vim.regex([[^\(/private\|/tmp\|/var\)]]):match_str(buf_dir) then
+                                if vim.regex([[^\(/private\|/tmp\|/var\|]] .. vim.fn.expand('~') .. [[/ai-prompts\)]]):match_str(buf_dir) then
                                     return vim.fn.getcwd()
                                 end
                                 return buf_dir
