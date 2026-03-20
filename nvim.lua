@@ -246,6 +246,30 @@ vim.cmd('highlight StatusLineNC guibg=#dddddd guifg=#666666')
 -- undo the autocomplete key map
 vim.cmd('iunmap jp')
 
+-- clipboard
+
+local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil
+if is_ssh then
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(''), '\n'),
+      vim.fn.getregtype('')
+    }
+  end
+
+  vim.g.clipboard = {
+    name = 'osc52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = paste, 
+      ['*'] = paste
+    },
+  }
+end
+
 -- snippets
 
 local ls = require("luasnip")
