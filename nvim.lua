@@ -239,6 +239,10 @@ vim.keymap.set({"n"}, '<space>if', '<cmd>FzfLua files<cr>')
 vim.keymap.set({"n"}, '<space>id', '<cmd>FzfLua live_grep<cr><C-g>')
 vim.keymap.set({"n"}, '<space><tab>', '<cmd>FzfLua oldfiles<cr>')
 
+-- completion
+
+vim.keymap.set({ "i" }, "<C-t>", function() FzfLua.complete_path() end, { silent = true, desc = "Fuzzy complete path" })
+
 -- custom colors
 
 vim.cmd('highlight StatusLineNC guibg=#dddddd guifg=#666666')
