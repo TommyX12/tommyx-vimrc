@@ -241,7 +241,19 @@ vim.keymap.set({"n"}, '<space><tab>', '<cmd>FzfLua oldfiles<cr>')
 
 -- completion
 
-vim.keymap.set({ "i" }, "<C-t>", function() FzfLua.complete_path() end, { silent = true, desc = "Fuzzy complete path" })
+vim.keymap.set({ "i" }, "<C-t>", function()
+    local cmd
+    for _, bin in ipairs({ "fdfind", "fd" }) do
+        if vim.fn.executable(bin) == 1 then
+            -- --strip-cwd-prefix requires fd 8.3.0+, fall back without it
+            local ver = vim.fn.system(bin .. " --version")
+            local major = tonumber(ver:match("(%d+)%.")) or 0
+            cmd = (major >= 8) and (bin .. " --strip-cwd-prefix") or bin
+            break
+        end
+    end
+    require("fzf-lua").complete_path({ cmd = cmd })
+end, { silent = true, desc = "Fuzzy complete path" })
 
 -- custom colors
 
