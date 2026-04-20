@@ -52,6 +52,7 @@ set shiftround " tab / shifting moves to closest tab stop.
 set autoindent " Match indents on new lines.
 set copyindent " Copy existing indent char when auto indenting
 set smartindent " Intelligently un-indent / indent new lines based on rules.
+set title " set the title of the window to the file name.
 
 " split right and below
 set splitright
